@@ -1,0 +1,123 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Jetstream\HasProfilePhoto;
+use Laravel\Sanctum\HasApiTokens;
+
+/**
+ * Le modèle User qui est lié à la table users dans la base de données
+ * 
+ * @author Clara Vesval et Giovanni Ventoso B2B Info <clara.vesval@ynov.com> <giovanni.ventoso@ynov.com>
+ * 
+ */
+
+class User extends Authenticatable
+{
+    use HasApiTokens;
+    use HasFactory;
+    //use HasProfilePhoto;
+    use Notifiable;
+    use TwoFactorAuthenticatable;
+
+    public $timestamps = false;
+
+/* Relations Eloquent */
+
+/**
+     * Renvoie le role de l'utilisateur'
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function role()
+    {
+        return $this->belongsTo('App\Models\Role');
+    } 
+
+    /**
+     * Renvoie la liste des articles écrit par un utilisateur
+     *
+     * @return  \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function articles()
+    {
+        return $this->hasMany('App\Models\Article');
+    }
+
+    /**
+     * Renvoie la liste des posts d'un utilisateur
+     *
+     * @return  \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts()
+    {
+        return $this->hasMany('App\Models\Post');
+    }
+
+    /**
+     * Renvoie tous les sessions qui sont asssociés à 'l'utilisateur
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function sessiongames()
+    {
+        return $this->belongsToMany('App\Models\Sessiongame')
+                    ->using("App\Models\SessiongameUser")
+                    ->withPivot("id");
+                    
+    }
+
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'firstname',
+        'lastname',
+        'date_of_birth',
+        'email',
+        'password',
+        'phone',
+        'address',
+        'postal_code',
+        'role_id',
+        'city',
+        'country',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+        'two_factor_recovery_codes',
+        'two_factor_secret',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        //'profile_photo_url',
+    ];
+}
