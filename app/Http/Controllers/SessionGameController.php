@@ -59,23 +59,33 @@ class SessiongameController extends Controller
         if ($request->filled('price')){
             $validateData=$request->validate([
                 'price' => 'numeric',
+                'name' => 'required|max:60|min:3',
                 'start_date' => 'required|date|after_or_equal:tomorrow', 
                 'end_date'=>'required|date|after:start_date',
-                'goodie'=>'required|integer|exists:goodies,id'
+                'goodie'=>'required|integer|exists:goodies,id',
+                'image_path'=>'required|image|max:5000',
             ]);
 
             $sessiongame->price = $validateData["price"];
         }
         else {
             $validateData=$request->validate([
+                'name' => 'required|max:60|min:3',
                 'start_date' => 'required|date|after_or_equal:tomorrow', 
                 'end_date'=>'required|date|after:start_date',
-                'goodie'=>'required|integer|exists:goodies,id'
+                'goodie'=>'required|integer|exists:goodies,id',
+                'image_path'=>'required|image|max:5000',
             ]);
         }
+
+        // Save the file locally in the storage/public/ folder under a new folder named /product
+        $request->image_path->store('images', 'public');
+        $path ="/".$request->file('image_path')->store('images');
         
+        $sessiongame->name = $validateData["name"];
         $sessiongame->start_date = $validateData["start_date"];
         $sessiongame->end_date = $validateData["end_date"];
+        $sessiongame->image_path=$path;
         $sessiongame->goodie_id = $validateData["goodie"];
         $sessiongame->save();
     
@@ -119,18 +129,22 @@ class SessiongameController extends Controller
     {
         $this->authorize('update', Sessiongame::class);
         $validateData=$request->validate([
+            'name' => 'required|max:60|min:3',
             'start_date' => 'required|date|', 
             'end_date'=>'required|date|after:start_date',
-            'goodie'=>'required|integer|exists:goodies,id'
+            'goodie'=>'required|integer|exists:goodies,id',
+            'image_path'=>'image|max:5000',
         ]);
 
         
         if ($request->filled('price')){
             $validateData=$request->validate([
+                'name' => 'required|max:60|min:3',
                 'price' => 'numeric',
                 'start_date' => 'required|date|', 
                 'end_date'=>'required|date|after:start_date',
-                'goodie'=>'required|integer|exists:goodies,id'
+                'goodie'=>'required|integer|exists:goodies,id',
+                'image_path'=>'image|max:5000',
             ]);
 
             $sessiongame->price = $validateData["price"];
@@ -154,6 +168,11 @@ class SessiongameController extends Controller
     public function destroy(SessionGame $sessiongame)
     {
         $this->authorize('delete', Sessiongame::class);
+        if(is_file($sessiongame->image_path))
+        {
+            //Supprimer l'image du dossier
+            unlink(public_path($sessiongame->image_path));
+        }
         $sessiongame->delete();
         return redirect('/sessions');
     }

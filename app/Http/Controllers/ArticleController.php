@@ -56,8 +56,8 @@ class ArticleController extends Controller
         $this->authorize('create', Article::class);
             $validateData=$request->validate([
                 'title' => 'required|max:60|min:5|unique:articles',
-                'description' => 'required|min:10', // Only allow .jpg, .bmp and .png file types.
-                'image_path'=>'required|image|max:5000',
+                'description' => 'required|min:10', 
+                'image_path'=>'required|image|max:5000',// Only allow .jpg, .bmp and .png file types.
             ]);
 
             // Save the file locally in the storage/public/ folder under a new folder named /product
@@ -117,11 +117,18 @@ class ArticleController extends Controller
         ]);
 
         if ($request->hasFile('image_path')) {
+            if(is_file($article->image_path))
+        {
+        //Supprimer l'image du dossier
+        unlink(public_path($article->image_path));
+        
+
         // Save the file locally in the storage/public/ folder under a new folder named /product
         $request->image_path->store('images', 'public');
         $path ="/".$request->file('image_path')->store('images');
 
         $article->image_path=$path;
+        }
         }
 
         $article->title = $validateData["title"];
@@ -140,6 +147,12 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $this->authorize('delete', Article::class);
+        if(is_file('public/images/cadeau2.png'))
+        {
+        //Supprimer l'image du dossier
+        unlink(public_path($article->image_path));
+        }
+        
         $article->delete();
         return redirect('/articles');
     }

@@ -7,7 +7,7 @@
 @section ('content')
 
 <div class=" contourForm col-12 col-md-6 offset-md-3">
-    <form action="{{ route('sessiongames.store') }}" method="post"">
+    <form action="{{ route('sessiongames.store') }}" method="post" enctype="multipart/form-data">
         <!-- Add CSRF Token -->
         @csrf
        <fieldset>
@@ -19,6 +19,11 @@
             </div> --}}
             
             <div class="form-group">
+                <label for="name">Nom </label>
+                <input value="{{ old('name') }}" type="text" required name="name" id="name" class="form-control"class=@error('name') is-invalid @enderror >
+            </div>
+
+            <div class="form-group">
                 <label for="start_date">Date de début</label>
                 <input value="{{ old('start_date') }}" type="date" required name="start_date" id="start_date" class="form-control"class=@error('start_date') is-invalid @enderror >
             </div>
@@ -26,6 +31,12 @@
             <div class="form-group">
                 <label for="end_date">Date de fin</label>
                 <input value="{{ old('end_date') }}" type="date" required name="end_date" id="end_date" class="form-control"class=@error('end_date') is-invalid @enderror >
+            </div>
+
+            <div class="form-group">
+                <label for="image_path" >Image</label>
+                <br/>
+                <input type="file" name="image_path" required class=@error('image_path') is-invalid @enderror>
             </div>
 
             <div class="form-group">
@@ -39,13 +50,19 @@
             </div>
             
        </fieldset>
-       @error('price')
+       {{-- @error('price')
+        <div class="alert alert-danger"> {{$message}} </div>
+        @enderror  --}}
+        @error('name')
         <div class="alert alert-danger"> {{$message}} </div>
         @enderror 
         @error('start_date')
         <div class="alert alert-danger"> {{$message}} </div>
         @enderror 
        @error('end_date')
+        <div class="alert alert-danger"> {{$message}} </div>
+        @enderror 
+        @error('image_path')
         <div class="alert alert-danger"> {{$message}} </div>
         @enderror 
         @error('goodie')

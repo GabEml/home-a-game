@@ -134,6 +134,11 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('delete', $post);
+        if(is_file($post->image_path))
+        {
+            //Supprimer l'image du dossier
+            unlink(public_path($post->image_path));
+        }
         $post->delete();
         $challenge=$post->challenge;
 

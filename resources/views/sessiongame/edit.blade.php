@@ -16,7 +16,11 @@
             <input type="number" value="{{$sessiongame->price}}" step="any" class="form-control" name="price" class=@error('price') is-invalid @enderror />
         <small>Si vous ne mettez pas de prix, il est fixé à 40€ par défault</small>
         </div> --}}
-        
+        <div class="form-group">
+            <label for="name">Nom </label>
+            <input value="{{$sessiongame->name}}" type="text" required name="name" id="name" class="form-control"class=@error('name') is-invalid @enderror >
+        </div>
+
         <div class="form-group">
             <label for="start_date">Date de début</label>
             <input type="date" value="{{$sessiongame->start_date}}" required name="start_date" id="start_date" class="form-control"class=@error('start_date') is-invalid @enderror ></input>
@@ -25,6 +29,14 @@
         <div class="form-group">
             <label for="end_date">Date de fin</label>
             <input type="date" value="{{$sessiongame->end_date}}" required name="end_date" id="end_date" class="form-control"class=@error('end_date') is-invalid @enderror ></input>
+        </div>
+
+        <div class="form-group">
+            <label for="image_path" >Image</label>
+            <br/>
+            <input type="file" name="image_path" class=@error('image_path') is-invalid @enderror>
+            <br/>
+            <small>Si vous ne choissisez pas d'image, il garde celle déjà existante</small>
         </div>
 
         <div class="form-group">
@@ -41,10 +53,16 @@
    @error('price')
     <div class="alert alert-danger"> {{$message}} </div>
     @enderror 
+    @error('name')
+    <div class="alert alert-danger"> {{$message}} </div>
+    @enderror 
     @error('start_date')
     <div class="alert alert-danger"> {{$message}} </div>
     @enderror 
    @error('end_date')
+    <div class="alert alert-danger"> {{$message}} </div>
+    @enderror 
+    @error('image_path')
     <div class="alert alert-danger"> {{$message}} </div>
     @enderror 
    <br/>

@@ -19,6 +19,7 @@ class CreateSessiongamesTable extends Migration
             $table->float('price')->default(40.00);
             $table->date('start_date');
             $table->date('end_date');
+            $table->string('image_path');
             $table -> foreignId('goodie_id')->nullable()->constrained('goodies')->onDelete('set null');
             $table->engine = 'InnoDB';
         });
