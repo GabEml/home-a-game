@@ -17,12 +17,22 @@
             </ol>
        </nav>
     </div>
+
+    <br/>
+
+    <div class='col-12'>
+        <p class="text-center">Pour cette session, vous pouvez avoir la chance de gagner : {{$sessiongame->goodie->name}} !</p>
+    </div>
+    <br/>
+
        <!--End Breadcrumb-->
        <div class="row containerArticles">
           @foreach ($sessiongame->challenges as $challenge)
-              <div class="positionButton marginArticles col-lg-3 col-md-6 col-sm-12 containerPresentation">
-                  <div class="flex flex-col justify-content-center">
+              <div class="flex flex-col positionButton marginArticles col-lg-3 col-md-6 col-sm-12 containerPresentation justify-content-between">
+                  <div class="flex flex-col">
                       <img width="220px" height=auto class="align-self-center imagePresentation" src="{{$challenge->images[0]->image_path}}" alt="{{$challenge->title}}">
+                  </div>
+                  <div>
                       <h2 class="align-self-center text-center titleArticleHome">{{$challenge->title}}</h2>
                       @foreach ($challenge->posts as $post)
                             @if($post->user->id == Auth::user()->id)
@@ -38,44 +48,42 @@
                             @endif
 
                         @endforeach
-                    </div>
                 <br/>
-                  
-                      @if (Auth::user()->role->role==="Admin Défis")
-                          <div class="flex justify-content-around">
-                              <form action="{{route('challenges.destroy',$challenge->id)}}" method="post">
-                                  @csrf
-                                  @method('DELETE')
-                                  <button class="buttonAdmin btn btn-danger" type="submit"> Supprimer </button>
-                              </form>
-                              <a class="btn buttonAdmin btn-success " href="{{route('challenges.edit',$challenge->id)}}"> Modifier</a>
+                    <div>
+                        @if (Auth::user()->role->role==="Admin Défis")
+                            <div class="flex justify-content-around">
+                                <form action="{{route('challenges.destroy',$challenge->id)}}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="buttonAdmin btn btn-danger" type="submit"> Supprimer </button>
+                                </form>
+                                <a class="btn buttonAdmin btn-success " href="{{route('challenges.edit',$challenge->id)}}"> Modifier</a>
 
-                          </div>
-                      @else
-                      <div>
-                          <a class="btn seeMore" href="{{route('challenges.show',$challenge->id)}}"> Voir</a>
-                      </div>
-                      @endif
+                            </div>
+                        @else
+                        <div>
+                            <a class="btn seeMore" href="{{route('challenges.show',$challenge->id)}}"> Voir</a>
+                        </div>
+                        @endif
+                    </div>
+                </div>
               </div>
           @endforeach
       </div>
 
 @auth
     @if (Auth::user()->role->role==="Admin Défis")
-        <div class="flex justify-content-between">
-            <div class="">
-                        <a class="btn btn-primary" href="{{route('sessiongames.index')}}"> Retour</a>
+        
+        <div class="flex col-12 justify-content-between  btnChallengeAdmin">
+            <div class="flex ">
+                <a class="btn btn-primary" href="{{route('sessiongames.index')}}"> Retour</a>
             </div>
-            <div class="text-center">
-                
-                    <div>
-                        <a class="btn btn-info" href="{{route('sessiongames.challenges.create',$sessiongame->id)}}"> Ajouter un défi</a>
-                    </div>
-            </div>
-            <div class="">
-                <a class="btnHidden btn btn-primary"> Retour</a>
+            <div>
+                <a class="btn btn-info" href="{{route('sessiongames.challenges.create',$sessiongame->id)}}"> Ajouter un défi</a>
             </div>
         </div>
+
+
     @elseif (Auth::user()->role->role==="User")
     <div class="row">
         <div class="col-12 text-center">

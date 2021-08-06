@@ -89,6 +89,8 @@ Route::delete('utilisateurs/{user}',[UserController::class, 'destroy'])->middlew
 Route::get('/tirage_gagnant',[RankingController::class, 'winnerDraw'])->middleware('auth')->name('winner_draw');
 
 Route::get('goodies',[GoodieController::class, 'index'])->middleware('auth')->name('goodies.index');
+Route::get('goodies/creer',[GoodieController::class, 'create'])->middleware('auth')->name('goodies.create');
 Route::post('goodies/',[GoodieController::class, 'store'])->middleware('auth')->name('goodies.store');
+Route::get('goodies/{goodie}/editer',[GoodieController::class, 'edit'])->middleware('auth')->name('goodies.edit');
 Route::put('goodies/{goodie}',[GoodieController::class, 'update'])->middleware('auth')->name('goodies.update');
 Route::delete('goodies/{goodie}',[GoodieController::class, 'destroy'])->middleware('auth')->name('goodies.destroy');

@@ -169,7 +169,7 @@ class SessiongameController extends Controller
                 $sessiongame->image_path=$path;
             }
         }
-        
+        $sessiongame->name = $validateData["name"];
         $sessiongame->start_date = $validateData["start_date"];
         $sessiongame->end_date = $validateData["end_date"];
         $sessiongame->goodie_id = $validateData["goodie"];

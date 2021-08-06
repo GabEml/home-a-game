@@ -84,7 +84,7 @@
                             </x-jet-nav-link>
                         </li>
                     @endif
-                    @if (Auth::user()->role->role==="Admin Défis")
+                    @if (Auth::user()->role->role==="User" or Auth::user()->role->role==="Admin Défis")
                         <li class="nav-item">
                             <x-jet-nav-link href="{{ route('goodies.index') }}" :active="request()->routeIs('goodies.index')">
                                 <h2 class="linkMenu">{{ __('Goodies') }}</h2>

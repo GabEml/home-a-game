@@ -9,12 +9,16 @@
 <div class="row containerArticles">
     @if (Auth::user()->role->role==="Admin Défis")
         @foreach ($sessiongames as $sessiongame)
-                <div class="positionButton marginArticles col-lg-3 col-md-6 col-sm-12 containerPresentation">
-                    <div class="flex flex-col justify-content-center">
-                        <h2 class="align-self-center titleSession">Session</h2>
-                        <br/>
-                        <p class="align-self-center" >{{$sessiongame->start_date}} au {{$sessiongame->end_date}}</p>
+                <div class=" flex flex-col marginArticles col-lg-3 col-md-6 col-sm-12 containerPresentation justify-content-between">
+                    <div class="flex flex-col">
+                        <img width="280px" class="align-self-center imagePresentation" src="{{$sessiongame->image_path}}" alt="{{$sessiongame->title}}">
                     </div>
+                    <div>
+                        <div class="flex flex-col">
+                            <h2 class="align-self-center titleSession">{{$sessiongame->name}}</h2>
+                            <br/>
+                            <p class="align-self-center" >{{$sessiongame->start_date}} au {{$sessiongame->end_date}}</p>
+                        </div>
                     <br/>
                         <div class="flex justify-content-around">
                                 <form action="{{route('sessiongames.destroy',$sessiongame->id)}}" method="post">
@@ -25,6 +29,7 @@
                                 <a class="btn buttonAdmin btn-success " href="{{route('sessiongames.edit',$sessiongame->id)}}"> Modifier</a>
                                 <a class="btn buttonAdmin seeAdmin" href="{{route('sessiongames.show',$sessiongame->id)}}"> Voir</a>
                         </div>
+                    </div>
                 </div>
         @endforeach
 
@@ -34,12 +39,16 @@
     </div>
     <br/><br/><br/>
         @foreach ($sessiongamesUser as $sessiongame)
-                <div class="positionButton marginArticles col-lg-3 col-md-6 col-sm-12 containerPresentation">
-                    <div class="flex flex-col justify-content-center">
-                        <h2 class="align-self-center  titleSession">Session</h2>
-                        <br/>
-                        <p class="align-self-center" >{{$sessiongame->start_date}} au {{$sessiongame->end_date}}</p>
-                    </div>
+        <div class=" flex flex-col marginArticles col-lg-3 col-md-6 col-sm-12 containerPresentation justify-content-between">
+            <div class="flex flex-col">
+                <img width="280px" class="align-self-center imagePresentation" src="{{$sessiongame->image_path}}" alt="{{$sessiongame->title}}">
+            </div>
+            <div>
+            <div class="flex flex-col">
+                <h2 class="align-self-center titleSession">{{$sessiongame->name}}</h2>
+                <br/>
+                <p class="align-self-center" >{{$sessiongame->start_date}} au {{$sessiongame->end_date}}</p>
+            </div>
                     <br/>
                         <div>
                             @if($sessiongame->start_date<$dateNow and $sessiongame->end_date>$dateNow)
@@ -50,6 +59,7 @@
                             @endif
                         </div>
                 </div>
+            </div>
         @endforeach
     @endif
 

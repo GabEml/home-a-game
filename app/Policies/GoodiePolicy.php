@@ -19,7 +19,7 @@ class GoodiePolicy
      */
     public function viewAny(User $user)
     {
-        return Auth::user()->role->role==="Admin Défis";
+        return Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="User";
     }
 
 

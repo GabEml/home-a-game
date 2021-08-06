@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
@@ -111,7 +112,7 @@ class ArticleController extends Controller
     {
         $this->authorize('update', Article::class);
         $validateData=$request->validate([
-            'title' => 'required|max:60|min:5',
+            'title' => 'required|max:60|min:5',Rule::unique('users')->ignore($article->id),
             'description' => 'required|min:10', // Only allow .jpg, .bmp and .png file types.
             'image_path'=>'image|max:5000',
         ]);
