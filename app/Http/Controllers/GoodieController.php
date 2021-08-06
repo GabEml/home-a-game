@@ -79,8 +79,13 @@ class GoodieController extends Controller
     public function destroy(Goodie $goodie)
     {
         $this->authorize('delete', Goodie::class);
-        if(is_file($goodie->image_path))
-        {
+        $path = $goodie->image_path;
+
+            //Pour utiliser is_file, il faur enlever le "/" qui est au début du chemin de l'image dans la bdd
+            $path = substr($path,1);
+            
+            if(is_file($path))
+            {
             //Supprimer l'image du dossier
             unlink(public_path($goodie->image_path));
         }

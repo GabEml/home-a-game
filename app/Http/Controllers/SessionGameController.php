@@ -149,6 +149,26 @@ class SessiongameController extends Controller
 
             $sessiongame->price = $validateData["price"];
         }
+
+        if ($request->hasFile('image_path')) {
+            $path = $sessiongame->image_path;
+
+            //Pour utiliser is_file, il faur enlever le "/" qui est au début du chemin de l'image dans la bdd
+            $path = substr($path,1);
+            
+            if(is_file($path))
+            {
+                //Supprimer l'image du dossier
+                unlink(public_path($sessiongame->image_path));
+        
+
+                // Save the file locally in the storage/public/ folder under a new folder named /product
+                $request->image_path->store('images', 'public');
+                $path ="/".$request->file('image_path')->store('images');
+
+                $sessiongame->image_path=$path;
+            }
+        }
         
         $sessiongame->start_date = $validateData["start_date"];
         $sessiongame->end_date = $validateData["end_date"];
@@ -168,7 +188,12 @@ class SessiongameController extends Controller
     public function destroy(SessionGame $sessiongame)
     {
         $this->authorize('delete', Sessiongame::class);
-        if(is_file($sessiongame->image_path))
+        $path = $sessiongame->image_path;
+
+        //Pour utiliser is_file, il faur enlever le "/" qui est au début du chemin de l'image dans la bdd
+        $path = substr($path,1);
+            
+        if(is_file($path))
         {
             //Supprimer l'image du dossier
             unlink(public_path($sessiongame->image_path));

@@ -117,18 +117,23 @@ class ArticleController extends Controller
         ]);
 
         if ($request->hasFile('image_path')) {
-            if(is_file($article->image_path))
-        {
-        //Supprimer l'image du dossier
-        unlink(public_path($article->image_path));
+            $path = $article->image_path;
+
+            //Pour utiliser is_file, il faur enlever le "/" qui est au début du chemin de l'image dans la bdd
+            $path = substr($path,1);
+            
+            if(is_file($path))
+            {
+                //Supprimer l'image du dossier
+                unlink(public_path($article->image_path));
         
 
-        // Save the file locally in the storage/public/ folder under a new folder named /product
-        $request->image_path->store('images', 'public');
-        $path ="/".$request->file('image_path')->store('images');
+                // Save the file locally in the storage/public/ folder under a new folder named /product
+                $request->image_path->store('images', 'public');
+                $path ="/".$request->file('image_path')->store('images');
 
-        $article->image_path=$path;
-        }
+                $article->image_path=$path;
+            }
         }
 
         $article->title = $validateData["title"];
@@ -147,12 +152,16 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $this->authorize('delete', Article::class);
-        if(is_file('public/images/cadeau2.png'))
+        $path = $article->image_path;
+
+        //Pour utiliser is_file, il faur enlever le "/" qui est au début du chemin de l'image dans la bdd
+        $path = substr($path,1);
+
+        if(is_file($path))
         {
         //Supprimer l'image du dossier
         unlink(public_path($article->image_path));
         }
-        
         $article->delete();
         return redirect('/articles');
     }

@@ -134,8 +134,13 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('delete', $post);
-        if(is_file($post->image_path))
-        {
+        $path = $post->image_path;
+
+            //Pour utiliser is_file, il faur enlever le "/" qui est au début du chemin de l'image dans la bdd
+            $path = substr($path,1);
+            
+            if(is_file($path))
+            {
             //Supprimer l'image du dossier
             unlink(public_path($post->image_path));
         }
