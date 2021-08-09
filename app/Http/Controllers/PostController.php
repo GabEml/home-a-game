@@ -50,7 +50,7 @@ class PostController extends Controller
         if($challenge->type_of_file=="picture"){
 
             $validateData=$request->validate([
-                'file_path'=>'required|image|max:5000',
+                'file_path'=>'required|image|max:100000',
             ]);
 
             // Save the file locally in the storage/public/ folder under a new folder named /product
@@ -61,7 +61,7 @@ class PostController extends Controller
             if($challenge->type_of_file=="video"){
 
                 $validateData=$request->validate([
-                    'file_path'=>'required|mimes:mp4|max:5000',
+                    'file_path'=>'required|mimes:mp4|max:100000',
                 ]);
     
                 // Save the file locally in the storage/public/ folder under a new folder named /product

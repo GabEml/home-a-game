@@ -19,7 +19,7 @@
             </div>
             
             <div class="form-group">
-                <label for="image_path" >Image</label>
+                <label for="image_path" >Image (max 100Mo)</label>
                 <br/>
                 <input type="file" name="image_path" class=@error('image_path') is-invalid @enderror>
                 <br/>

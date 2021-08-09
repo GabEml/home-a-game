@@ -18,8 +18,7 @@ class CreateChallengesTable extends Migration
             $table->string('title');
             $table->integer('points');
             $table->enum('type_of_file', ['picture','video','both']);
-            $table->boolean('editable');
-            $table->integer('file_size');
+            $table->boolean('editable')->default(false);
             $table -> foreignId('sessiongame_id')->constrained('sessiongames')->onDelete('cascade');
             $table->engine = 'InnoDB';
         });

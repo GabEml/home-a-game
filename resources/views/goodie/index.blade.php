@@ -26,7 +26,7 @@
                     <div>
                         @if (Auth::user()->role->role==="Admin Défis")
                             <div class="flex justify-content-around">
-                                <form action="{{route('goodies.destroy',$goodie->id)}}" method="post" enctype="multipart/form-data">
+                                <form action="{{route('goodies.destroy',$goodie->id)}}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button class="buttonAdmin btn btn-danger" type="submit"> Supprimer </button>

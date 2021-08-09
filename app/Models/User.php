@@ -13,9 +13,13 @@ use Laravel\Sanctum\HasApiTokens;
 /**
  * Le modèle User qui est lié à la table users dans la base de données
  * 
- * @author Clara Vesval et Giovanni Ventoso B2B Info <clara.vesval@ynov.com> <giovanni.ventoso@ynov.com>
+ * @author Clara Vesval <clara.vesval@ynov.com> 
  * 
  */
+
+// Pour l'envoi de mail
+// class User extends Authenticatable implements MustVerifyEmail
+
 
 class User extends Authenticatable
 {

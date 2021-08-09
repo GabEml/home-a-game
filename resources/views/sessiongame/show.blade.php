@@ -12,7 +12,7 @@
        <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('sessiongames.index') }}">Espace Jeu</a></li>
-                <li class="breadcrumb-item active">Session du {{$sessiongame->start_date}} au {{$sessiongame->end_date}}</li>
+                <li class="breadcrumb-item active">Session {{$sessiongame->name}}</li>
                 
             </ol>
        </nav>
@@ -21,6 +21,7 @@
     <br/>
 
     <div class='col-12'>
+        <p class="text-center">{{$sessiongame->description}}</p>
         <p class="text-center">Pour cette session, vous pouvez avoir la chance de gagner : {{$sessiongame->goodie->name}} !</p>
     </div>
     <br/>

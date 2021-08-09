@@ -28,10 +28,11 @@
                     <select value="{{ old('type_of_file') }}" class="form-control" name='type_of_file' class=@error('type_of_file') is-invalid @enderror>
                         <option value="picture"> Photo </option>
                         <option value="video"> Vidéo </option>
+                        <option value="both"> Les deux </option>
                     </select>
             </div>
 
-            <label for='filenames'> Images</label>
+            <label for='filenames'> Images (max 100Mo)</label>
             <div class="form-group input-group control-group increment flex justify-content-between">
                 <input type="file" name="filenames[]" class=@error('filename') is-invalid @enderror>
                 <div > 
@@ -48,8 +49,14 @@
             </div>
             <small> Vous pouvez choisir autant d'images que vous le souhaitez</small>
 
-            <br/>
+            <br/><br/>
             
+            <div class="form-check form-check-inline flex justify-content-center ">
+                <input class="form-check-input" type="checkbox" value="1" name="editable" class=@error('editable') is-invalid @enderror>
+                <label class="form-check-label" for="flexCheckDefault">
+                    Ce défi peut être réalisé plusieurs fois
+                </label>
+            </div>
        </fieldset>
        @if ($errors->any())
     <div class="alert alert-danger">

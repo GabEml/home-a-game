@@ -56,33 +56,27 @@ class SessiongameController extends Controller
         
 
         $sessiongame=new Sessiongame();
-        if ($request->filled('price')){
+        
             $validateData=$request->validate([
                 'price' => 'numeric',
                 'name' => 'required|max:60|min:3',
+                'description' => 'required|min:5', 
                 'start_date' => 'required|date|after_or_equal:tomorrow', 
                 'end_date'=>'required|date|after:start_date',
                 'goodie'=>'required|integer|exists:goodies,id',
-                'image_path'=>'required|image|max:5000',
+                'image_path'=>'required|image|max:100000',
             ]);
 
+            if ($request->filled('price')){
             $sessiongame->price = $validateData["price"];
-        }
-        else {
-            $validateData=$request->validate([
-                'name' => 'required|max:60|min:3',
-                'start_date' => 'required|date|after_or_equal:tomorrow', 
-                'end_date'=>'required|date|after:start_date',
-                'goodie'=>'required|integer|exists:goodies,id',
-                'image_path'=>'required|image|max:5000',
-            ]);
-        }
+            }
 
         // Save the file locally in the storage/public/ folder under a new folder named /product
         $request->image_path->store('images', 'public');
         $path ="/".$request->file('image_path')->store('images');
         
         $sessiongame->name = $validateData["name"];
+        $sessiongame->description = $validateData["description"];
         $sessiongame->start_date = $validateData["start_date"];
         $sessiongame->end_date = $validateData["end_date"];
         $sessiongame->image_path=$path;
@@ -128,27 +122,22 @@ class SessiongameController extends Controller
     public function update(Request $request, SessionGame $sessiongame)
     {
         $this->authorize('update', Sessiongame::class);
-        $validateData=$request->validate([
-            'name' => 'required|max:60|min:3',
-            'start_date' => 'required|date|', 
-            'end_date'=>'required|date|after:start_date',
-            'goodie'=>'required|integer|exists:goodies,id',
-            'image_path'=>'image|max:5000',
-        ]);
-
+      
         
-        if ($request->filled('price')){
             $validateData=$request->validate([
                 'name' => 'required|max:60|min:3',
+                'description' => 'required|min:5', 
                 'price' => 'numeric',
                 'start_date' => 'required|date|', 
                 'end_date'=>'required|date|after:start_date',
                 'goodie'=>'required|integer|exists:goodies,id',
-                'image_path'=>'image|max:5000',
+                'image_path'=>'image|max:100000',
             ]);
 
-            $sessiongame->price = $validateData["price"];
-        }
+            if ($request->filled('price')){
+                $sessiongame->price = $validateData["price"];
+            }
+        
 
         if ($request->hasFile('image_path')) {
             $path = $sessiongame->image_path;
@@ -170,6 +159,7 @@ class SessiongameController extends Controller
             }
         }
         $sessiongame->name = $validateData["name"];
+        $sessiongame->description = $validateData["description"];
         $sessiongame->start_date = $validateData["start_date"];
         $sessiongame->end_date = $validateData["end_date"];
         $sessiongame->goodie_id = $validateData["goodie"];

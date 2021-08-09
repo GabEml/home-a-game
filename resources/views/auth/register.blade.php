@@ -29,7 +29,7 @@
 
                     <div class="mt-4">
                         <x-jet-label for="date_of_birth" value="{{ __('Date de naissance') }}" />
-                        <x-jet-input id="date_of_birth" class="block mt-1 w-full" type="date" name="date_of_birth" required />
+                        <x-jet-input id="date_of_birth" :value="old('date_of_birth')" class="block mt-1 w-full" type="date" name="date_of_birth" required />
                     </div>
 
                     <div class="mt-4">
@@ -65,7 +65,7 @@
 
                     <div class="mt-4">
                         <x-jet-label for="city" value="{{ __('Ville') }}" />
-                        <x-jet-input id="city" class="block mt-1 w-full" type="text" name="city" :value="old('city')" required autocomplete="new-password" />
+                        <x-jet-input id="city" class="block mt-1 w-full" type="text" name="city" :value="old('city')" required />
                     </div>
 
                     <div class="mt-4">

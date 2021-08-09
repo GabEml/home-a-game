@@ -22,6 +22,11 @@
         </div>
 
         <div class="form-group">
+            <label for="description">Description</label>
+            <textarea required name="description" id="description" rows="8" class="form-control"class=@error('description') is-invalid @enderror > {{$sessiongame->description}} </textarea>
+        </div>
+
+        <div class="form-group">
             <label for="start_date">Date de début</label>
             <input type="date" value="{{$sessiongame->start_date}}" required name="start_date" id="start_date" class="form-control"class=@error('start_date') is-invalid @enderror ></input>
         </div>
@@ -32,7 +37,7 @@
         </div>
 
         <div class="form-group">
-            <label for="image_path" >Image</label>
+            <label for="image_path" >Image (max 100Mo)</label>
             <br/>
             <input type="file" name="image_path" class=@error('image_path') is-invalid @enderror>
             <br/>
@@ -50,10 +55,13 @@
         </div>
         
    </fieldset>
-   @error('price')
+   {{-- @error('price')
+    <div class="alert alert-danger"> {{$message}} </div>
+    @enderror  --}}
+    @error('name')
     <div class="alert alert-danger"> {{$message}} </div>
     @enderror 
-    @error('name')
+    @error('description')
     <div class="alert alert-danger"> {{$message}} </div>
     @enderror 
     @error('start_date')

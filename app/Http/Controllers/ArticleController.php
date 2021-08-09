@@ -58,7 +58,7 @@ class ArticleController extends Controller
             $validateData=$request->validate([
                 'title' => 'required|max:60|min:5|unique:articles',
                 'description' => 'required|min:10', 
-                'image_path'=>'required|image|max:5000',// Only allow .jpg, .bmp and .png file types.
+                'image_path'=>'required|image|max:100000',// Only allow .jpg, .bmp and .png file types.
             ]);
 
             // Save the file locally in the storage/public/ folder under a new folder named /product
@@ -113,8 +113,8 @@ class ArticleController extends Controller
         $this->authorize('update', Article::class);
         $validateData=$request->validate([
             'title' => 'required|max:60|min:5',Rule::unique('users')->ignore($article->id),
-            'description' => 'required|min:10', // Only allow .jpg, .bmp and .png file types.
-            'image_path'=>'image|max:5000',
+            'description' => 'required|min:10', 
+            'image_path'=>'image|max:100000',// Only allow .jpg, .bmp and .png file types.
         ]);
 
         if ($request->hasFile('image_path')) {

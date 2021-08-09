@@ -12,7 +12,7 @@
        <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('sessiongames.index') }}">Espace Jeu</a></li>
-                <li class="breadcrumb-item "><a href="{{ route('sessiongames.show', $sessiongame->id) }}">Session du {{$sessiongame->start_date}} au {{$sessiongame->end_date}} </a></li>
+                <li class="breadcrumb-item "><a href="{{ route('sessiongames.show', $sessiongame->id) }}">Session {{$sessiongame->name}} </a></li>
                 <li class="breadcrumb-item active">{{$challenge->title}}</li>
                 
             </ol>
@@ -70,9 +70,9 @@
                                 
                                 <div class="form-group">
                                     @if ($challenge->type_of_file=="picture")
-                                        <label for="file_path" >Choississez votre photo</label>
+                                        <label for="file_path" >Choississez votre photo (max 100Mo)</label>
                                     @else
-                                        <label for="file_path" >Choississez votre vidéo (Accepté : mp4)</label>
+                                        <label for="file_path" >Choississez votre vidéo (Accepté : mp4 | max 100Mo)</label>
                                     @endif
                                     <br/>
                                     <input type="file" name="file_path" required class=@error('file_path') is-invalid @enderror>

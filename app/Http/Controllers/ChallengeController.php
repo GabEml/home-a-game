@@ -36,15 +36,19 @@ class ChallengeController extends Controller
         $validateData=$request->validate([
             'title' => 'required|max:255|min:5',
             'points' => 'required|integer|min:1', 
-            'filenames'=>'required|max:5000',
+            'filenames'=>'required|max:100000',
             'filenames.*' => 'mimes:png,jpg,bmp,jpeg',
-            'type_of_file'=>'required|in:picture,video',
+            'editable'=> 'integer|in:0,1',
+            'type_of_file'=>'required|in:picture,video,both',
         ]);
 
         $challenge=new Challenge();
         $challenge->title = $validateData["title"];
         $challenge->points = $validateData["points"];
         $challenge->type_of_file = $validateData["type_of_file"];
+        if ($request->filled('editable')){
+            $challenge->editable = $validateData["editable"];
+        }
         $challenge->sessiongame_id=$sessiongame->id;
         
         $challenge->save();
@@ -131,13 +135,22 @@ class ChallengeController extends Controller
         $validateData=$request->validate([
             'title' => 'required|max:255|min:5',
             'points' => 'required|integer|min:1', 
-            'filenames'=>'max:5000',
+            'editable'=> 'integer|in:0,1',
+            'filenames'=>'max:100000',
             'filenames.*' => 'mimes:png,jpg,bmp,jpeg',
-            'type_of_file'=>'required|in:picture,video',
+            'type_of_file'=>'required|in:picture,video,both',
         ]);
 
         $challenge->title = $validateData["title"];
         $challenge->points = $validateData["points"];
+
+        if ($request->filled('editable')){
+            $challenge->editable = $validateData["editable"];
+        }
+        else{
+            $challenge->editable = 0;
+        }
+
         $challenge->type_of_file = $validateData["type_of_file"];
         
         $challenge->update();
@@ -171,6 +184,20 @@ class ChallengeController extends Controller
     public function destroy(Challenge $challenge)
     {
         $this->authorize('delete', Challenge::class);
+
+        foreach ($challenge->images as $image){
+            $path = $image->image_path;
+
+            //Pour utiliser is_file, il faur enlever le "/" qui est au début du chemin de l'image dans la bdd
+            $path = substr($path,1);
+                
+            if(is_file($path))
+            {
+                //Supprimer l'image du dossier
+                unlink(public_path($image->image_path));
+            }
+        }
+
         $session = $challenge->sessiongame;
         $challenge->delete();
         return redirect()->route('sessiongames.show', ['sessiongame'=>$session]);
@@ -185,6 +212,18 @@ class ChallengeController extends Controller
     public function destroyImage(Image $image)
     {
         $this->authorize('delete', Challenge::class);
+
+        $path = $image->image_path;
+
+        //Pour utiliser is_file, il faur enlever le "/" qui est au début du chemin de l'image dans la bdd
+        $path = substr($path,1);
+            
+        if(is_file($path))
+        {
+            //Supprimer l'image du dossier
+            unlink(public_path($image->image_path));
+        }
+
         $challenge = $image->challenge;
         $image->delete();
         return redirect()->route('challenges.edit', ['challenge'=>$challenge]);

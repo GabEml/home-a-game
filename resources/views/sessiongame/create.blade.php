@@ -24,6 +24,11 @@
             </div>
 
             <div class="form-group">
+                <label for="description">Description</label>
+                <textarea value="{{ old('description') }}" required name="description" id="description" rows="2" class="form-control" class=@error('description') is-invalid @enderror >{{ old('description') }}</textarea>
+            </div>
+
+            <div class="form-group">
                 <label for="start_date">Date de début</label>
                 <input value="{{ old('start_date') }}" type="date" required name="start_date" id="start_date" class="form-control"class=@error('start_date') is-invalid @enderror >
             </div>
@@ -54,6 +59,9 @@
         <div class="alert alert-danger"> {{$message}} </div>
         @enderror  --}}
         @error('name')
+        <div class="alert alert-danger"> {{$message}} </div>
+        @enderror 
+        @error('description')
         <div class="alert alert-danger"> {{$message}} </div>
         @enderror 
         @error('start_date')

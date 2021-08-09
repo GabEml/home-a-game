@@ -23,7 +23,7 @@
         <br/>
         @foreach ($sessiongames as $sessiongame)
             <div class="form-check form-check-inline flex justify-content-center ">
-                <input class="form-check-input" type="checkbox" value="{{$sessiongame->id}}" name="sessiongames[]" class=@error('session') is-invalid @enderror">
+                <input class="form-check-input" type="checkbox" value="{{$sessiongame->id}}" name="sessiongames[]" class=@error('session') is-invalid @enderror>
                 <label class="form-check-label" for="flexCheckDefault">
                 Session du {{$sessiongame->start_date}} au {{$sessiongame->end_date}}
                 </label>
