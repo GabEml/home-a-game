@@ -55,7 +55,7 @@ class PostPolicy
     public function delete(User $user, Post $post)
     {
         if(Auth::user()->role->role==="User"){
-            return $post->state!="validated";
+            return $post->state=="pending" or $post->challenge->editable==1;
         }
         else{
             return Auth::user()->role->role==="Admin Défis";

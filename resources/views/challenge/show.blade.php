@@ -52,8 +52,10 @@
                 <p class="titleChallenge">{{$challenge->title}}</p>
                 @if ($challenge->type_of_file=="picture")
                     <p> Vous devez fournir une photo</p>
-                @else
+                @elseif ($challenge->type_of_file=="video")
                     <p> Vous devez fournir une vidéo</p>
+                @else 
+                <p> Vous devez fournir une photo ou bien une vidéo</p>
                 @endif
                 <p>Nombres de points : {{$challenge->points}}</p>
             </div>
@@ -71,15 +73,22 @@
                                 <div class="form-group">
                                     @if ($challenge->type_of_file=="picture")
                                         <label for="file_path" >Choississez votre photo (max 100Mo)</label>
-                                    @else
+                                    @elseif ($challenge->type_of_file=="video")
                                         <label for="file_path" >Choississez votre vidéo (Accepté : mp4 | max 100Mo)</label>
+                                    @else
+                                    <label for="file_path" >Choississez votre photo ou vidéo (Accepté : mp4 et toutes images | max 100Mo)</label>
                                     @endif
                                     <br/>
                                     <input type="file" name="file_path" required class=@error('file_path') is-invalid @enderror>
                                 </div>
                                 
                         </fieldset> 
-                        @error('file_path')
+                        @if($challenge->editable ==0)
+                            <p class="align-self-center text-center list-group-item list-group-item-danger"> <span class="warning">ATTENTION </span>, vous n'avez qu'une chance pour ce défi, une fois validée par l'administrateur vous ne pourrez pas le refaire !</p>
+                        @else
+                        <p class="align-self-center text-center list-group-item list-group-item-info">Vous avez plusieurs chance pour réaliser ce défi</p>
+                        @endif
+                            @error('file_path')
                             <div class="alert alert-danger"> {{$message}} </div>
                             @enderror 
                         <br/>
@@ -99,7 +108,7 @@
                                         type="video/mp4">
                             </video>
                         @endif
-                            @if($post->state!="validated")
+                            @if($challenge->editable==1 or $post->state=="pending")
                                 <div class="infoChallenge">
                                     <form action="{{route('posts.destroy',$post->id)}}" method="post">
                                         @csrf
@@ -108,11 +117,15 @@
                                     </form>
 
                                     <div>
-                                        <p>Si votre défi est en attente ou que vous n'avez pas tous les points vous pouvez le supprimer et reposter</p>
-                                        <br/>
-                                        <p class="list-group-item list-group-item-danger"> <span class="warning">ATTENTION </span>, si vous le supprimez, vous perdrez vos points, quitte à en gagner moins avec un autre post !</p>
-                                    </div>
+                                        @if($post->state=="pending")
+                                        <p class="align-self-center text-center list-group-item list-group-item-info">Tant que le défi est en attente, vous pouvez toujours le supprimer et poster à nouveau</p>
+                                        @else
+                                            <p class="list-group-item list-group-item-info"> <span class="warning">ATTENTION </span>, si vous supprimez votre post, vous perdrez vos points pour ce défi, quitte à en gagner moins avec un autre post !</p>
+                                        @endif
+                                        </div>
                                 </div>
+
+
                             @endif
                     @endif
             </div>

@@ -29,26 +29,36 @@
        <!--End Breadcrumb-->
        <div class="row containerArticles">
           @foreach ($sessiongame->challenges as $challenge)
-              <div class="flex flex-col positionButton marginArticles col-lg-3 col-md-6 col-sm-12 containerPresentation justify-content-between">
+              <div class="flex flex-col positionButton marginArticles col-lg-3 col-md-6 col-sm-12 containerChallenge containerPresentation justify-content-between">
                   <div class="flex flex-col">
-                      <img width="220px" height=auto class="align-self-center imagePresentation" src="{{$challenge->images[0]->image_path}}" alt="{{$challenge->title}}">
-                  </div>
+                        <div class="containerTitleChallenge">
+                            <h2 class="align-self-center text-center">{{$challenge->title}}</h2>
+                        </div>
+                        {{-- <div class="roundTop"> </div> --}}
+                        <img width="220px" height=auto class="align-self-center imagePresentation" src="{{$challenge->images[0]->image_path}}" alt="{{$challenge->title}}">
+                        <h2 class="align-self-center text-center titleArticleHome">{{$challenge->points}} points</h2>
+                    </div>
                   <div>
-                      <h2 class="align-self-center text-center titleArticleHome">{{$challenge->title}}</h2>
+                    
+                      <div class="result">
                       @foreach ($challenge->posts as $post)
                             @if($post->user->id == Auth::user()->id)
                                 @if($post->state =="pending")
-                                    <p class="status align-self-center"> Statut : En attente </p>
+                                    <p class="status text-center"> Statut : En attente </p>
                                 @elseif($post->state =="not_validated")
-                                    <p class="status align-self-center"> Statut :Non validé </p>
+                                    <p class="status text-center"> Statut :Non validé </p>
+                                    <p class="status text-center"> Score obtenu : {{$post->user_point}} points </p>
                                 @elseif($post->state =="partly_validated")
-                                    <p class="status align-self-center">Statut : Partiellement validé </p>
+                                    <p class="status text-center">Statut : Partiellement validé </p>
+                                    <p class="status text-center"> Score obtenu : {{$post->user_point}} points</p>
                                 @else
-                                    <p class="status align-self-center">Statut : Validé </p>
+                                    <p class="status text-center">Statut : Validé </p>
+                                    <p class="status text-center"> Score obtenu : {{$post->user_point}} points</p>
                                 @endif
                             @endif
 
                         @endforeach
+                    </div>
                 <br/>
                     <div>
                         @if (Auth::user()->role->role==="Admin Défis")
@@ -63,7 +73,7 @@
                             </div>
                         @else
                         <div>
-                            <a class="btn seeMore" href="{{route('challenges.show',$challenge->id)}}"> Voir</a>
+                            <a class="btn seeMore seeMoreChallenge" href="{{route('challenges.show',$challenge->id)}}"> Voir</a>
                         </div>
                         @endif
                     </div>
