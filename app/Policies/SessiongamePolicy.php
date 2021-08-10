@@ -42,7 +42,7 @@ class SessiongamePolicy
         if (Auth::user()->role->role==="User"){
            
             return SessiongameUser::where("user_id", Auth::user()->id)->where("sessiongame_id", $sessiongame->id)->get()->isNotEmpty()
-            and $sessiongame->start_date<date('Y-m-d') and $sessiongame->end_date>date('Y-m-d');
+            and $sessiongame->start_date<=date('Y-m-d') and $sessiongame->end_date>=date('Y-m-d');
         }
         else {
             return Auth::user()->role->role==="Admin Défis";

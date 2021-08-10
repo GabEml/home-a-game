@@ -51,7 +51,7 @@
             </div>
                     <br/>
                         <div>
-                            @if($sessiongame->start_date<$dateNow and $sessiongame->end_date>$dateNow)
+                            @if($sessiongame->start_date<=$dateNow and $sessiongame->end_date>=$dateNow)
                             <a class="btn seeMore" href="{{route('sessiongames.show',$sessiongame->id)}}"> Voir</a>
                             @else
                             <a class="btn seeMore disabled" href="{{route('sessiongames.show',$sessiongame->id)}}"> Voir</a>

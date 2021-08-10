@@ -22,6 +22,7 @@ class SessiongameController extends Controller
     {
         $this->authorize('viewAny', $sessiongame);
         $sessiongamesAll= Sessiongame::orderBy('start_date')->get();
+        
         $user=User::where('id', Auth::user()->id)->first();
         $sessiongamesUser = $user->sessiongames;
 
