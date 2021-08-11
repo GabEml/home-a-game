@@ -2,7 +2,7 @@
     <x-jet-authentication-card>
         
         <x-slot name="logo">
-            <div class="logoRegister flex flex-col">
+            <div class="logoRegister testLogo flex flex-col">
             <x-jet-authentication-card-logo />
             <h1 class="h1 title"> Créer son compte </h1>
             <p class="description ">Entrez vos informations personnelles</p>

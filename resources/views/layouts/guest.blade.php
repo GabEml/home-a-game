@@ -99,7 +99,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item" href="{{ route('profile.show') }}">Mon Profil</a>
-                      <a class="dropdown-item" href="{{ route('api-tokens.index')}}">API Token</a>
+                      {{-- <a class="dropdown-item" href="{{ route('api-tokens.index')}}">API Token</a> --}}
                       <a class="dropdown-item" href="/deconnexion">Se déconnecter</a>
                       
                     </div>
@@ -127,6 +127,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item" href="{{ route('profile.show') }}">Mon Profil</a>
+                      {{-- <a class="dropdown-item" href="{{ route('api-tokens.index')}}">API Token</a> --}}
                       <a class="dropdown-item" href="/deconnexion">Se déconnecter</a>
                       
                     </div>
@@ -134,12 +135,12 @@
                 @else
                     <div>
                         <x-jet-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
-                            <h2 class="linkMenu">{{ __('Se connecter') }}</h2>
+                            <h2 class="linkMenu linkMenuNotConnected">{{ __('Se connecter') }}</h2>
                         </x-jet-nav-link>
                     </div>
                     <div>
                         <x-jet-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
-                            <h2 class="linkMenu"> {{ __("S'inscrire") }}</h2>
+                            <h2 class="linkMenu linkMenuNotConnected linkRegister"> {{ __("S'inscrire") }}</h2>
                         </x-jet-nav-link>
                     </div>
                 @endif
@@ -168,7 +169,7 @@
                      </div>
                  </div>
                      <div class="col-12 d-flex justify-content-center small">
-                         <p class="mb-0">&copy; Copyright 2021 © HAG | Tous droits réservés</p>
+                         <p class="mb-0 text-center">&copy; Copyright 2021 © HAG | Tous droits réservés</p>
                      </div>
              </div><!--End container-fluid in footer-->
         </footer><!--end of main Footer-->

@@ -35,11 +35,25 @@ class DatabaseSeeder extends Seeder
 
         $date= new DateTime;
 
+        $user = New User;
+        $user->firstname="Toto";
+        $user->lastname="Toto";
+        $user->email="toto@toto.com";
+        $user->password=Hash::make("toto");
+        $user->date_of_birth=$date->format("Y-m-d");
+        $user->phone="0678254697";
+        $user->address="45 rue Paradis";
+        $user->city="Paris";
+        $user->country="France";
+        $user->postal_code="79000";
+        $user->role_id=1;
+        $user->save();
+
         $userAdminDefis = New User;
-        $userAdminDefis->firstname="Test";
-        $userAdminDefis->lastname="Test";
-        $userAdminDefis->email="test@test.com";
-        $userAdminDefis->password=Hash::make("test");
+        $userAdminDefis->firstname="Admin Defis";
+        $userAdminDefis->lastname="Admin Defis";
+        $userAdminDefis->email="admin@defi.com";
+        $userAdminDefis->password=Hash::make("admindefis");
         $userAdminDefis->date_of_birth=$date->format("Y-m-d");
         $userAdminDefis->phone="0678254697";
         $userAdminDefis->address="45 rue Paradis";
@@ -50,10 +64,10 @@ class DatabaseSeeder extends Seeder
         $userAdminDefis->save();
 
         $userSuperAdmin = New User;
-        $userSuperAdmin->firstname="Test";
-        $userSuperAdmin->lastname="Test";
-        $userSuperAdmin->email="test2@test.com";
-        $userSuperAdmin->password=Hash::make("test");
+        $userSuperAdmin->firstname="Super Admin";
+        $userSuperAdmin->lastname="Super Admin";
+        $userSuperAdmin->email="super@admin.com";
+        $userSuperAdmin->password=Hash::make("superadmin");
         $userSuperAdmin->date_of_birth=$date->format("Y-m-d");
         $userSuperAdmin->phone="0678254697";
         $userSuperAdmin->address="45 rue Paradis";

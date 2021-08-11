@@ -1,6 +1,7 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
+            <div class="logoRegister flex flex-col">
             <x-jet-authentication-card-logo />
             <h1 class="h1 title"> Se connecter </h1>
         </x-slot>

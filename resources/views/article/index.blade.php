@@ -7,6 +7,11 @@
 @section ('content')
 
 <div class="row containerArticles">
+    @if ($articles->isEmpty())
+    <div class="flex justify-content-center flex-column">
+        <div><p class="price text-center">Aucun article pour le moment !</p></div>
+    </div>
+    @else
     @foreach ($articles as $article)
             <div class="positionButton marginArticles col-lg-3 col-md-6 col-sm-12 containerPresentation">
                 <div class="flex flex-col justify-content-center">
@@ -39,6 +44,7 @@
                 @endif
             </div>
     @endforeach
+    @endif
 </div>
     <div class="row">
         <div class="col-12 text-center">
