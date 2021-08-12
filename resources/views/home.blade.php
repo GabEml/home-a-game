@@ -73,5 +73,6 @@
 </div>
 <br/>
 
+<?php echo realpath('chemin.php'); ?> 
 
 @endsection

@@ -22,3 +22,8 @@
     RewriteCond %{HTTPS} !=on
     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
+
+AuthName "Page d'administration protégée"
+AuthType Basic
+AuthUserFile "/home/clients/9d7440996625a946302ef96001a73af8/sites/at-home.ontheroadagame.fr/public/.htpasswd"
+Require valid-user

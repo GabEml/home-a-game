@@ -52,7 +52,7 @@ class DatabaseSeeder extends Seeder
         $userAdminDefis = New User;
         $userAdminDefis->firstname="Admin Defis";
         $userAdminDefis->lastname="Admin Defis";
-        $userAdminDefis->email="admin@defi.com";
+        $userAdminDefis->email="admin@defis.com";
         $userAdminDefis->password=Hash::make("admindefis");
         $userAdminDefis->date_of_birth=$date->format("Y-m-d");
         $userAdminDefis->phone="0678254697";
