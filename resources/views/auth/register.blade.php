@@ -50,7 +50,7 @@
                 <div class="fields">
                     <div>
                         <x-jet-label for="phone" value="{{ __('Numéro de téléphone') }}" />
-                        <x-jet-input pattern="0[1-9][0-9]{8}" id="phone" class="block mt-1 w-full" type="tel" name="phone" :value="old('phone')" required autofocus autocomplete="phone" />
+                        <x-jet-input pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$" id="phone" class="block mt-1 w-full" type="tel" name="phone" :value="old('phone')" required autofocus autocomplete="phone" />
                     </div>
 
                     <div class="mt-4">

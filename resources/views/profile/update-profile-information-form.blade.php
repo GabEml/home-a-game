@@ -82,7 +82,7 @@
 
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="phone" value="{{ __('Numéro de téléphone') }}" />
-            <x-jet-input id="phone" type="tel" class="mt-1 block w-full" wire:model.defer="state.phone" autocomplete="phone" />
+            <x-jet-input id="phone" type="tel" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$" class="mt-1 block w-full" wire:model.defer="state.phone" autocomplete="phone" />
             <x-jet-input-error for="phone" class="mt-2" />
         </div>
 

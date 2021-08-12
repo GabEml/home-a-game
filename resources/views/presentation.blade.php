@@ -2,7 +2,7 @@
 
 @section('title', 'Presentation')
 
-@section('titlePage'," Home A Game : un jeu d'aventure pour continuer de vivre le voyage près de chez sois")
+@section('titlePage'," @ Home a Game : un jeu d'aventure hors du commun pour vivre l'expérience OTR près de chez soi")
 
 @section ('content')
 
@@ -10,8 +10,8 @@
 <div class="row">
     <div class="col-12 containerPresentation">
         <div class="flex flex-col justify-content-center">
-            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/sablier.png" alt="trophee">
-            <h2 class="align-self-center titlePresentation">Plusieurs semaines de challenge</h2>
+            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/sablier.png" alt="sablier">
+            <h2 class="align-self-center titlePresentation">Plusieurs sessions par an, limitées dans le temps</h2>
         </div>
         <br/>
             <p>A la différence de On The Road A Game, une session dure de 8 à 12 semaines pour seulement 40€. Chaque joueur est maître de son aventure et ce, durant toute la durée du jeu.</p>
@@ -21,8 +21,8 @@
 
     <div class="col-12 containerPresentation">
         <div class="flex flex-col justify-content-center">
-            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/defis.png" alt="trophee">
-            <h2 class="align-self-center titlePresentation">Une dizaine de défis à relever à chaque session</h2>
+            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/defis.png" alt="cible">
+            <h2 class="align-self-center titlePresentation">Des défis à relever seul ou en équipe</h2>
         </div>
         <br/>
             <p>Au départ du jeu, nous proposons aux joueurs une série de défis. Le nombre de points attribués dépend de la difficulté du défi. A vous, donc, de trouver le juste équilibre entre le nombre et le degré de difficulté des défis que vous pensez pouvoir relever.</p>
@@ -34,17 +34,8 @@
 
     <div class="col-12 containerPresentation">
         <div class="flex flex-col justify-content-center">
-            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/trophee.png" alt="trophee">
-            <h2 class="align-self-center titlePresentation">Des points à gagner avec un classement</h2>
-        </div>
-        <br/>
-            <p>Comme dit précédemment, chaque défi vous rapporte un nombre de points. Le but ? En avoir le plus possible ! Vous pouvez à tout moment voir le nombre de points de vos adversaires pour vous pousser à vous dépasser grâce au classement réalisé pour chaque session en cours</p>
-    </div>
-
-    <div class="col-12 containerPresentation">
-        <div class="flex flex-col justify-content-center">
-            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/cadeau.png" alt="trophee">
-            <h2 class="align-self-center titlePresentation">Goodies à gagner et tirage au sort</h2>
+            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/cadeau.png" alt="cadeau">
+            <h2 class="align-self-center titlePresentation">Des cadeaux à gagner à chaque session</h2>
         </div>
         <br/>
             <p>A la fin de chaque session, le vainqueur de chaque session se qualifie pour un tirage au sort qui permet de gagner 1 voyage On The Road a Game ! Pas d'inquiétude, une dotation en goodies récompense les participants les mieux classés de chaque session </p>
@@ -54,8 +45,8 @@
 
     <div class="col-12 containerPresentation">
         <div class="flex flex-col justify-content-center">
-            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/ville.png" alt="trophee">
-            <h2 class="align-self-center titlePresentation">Un retour aux sources : la découverte de sa ville</h2>
+            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/ville.png" alt="ville">
+            <h2 class="align-self-center titlePresentation">Un moyen original de (re)découvrir sa région</h2>
         </div>
         <br/>
             <p>L’objectif de On The Road a Game, c’est de vous faire revenir aux origines du voyage: la découverte. Mais avec la crise sanitaire actuelle, le but de Home A Game est de vous permettre de goûter à l’esprit des voyages On The Road a Game sans devoir voyager, en restant chez soi ! </p>
@@ -65,7 +56,7 @@
 
     <div class="col-12 containerPresentation">
         <div class="flex flex-col justify-content-center">
-            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/rencontre.png" alt="trophee">
+            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/rencontre.png" alt="rencontre">
             <h2 class="align-self-center titlePresentation">Des rencontres sincères et spontanées</h2>
         </div>
         <br/>

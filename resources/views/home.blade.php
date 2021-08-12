@@ -2,7 +2,7 @@
 
 @section('title', 'Accueil')
 
-@section('titlePage'," Home A Game : un jeu d'aventure pour continuer de vivre le voyage près de chez soi !")
+@section('titlePage'," @ Home a Game : un jeu d'aventure hors du commun pour vivre l'expérience OTR près de chez soi")
 
 @section ('content')
 
@@ -10,51 +10,48 @@
 <div class="row containerHome">
     <div class=" col-12 col-md-6 col-lg-3 d-flex containerPresentation">
         <div class="centerImageHome flex flex-col justify-content-center">
-            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/sablier.png" alt="trophee">
-            <h2 class="align-self-center titlePresentation">Plusieurs semaines de challenge</h2>
+            <img width="190px" height=auto class="align-self-center imagePresentation imagePresentationTimer" src="/images/sablier.png" alt="sablier">
+            <h2 class="align-self-center titlePresentation">Plusieurs sessions par an, limitées dans le temps</h2>
         </div>
     </div>
 
     <div class=" col-12 col-md-6 col-lg-3 d-flex containerPresentation">
         <div class="centerImageHome flex flex-col justify-content-center">
-            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/defis.png" alt="trophee">
-            <h2 class="align-self-center titlePresentation">Une dizaine de défis à relever à chaque session</h2>
+            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/defis.png" alt="cible">
+            <h2 class="align-self-center titlePresentation">Des défis à relever seul ou en équipe</h2>
         </div>
     </div>
 
     <div class=" col-12 col-md-6 col-lg-3 d-flex containerPresentation">
         <div class="centerImageHome flex flex-col justify-content-center">
-            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/trophee.png" alt="trophee">
-            <h2 class="align-self-center titlePresentation">Des points à gagner avec un classement</h2>
+            <img width="180px" height=auto class="align-self-center imagePresentation imagePresentationGift" src="/images/cadeau.png" alt="cadeau">
+            <h2 class="align-self-center titlePresentation">Des cadeaux à gagner à chaque session</h2>
         </div>
     </div>
+
+    <div class=" col-12 col-md-6 col-lg-3 d-flex containerPresentation">
+        <div class="centerImageHome flex flex-col justify-content-center">
+            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/ville.png" alt="ville">
+            <h2 class="align-self-center titlePresentation">Un moyen original de (re)découvrir sa région</h2>
+        </div>
+    </div>
+
 </div>
 <div class="row containerHome">
-    <div class=" col-12 col-md-6 col-lg-3 d-flex containerPresentation">
+    
+    <div class=" col-12 col-md-6 col-lg-4 d-flex containerPresentation">
         <div class="centerImageHome flex flex-col justify-content-center">
-            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/cadeau.png" alt="trophee">
-            <h2 class="align-self-center titlePresentation">Goodies à gagner et tirage au sort</h2>
+            <img width="350px" height=auto class="align-self-center imagePresentation" src="/images/ontheroadagame.png" alt="On The Road a Game">
+            <h2 class="align-self-center titlePresentation">Un voyage On The Road a Game à gagner chaque année*</h2>
+            <br/>
+            <small class="italic">*Lot attribué par tirage au sort entre les vainqueurs de toutes les sessions</small>
         </div>
     </div>
 
-    <div class=" col-12 col-md-6 col-lg-3 d-flex containerPresentation">
-        <div class="centerImageHome flex flex-col justify-content-center">
-            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/ville.png" alt="trophee">
-            <h2 class="align-self-center titlePresentation">Un retour aux sources : la découverte de sa ville</h2>
-        </div>
-    </div>
-
-    <div class=" col-12 col-md-6 col-lg-3 d-flex containerPresentation">
-        <div class="centerImageHome flex flex-col justify-content-center">
-            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/rencontre.png" alt="trophee">
-            <h2 class="align-self-center titlePresentation">Des rencontres sincères et spontanées</h2>
-        </div>
-    </div>
 </div>
 
 
-
-<div class="row containerArticleHome">
+{{-- <div class="row containerArticleHome">
     <h2 class="titleLatestArticles col-12">Les derniers articles...</h2>
     @foreach ($articles as $article)
             <div class=" positionButton col-12 col-md-6 col-lg-3 containerPresentation containerTheArticle">
@@ -70,7 +67,7 @@
                 </div>
             </div>
     @endforeach
-</div>
+</div> --}}
 <br/>
 
 <?php echo realpath('chemin.php'); ?> 
