@@ -2,7 +2,7 @@
 
 @section('title', 'Accueil')
 
-@section('titlePage'," Home A Game : un jeu d'aventure pour continuer de vivre le voyage près de chez soi !!!")
+@section('titlePage'," Home A Game : un jeu d'aventure pour continuer de vivre le voyage près de chez soi !!")
 
 @section ('content')
 
