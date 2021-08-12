@@ -21,15 +21,20 @@ class RankingController extends Controller
         ->where('end_date','>',date('Y-m-d'))
         ->first();
 
-        $ranking= DB::table('users')
-        ->select('users.firstname','users.lastname', DB::raw('SUM(user_point) as points'))
-        ->where('sessiongames.id',$session->id)
-        ->groupBy ('user_id')
-        ->join('posts','users.id', '=', 'posts.user_id')
-        ->join('challenges','challenges.id', '=', 'posts.challenge_id')
-        ->join('sessiongames','sessiongames.id', '=', 'challenges.sessiongame_id')
-        ->orderByDesc('points')
-        ->get();
+        if($session!=NULL){
+            $ranking= DB::table('users')
+            ->select('users.firstname','users.lastname', DB::raw('SUM(user_point) as points'))
+            ->where('sessiongames.id',$session->id)
+            ->groupBy ('user_id')
+            ->join('posts','users.id', '=', 'posts.user_id')
+            ->join('challenges','challenges.id', '=', 'posts.challenge_id')
+            ->join('sessiongames','sessiongames.id', '=', 'challenges.sessiongame_id')
+            ->orderByDesc('points')
+            ->get();
+        }
+        else {
+            $ranking=NULL;
+        }
 
         $position=0;
         $winner="";

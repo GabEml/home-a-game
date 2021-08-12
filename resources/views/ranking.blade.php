@@ -17,6 +17,8 @@
           </tr>
         </thead>
         <tbody>
+          @if ($users==null)
+          @else
             @foreach ($users as $user)
                 <tr>
                     <th scope="row">{{$position=$position+1}}</th>
@@ -24,6 +26,7 @@
                     <td>{{$user->points}}</td>
                 </tr>
             @endforeach
+           @endif
         </tbody>
       </table>
 </div>
