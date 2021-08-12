@@ -53,17 +53,6 @@
             <br/>
             <p>Cela vous permettra également la découverte de vous-même et de votre ville que peut-être vous ne connaissez pas vraiment ! De votre imagination, de votre humour et de votre capacité à relever les challenges hors du commun.</p>
     </div>
-
-    <div class="col-12 containerPresentation">
-        <div class="flex flex-col justify-content-center">
-            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/rencontre.png" alt="rencontre">
-            <h2 class="align-self-center titlePresentation">Des rencontres sincères et spontanées</h2>
-        </div>
-        <br/>
-        <p>On The Road a Game la promesse d’une succession de rencontres. Spontanées. Etonnantes. Inoubliables. Mais détrompez-vous, vous pouvez aussi de faire d'excellentes rencontres près de chez vous ! de vos voisins ou petits commerçants de votre village par exemple !</p>
-        <br/>
-        <p>Sans oublier les autres joueurs qui partagent avec vous ce même goût de la découverte, cette même soif d’aventure, cette même envie d’aller vers les autres.</p>
-    </div>
     
 </div>
 

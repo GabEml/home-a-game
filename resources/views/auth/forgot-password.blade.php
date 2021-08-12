@@ -1,8 +1,11 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
+            <div class="logoRegister flex flex-col">
             <x-jet-authentication-card-logo />
         </x-slot>
+
+        <br/>
 
         <div class="mb-4 text-sm text-gray-600">
             {{ __("Mot de passe oublié? Aucun problème. Faites-nous simplement savoir votre adresse e-mail et nous vous enverrons par e-mail un lien de réinitialisation du mot de passe qui vous permettra d'en choisir un nouveau.") }}
@@ -31,4 +34,5 @@
             </div>
         </form>
     </x-jet-authentication-card>
+    <br/><br/><br/>
 </x-guest-layout>
