@@ -62,7 +62,7 @@
                             
                             <div class="form-group">
                                 <label for="user_point">Nombres de points :</label>
-                                <input type="number" min=0 max="{{$postPending->challenge->points}}"  value="{{$postPending->user_point}}" required name="user_point" id="user_point" class="form-control"class=@error('user_point') is-invalid @enderror ></input>
+                                <input type="number" min=0 max="{{$postPending->challenge->points-1}}"  value="{{$postPending->user_point}}" name="user_point" id="user_point" class="form-control"class=@error('user_point') is-invalid @enderror ></input>
                             </div>
                             
                             <div class="form-group">
