@@ -88,6 +88,7 @@
                         @else
                         <p class="align-self-center text-center list-group-item list-group-item-info">Vous avez plusieurs chance pour réaliser ce défi</p>
                         @endif
+                        <br/>
                             @error('file_path')
                             <div class="alert alert-danger"> {{$message}} </div>
                             @enderror 

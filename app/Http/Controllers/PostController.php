@@ -51,6 +51,9 @@ class PostController extends Controller
 
             $validateData=$request->validate([
                 'file_path'=>'required|image|max:100000',
+            ],[
+                'file_path.image'=>'Le fichier de preuve doit être une image.',
+                'file_path.max'=>'Vous dépassez la taille maximale (100Mo).'
             ]);
 
             // Save the file locally in the storage/public/ folder under a new folder named /product
@@ -62,6 +65,9 @@ class PostController extends Controller
 
                 $validateData=$request->validate([
                     'file_path'=>'required|mimes:mp4|max:100000',
+                ],[
+                    'file_path.mimes'=>'Le fichier de preuve doit être une vidéo mp4',
+                    'file_path.max'=>'Vous dépassez la taille maximale (100Mo).'
                 ]);
     
                 // Save the file locally in the storage/public/ folder under a new folder named /product
@@ -105,7 +111,7 @@ class PostController extends Controller
         $validateData=$request->validate([
             'state' => 'required|in:validated,partly_validated,not_validated', 
             'user_point'=>"required_if:state,partly_validated|numeric|nullable|min:0|max:$maxPointsPost",
-            'comment'=>'required|max:255|min:4'
+            'comment'=>'max:255|min:2'
         ]);
         
         $post->state = $validateData["state"];

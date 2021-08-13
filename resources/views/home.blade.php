@@ -17,7 +17,7 @@
 
     <div class=" col-12 col-md-6 col-lg-3 d-flex containerPresentation">
         <div class="centerImageHome flex flex-col justify-content-center">
-            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/defis.png" alt="cible">
+            <img width="180px" height=auto class="align-self-center imagePresentation imagePresentationTarget" src="/images/defis.png" alt="cible">
             <h2 class="align-self-center titlePresentation">Des défis à relever seul ou en équipe</h2>
         </div>
     </div>
@@ -31,7 +31,7 @@
 
     <div class=" col-12 col-md-6 col-lg-3 d-flex containerPresentation">
         <div class="centerImageHome flex flex-col justify-content-center">
-            <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/ville.png" alt="ville">
+            <img width="180px" height=auto class="align-self-center imagePresentation imagePresentationMap" src="/images/ville.png" alt="ville">
             <h2 class="align-self-center titlePresentation">Un moyen original de (re)découvrir sa région</h2>
         </div>
     </div>

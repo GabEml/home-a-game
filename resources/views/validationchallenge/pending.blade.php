@@ -67,7 +67,7 @@
                             
                             <div class="form-group">
                                 <label for="comment">Commentaire :</label>
-                                <textarea required name="comment" id="comment" class="form-control"class=@error('comment') is-invalid @enderror ></textarea>
+                                <textarea name="comment" id="comment" class="form-control"class=@error('comment') is-invalid @enderror ></textarea>
                             </div>
                 
                             
