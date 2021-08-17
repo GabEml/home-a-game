@@ -39,7 +39,7 @@
         <div class="form-group">
             <label for="image_path" >Image (max 100Mo)</label>
             <br/>
-            <input type="file" name="image_path" class=@error('image_path') is-invalid @enderror>
+            <input type="file" class="form-control-file" name="image_path" class=@error('image_path') is-invalid @enderror>
             <br/>
             <small>Si vous ne choissisez pas d'image, il garde celle déjà existante</small>
         </div>
@@ -52,6 +52,31 @@
                     <option value={{$goodie->id}}> {{$goodie->name}}</option>
                 @endforeach
             </select>
+        </div>
+
+        <div class="form-group">
+            <label for="type" >Type de session :</label>
+            <select class="form-control" name='type' class=@error('type') is-invalid @enderror>
+                @if ($sessiongame->type=="Home a Game")
+                    <option value="Home a Game" selected>Home a Game </option>
+                    <option value="On The Road a Game">On The Road a Game</option>
+                @else
+                    <option value="Home a Game">Home a Game </option>
+                    <option value="On The Road a Game" selected>On The Road a Game</option>
+                @endif
+            </select>
+        </div>
+
+        <div class="form-check form-check-inline flex justify-content-center ">
+            @if($sessiongame->see_ranking == 1)
+                <input class="form-check-input" type="checkbox" value="0" name="see_ranking" class=@error('see_ranking') is-invalid @enderror>
+            @else
+                <input class="form-check-input" type="checkbox" value="0" name="see_ranking" checked class=@error('see_ranking')  is-invalid @enderror>
+            @endif  
+            
+            <label class="form-check-label" for="flexCheckDefault">
+                Cacher le classement
+            </label>
         </div>
         
    </fieldset>

@@ -41,7 +41,7 @@
             <div class="form-group">
                 <label for="image_path" >Image</label>
                 <br/>
-                <input type="file" name="image_path" required class=@error('image_path') is-invalid @enderror>
+                <input type="file" class="form-control-file" class="form-control-file" name="image_path" required class=@error('image_path') is-invalid @enderror>
             </div>
 
             <div class="form-group">
@@ -53,29 +53,34 @@
                     @endforeach
                 </select>
             </div>
+
+            <div class="form-group">
+                <label for="type" >Type de session :</label>
+                <select class="form-control" name='type' class=@error('type') is-invalid @enderror>
+                    <option value="Home a Game" selected>Home a Game </option>
+                    <option value="On The Road a Game">On The Road a Game</option>
+                </select>
+            </div>
             
+<br/>
+
+            <div class="form-check form-check-inline flex justify-content-center ">
+                <input class="form-check-input" type="checkbox" value="0" name="see_ranking" class=@error('see_ranking') is-invalid @enderror>
+                <label class="form-check-label" for="flexCheckDefault">
+                    Cacher le classement
+                </label>
+            </div>
+
        </fieldset>
-       {{-- @error('price')
-        <div class="alert alert-danger"> {{$message}} </div>
-        @enderror  --}}
-        @error('name')
-        <div class="alert alert-danger"> {{$message}} </div>
-        @enderror 
-        @error('description')
-        <div class="alert alert-danger"> {{$message}} </div>
-        @enderror 
-        @error('start_date')
-        <div class="alert alert-danger"> {{$message}} </div>
-        @enderror 
-       @error('end_date')
-        <div class="alert alert-danger"> {{$message}} </div>
-        @enderror 
-        @error('image_path')
-        <div class="alert alert-danger"> {{$message}} </div>
-        @enderror 
-        @error('goodie')
-        <div class="alert alert-danger"> {{$message}} </div>
-        @enderror 
+       @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
        <br/>
        <div class="flex justify-content-between">
         <a class="btn btn-primary" href="{{route('sessiongames.index')}}"> Retour </a>

@@ -66,16 +66,22 @@ class SessiongameController extends Controller
                 'end_date'=>'required|date|after:start_date',
                 'goodie'=>'required|integer|exists:goodies,id',
                 'image_path'=>'required|image|max:100000',
+                'type' => 'required|in:On The Road a Game,Home a Game',
+                'see_ranking'=> 'integer|in:0,1',
             ]);
 
             if ($request->filled('price')){
             $sessiongame->price = $validateData["price"];
+            }
+            if ($request->filled('see_ranking')){
+                $sessiongame->see_ranking = $validateData["see_ranking"];
             }
 
         // Save the file locally in the storage/public/ folder under a new folder named /product
         $request->image_path->store('images', 'public');
         $path ="/".$request->file('image_path')->store('images');
         
+        $sessiongame->type = $validateData["type"];
         $sessiongame->name = $validateData["name"];
         $sessiongame->description = $validateData["description"];
         $sessiongame->start_date = $validateData["start_date"];
@@ -133,7 +139,16 @@ class SessiongameController extends Controller
                 'end_date'=>'required|date|after:start_date',
                 'goodie'=>'required|integer|exists:goodies,id',
                 'image_path'=>'image|max:100000',
+                'type' => 'required|in:On The Road a Game,Home a Game',
+                'see_ranking'=> 'integer|in:0,1',
             ]);
+
+            if ($request->filled('see_ranking')){
+                $sessiongame->see_ranking = $validateData["see_ranking"];
+            }
+            else{
+                $sessiongame->see_ranking = 1;
+            }
 
             if ($request->filled('price')){
                 $sessiongame->price = $validateData["price"];
@@ -163,6 +178,7 @@ class SessiongameController extends Controller
         $sessiongame->description = $validateData["description"];
         $sessiongame->start_date = $validateData["start_date"];
         $sessiongame->end_date = $validateData["end_date"];
+        $sessiongame->type = $validateData["type"];
         $sessiongame->goodie_id = $validateData["goodie"];
         $sessiongame->update();
     

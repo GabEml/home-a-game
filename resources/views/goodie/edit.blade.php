@@ -21,7 +21,7 @@
             <div class="form-group">
                 <label for="image_path" >Image (max 100Mo)</label>
                 <br/>
-                <input type="file" name="image_path" class=@error('image_path') is-invalid @enderror>
+                <input type="file" class="form-control-file" name="image_path" class=@error('image_path') is-invalid @enderror>
                 <br/>
                 <small>Si vous ne choissisez pas d'image, il garde celle déjà existante</small>
             </div>

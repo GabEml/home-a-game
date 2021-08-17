@@ -20,7 +20,7 @@
             <div class="form-group">
                 <label for="image_path" >Image (max 100Mo)</label>
                 <br/>
-                <input type="file" name="image_path" required class=@error('image_path') is-invalid @enderror>
+                <input type="file" class="form-control-file" name="image_path" required class=@error('image_path') is-invalid @enderror>
             </div>
             
        </fieldset>

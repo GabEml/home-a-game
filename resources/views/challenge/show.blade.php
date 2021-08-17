@@ -79,7 +79,7 @@
                                     <label for="file_path" >Choississez votre photo ou vidéo (Accepté : mp4 et toutes images | max 100Mo)</label>
                                     @endif
                                     <br/>
-                                    <input type="file" name="file_path" required class=@error('file_path') is-invalid @enderror>
+                                    <input type="file" class="form-control-file" name="file_path" required class=@error('file_path') is-invalid @enderror>
                                 </div>
                                 
                         </fieldset> 

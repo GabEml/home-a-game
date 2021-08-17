@@ -20,8 +20,23 @@
             
             <div class="form-group">
                 <label for="points">Nombres de points</label>
-                <input value="{{ $challenge->points }}" type="number" required name="points" id="points" class="form-control" class=@error('points') is-invalid @enderror >
+                <input value="{{ $challenge->points }}" type="number"  name="points" id="points" class="form-control" class=@error('points') is-invalid @enderror >
             </div>
+
+            <div class="form-check form-check-inline flex justify-content-center ">
+                @if($challenge->unlimited_points == 0)
+                    <input class="form-check-input" type="checkbox" value="1" name="unlimited_points" class=@error('unlimited_points') is-invalid @enderror>
+                @else
+                    <input class="form-check-input" type="checkbox" checked value="1" name="unlimited_points" class=@error('unlimited_points') is-invalid @enderror>
+                @endif
+                
+                
+                <label class="form-check-label" for="flexCheckDefault">
+                    Points illimités
+                </label>
+            </div>
+
+            <br/>
             
             <div class="form-group">
                 <label for='type_of_file'> Type de post accepté</label>
