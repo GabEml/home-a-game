@@ -22,7 +22,7 @@
             @foreach ($users as $user)
                 <tr>
                     <th scope="row">{{$position=$position+1}}</th>
-                    <td>{{$user->firstname}} {{$user->lastname}}</td>
+                    <td class="test2">{{$user->firstname}} {{$user->lastname}}</td>
                     <td>{{$user->points}}</td>
                 </tr>
             @endforeach
