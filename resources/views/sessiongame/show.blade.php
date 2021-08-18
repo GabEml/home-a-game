@@ -36,7 +36,12 @@
                         </div>
                         {{-- <div class="roundTop"> </div> --}}
                         <img width="220px" height=auto class="align-self-center imagePresentation" src="{{$challenge->images[0]->image_path}}" alt="{{$challenge->title}}">
-                        <h2 class="align-self-center text-center titleArticleHome">{{$challenge->points}} points</h2>
+                        @if ($challenge->unlimited_points ==1)
+                        <h2 class="align-self-center text-center titleArticleHome">Points illimités</h2>
+                        @else
+                            <h2 class="align-self-center text-center titleArticleHome">{{$challenge->points}} points</h2>
+                        @endif
+                        
                     </div>
                   <div>
                     

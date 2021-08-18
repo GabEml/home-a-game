@@ -6,6 +6,18 @@
 
 @section ('content')
 
+<div class="row">
+  <div class=" menuValidation col-12 justify-content-center flex">
+      <a href ="{{ route('ranking') }}" class=" menuValidation buttonPending buttonActive"> @Home a Game </a>
+      <a href ="{{ route('rankingOTR') }}" class=" menuValidation buttonValidated" >On The Road a Game</a>
+  </div>
+</div>
+@if ($session==null)
+@else
+    <h2 class="titleProfile title">Session {{$session->name}} du {{$session->start_date}} au {{$session->end_date}}</h2>
+@endif
+
+<br/><br/>
 
 <div class="row">
     <table class="table table-striped table-hover">
@@ -22,7 +34,7 @@
             @foreach ($users as $user)
                 <tr>
                     <th scope="row">{{$position=$position+1}}</th>
-                    <td class="test2">{{$user->firstname}} {{$user->lastname}}</td>
+                    <td>{{$user->firstname}} {{$user->lastname}}</td>
                     <td>{{$user->points}}</td>
                 </tr>
             @endforeach

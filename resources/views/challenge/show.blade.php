@@ -57,7 +57,12 @@
                 @else 
                 <p> Vous devez fournir une photo ou bien une vidéo</p>
                 @endif
-                <p>Nombres de points : {{$challenge->points}}</p>
+                @if ($challenge->unlimited_points==1)
+                <p>Nombres de points : Illimités</p>
+                @else
+                    <p>Nombres de points : {{$challenge->points}}</p>
+                @endif
+                
             </div>
             <br/><br/>
             <div>
@@ -158,11 +163,20 @@
                     </tr>
                     <tr>
                         <td class="infoValidation">Commentaire : </td>
+                        @if ($post->comment==NULL)
+                        <td class="resultValidation">Aucun commentaire</td>
+                        @else
                             <td class="resultValidation">{{$post->comment}}</td>
+                        @endif
+                            
                     </tr>
                     <tr>
                         <td class="infoValidation">Nombres de points :</td>
-                        <td class="resultValidation">{{$post->user_point}}/{{$challenge->points}}</td>
+                        @if ($challenge->unlimited_points==1)
+                            <td class="resultValidation">{{$post->user_point}}</td>
+                        @else 
+                            <td class="resultValidation">{{$post->user_point}}/{{$challenge->points}}</td>
+                        @endif
                     </tr>
                 @endif
             </table>

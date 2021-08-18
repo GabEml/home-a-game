@@ -105,26 +105,39 @@ class PostController extends Controller
         else{
             $test=32;
         }
-        $maxPointsPost = $post->challenge->points;
-        $maxPoints = $maxPointsPost-1;
 
-        $validateData=$request->validate([
+        $maxPointsPost = $post->challenge->points;
+
+        if($post->challenge->unlimited_points==1){
+            $validateData=$request->validate([
+            'state' => 'required|in:validated,partly_validated,not_validated', 
+            'user_point'=>"required_if:state,partly_validated|numeric|nullable|min:0|max:2147483647",
+            'comment'=>'nullable|max:255|min:2'
+        ]);
+
+        $post->state = $validateData["state"];
+        $post->user_point = $validateData["user_point"];
+        }
+
+        else {
+            $validateData=$request->validate([
             'state' => 'required|in:validated,partly_validated,not_validated', 
             'user_point'=>"required_if:state,partly_validated|numeric|nullable|min:0|max:$maxPointsPost",
-            'comment'=>'max:255|min:2'
-        ]);
+            'comment'=>'nullable|max:255|min:2'
+            ]);
         
-        $post->state = $validateData["state"];
-        if($validateData["state"]==="validated"){
-            $post->user_point =$maxPointsPost;
+            $post->state = $validateData["state"];
+            if($validateData["state"]==="validated"){
+                $post->user_point =$maxPointsPost;
+            }
+            else if($validateData["state"]==="partly_validated"){
+                $post->user_point = $validateData["user_point"];
+            }
+            else{
+                $post->user_point =0;
+            }
         }
-        else if($validateData["state"]==="partly_validated"){
-            $post->user_point = $validateData["user_point"];
-        }
-        else{
-            $post->user_point =0;
-        }
-        
+
         $post->comment = $validateData["comment"];
         $post->update();
 

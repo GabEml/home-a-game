@@ -43,8 +43,13 @@
                     <br/>
                     <div>
                         <div class="">
-                            <div> <p>De : {{$postPending->user->firstname}}</p></div>
-                            <div> <p> Nombres de points : {{$postPending->challenge->points}}</p></div>
+                            <div> <p>De : {{$postPending->user->firstname}} {{$postPending->user->lastname}}</p></div>
+                            @if ($postPending->challenge->unlimited_points ==1)
+                            <div> <p> Nombres de points : Illimités</p></div>
+                            @else
+                                <div> <p> Nombres de points : {{$postPending->challenge->points}}</p></div>
+                            @endif
+                            
                         </div>
                         <br/>
                         <form action="{{route('posts.update',$postPending->id)}}" method="post">
@@ -62,7 +67,7 @@
                             
                             <div class="form-group">
                                 <label for="user_point">Nombres de points :</label>
-                                <input type="number" min=0 max="{{$postPending->challenge->points-1}}"  value="{{$postPending->user_point}}" name="user_point" id="user_point" class="form-control"class=@error('user_point') is-invalid @enderror ></input>
+                                <input type="number" min=0  value="{{$postPending->user_point}}" name="user_point" id="user_point" class="form-control"class=@error('user_point') is-invalid @enderror >
                             </div>
                             
                             <div class="form-group">

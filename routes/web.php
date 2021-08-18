@@ -43,6 +43,7 @@ Route::put('articles/{article}',[ArticleController::class, 'update'])->middlewar
 Route::delete('articles/{article}',[ArticleController::class, 'destroy'])->middleware('auth')->name('articles.destroy');
 
 Route::get('classement', [RankingController::class, 'ranking'])->name('ranking');
+Route::get('classement/OTR', [RankingController::class, 'rankingOTR'])->name('rankingOTR');
 
 Route::get('inscription_sessions', [SessiongameUserController::class, 'create'])->middleware('auth')->name('sessiongameusers.create');
 Route::post('inscription_sessions',[SessiongameUserController::class, 'store'])->middleware('auth')->name('sessiongameusers.store');

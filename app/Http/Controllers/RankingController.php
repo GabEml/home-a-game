@@ -16,9 +16,9 @@ class RankingController extends Controller
     public function ranking()
     {
         $session = DB::table('sessiongames')
-        ->select('id')
         ->where('start_date','<',date('Y-m-d'))
-        ->where('end_date','>',date('Y-m-d'))
+        ->where('type','Home a Game')
+        ->orderByDesc('start_date')
         ->first();
 
         if($session!=NULL){
@@ -39,6 +39,39 @@ class RankingController extends Controller
         $position=0;
         $winner="";
         return view('ranking', ['users'=>$ranking, "position"=>$position, "session"=>$session, "winner"=>$winner]);
+    }
+
+    /**
+     * ranking
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function rankingOTR()
+    {
+        $session = DB::table('sessiongames')
+        ->where('start_date','<',date('Y-m-d'))
+        ->where('type','On The Road a Game')
+        ->orderByDesc('start_date')
+        ->first();
+
+        if($session!=NULL){
+            $ranking= DB::table('users')
+            ->select('users.firstname','users.lastname', DB::raw('SUM(user_point) as points'))
+            ->where('sessiongames.id',$session->id)
+            ->groupBy ('user_id')
+            ->join('posts','users.id', '=', 'posts.user_id')
+            ->join('challenges','challenges.id', '=', 'posts.challenge_id')
+            ->join('sessiongames','sessiongames.id', '=', 'challenges.sessiongame_id')
+            ->orderByDesc('points')
+            ->get();
+        }
+        else {
+            $ranking=NULL;
+        }
+
+        $position=0;
+        $winner="";
+        return view('rankingOTR', ['users'=>$ranking, "position"=>$position, "session"=>$session, "winner"=>$winner]);
     }
 
     /**
