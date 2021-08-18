@@ -29,13 +29,14 @@
                         </form>
                     </div>
                     <div class="flex flex-col justify-content-center">
-                        @if ($postPending->challenge->type_of_file=="picture")
-                        <img width="280px" height="auto" class="align-self-center imagePresentation" src="{{$postPending->file_path}}" alt="{{$postPending->challenge->title}}">
+                        @if (false !==mb_strpos($postPending->file_path, "/images"))
+                        <a href="{{$postPending->file_path}}"><img width="280px" height="auto" class="align-self-center imagePresentation" src="{{$postPending->file_path}}" alt="{{$postPending->challenge->title}}"></a>
                             @else
                                 <video class="videoChallengePost" controls>
 
-                                    <source src="{{$postPending->file_path}}"
-                                            type="video/mp4">
+                                    <source src="{{$postPending->file_path}}" type="video/webm">
+                                    <source src="{{$postPending->file_path}}" type="video/mp4">
+                                    <source src="{{$postPending->file_path}}" type="video/ogg">
                                 </video>
                             @endif
                         <h2 class="align-self-center titleArticleHome">{{$postPending->challenge->title}}</h2>
@@ -74,9 +75,12 @@
                                 <label for="comment">Commentaire :</label>
                                 <textarea name="comment" id="comment" class="form-control"class=@error('comment') is-invalid @enderror ></textarea>
                             </div>
-                
-                            
+                            <div class="flex justify-content-center">
+                                <small><a href="{{$postPending->file_path}}" download>(Télécharger)</a></small>
+                            </div>
+                            <br/>
                     </fieldset>
+                    
                     <div class="flex justify-content-center">
                             <button type="submit" class="btn btn-info ">Valider</button>
                     </div>

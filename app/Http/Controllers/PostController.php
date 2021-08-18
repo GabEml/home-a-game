@@ -61,30 +61,48 @@ class PostController extends Controller
             $path ="/".$request->file('file_path')->store('images');
             }
 
-            if($challenge->type_of_file=="video"){
+        else if($challenge->type_of_file=="video"){
 
-                $validateData=$request->validate([
-                    'file_path'=>'required|mimes:mp4|max:100000',
-                ],[
-                    'file_path.mimes'=>'Le fichier de preuve doit être une vidéo mp4',
-                    'file_path.max'=>'Vous dépassez la taille maximale (100Mo).'
-                ]);
+            $validateData=$request->validate([
+                'file_path'=>'required|mimetypes:video/x-ms-wmv,video/webm,video/ogg,video/x-m4v,video/x-msvideo,video/3gpp,video/MP2T,application/x-mpegURL,video/x-flv,video/mp4,video/avi,video/mpeg,video/quicktime|max:100000',
+            ],[
+                'file_path.mimes'=>'Le fichier de preuve doit être une vidéo mp4',
+                'file_path.max'=>'Vous dépassez la taille maximale (100Mo).'
+            ]);
     
-                // Save the file locally in the storage/public/ folder under a new folder named /product
+            // Save the file locally in the storage/public/ folder under a new folder named /product
+            $request->file_path->store('videos', 'public');
+            $path ="/".$request->file('file_path')->store('videos');
+        }
+        else {
+            $validateData=$request->validate([
+                'file_path'=>'required|mimetypes:image/png,image/svg+xml,image/bmp,image/jpeg,image/webp,image/gif,
+                video/x-ms-wmv,video/webm,video/ogg,video/x-m4v,video/x-msvideo,video/3gpp,video/MP2T,application/x-mpegURL,video/x-flv,video/mp4,video/avi,video/mpeg,video/quicktime|max:100000',
+            ],[
+                'file_path.mimes'=>"Le fichier de preuve n'a pas le bon format",
+                'file_path.max'=>'Vous dépassez la taille maximale (100Mo).'
+            ]);
+ 
+            //On vérifie si c'est une image
+            if (false !== mb_strpos($validateData["file_path"]->getMimeType(), "image")) {
+                $request->file_path->store('images', 'public');
+                $path ="/".$request->file('file_path')->store('images');
+            }
+            else {
                 $request->file_path->store('videos', 'public');
                 $path ="/".$request->file('file_path')->store('videos');
-                }
-    
-    
+            }
+        }
+
             $post=new Post();
             $post->file_path=$path;
             $post->user_id=Auth::user()->id;
             $post->challenge_id=$challenge->id;
             $post->state="pending";
-            $post->save();
-        
+            $post->save();  
 
             return redirect()->route('challenges.show', ['challenge'=>$challenge]);
+            
     }
 
 

@@ -35,7 +35,7 @@ class ChallengeController extends Controller
         $this->authorize('create', Challenge::class);
         $validateData=$request->validate([
             'title' => 'required|max:255|min:5',
-            'points' => 'required_if:unlimited_points,0|nullable|integer|min:1', 
+            'points' => 'required_if:unlimited_points,|nullable|integer|min:1', 
             'filenames'=>'required|max:100000',
             'filenames.*' => 'mimes:png,jpg,bmp,jpeg',
             'editable'=> 'integer|in:0,1',
@@ -138,7 +138,7 @@ class ChallengeController extends Controller
         $this->authorize('update', Challenge::class);
         $validateData=$request->validate([
             'title' => 'required|max:255|min:5',
-            'points' => 'required_if:unlimited_points,0|nullable|integer|min:1', 
+            'points' => 'required_if:unlimited_points,|nullable|integer|min:1', 
             'editable'=> 'integer|in:0,1',
             'unlimited_points'=> 'integer|in:0,1',
             'filenames'=>'max:100000',

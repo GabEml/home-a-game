@@ -105,14 +105,19 @@
 
                     @else
 
-                        @if ($challenge->type_of_file=="picture")
+                        @if (false !==mb_strpos($post->file_path, "/images"))
                             <img src="{{$post->file_path}}" alt="{{$challenge->title}}" class="d-block imageChallengePost" />
                         @else
                             <video class="videoChallengePost" controls width="250">
 
-                                <source src="{{$post->file_path}}"
-                                        type="video/mp4">
+                                <source src="{{$post->file_path}}" type="video/webm">
+                                <source src="{{$post->file_path}}" type="video/mp4">
+                                <source src="{{$post->file_path}}" type="video/ogg">
                             </video>
+                        
+                            <p class="text-center"> Pas de panique si votre vidéo ne s'affiche pas, <a href="{{$post->file_path}}" download>cliquez ici pour la télécharger</a></p>
+                            <p class="text-center"> Si vous n'arrivez pas à la télécharger, il faut changer le format de la vidéo !</p>
+                            
                         @endif
                             @if($challenge->editable==1 or $post->state=="pending")
                                 <div class="infoChallenge">

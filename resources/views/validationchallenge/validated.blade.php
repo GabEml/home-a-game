@@ -29,13 +29,14 @@
                         </form>
                     </div>
                     <div class="flex flex-col justify-content-center">
-                        @if ($postValidated->challenge->type_of_file=="picture")
-                        <img width="280px" height="auto" class="align-self-center imagePresentation" src="{{$postValidated->file_path}}" alt="{{$postValidated->challenge->title}}">
+                        @if (false !==mb_strpos($postValidated->file_path, "/images"))
+                        <a href="{{$postValidated->file_path}}"><img width="280px" height="auto" class="align-self-center imagePresentation" src="{{$postValidated->file_path}}" alt="{{$postValidated->challenge->title}}"></a>
                             @else
                                 <video class="videoChallengePost" controls>
 
-                                    <source src="{{$postValidated->file_path}}"
-                                            type="video/mp4">
+                                    <source src="{{$postValidated->file_path}}" type="video/webm">
+                                    <source src="{{$postValidated->file_path}}" type="video/mp4">
+                                    <source src="{{$postValidated->file_path}}" type="video/ogg">
                                 </video>
                             @endif
                         <h2 class="align-self-center titleArticleHome">{{$postValidated->challenge->title}}</h2>
@@ -84,7 +85,11 @@
                                 <textarea name="comment" id="comment" class="form-control"class=@error('comment') is-invalid @enderror > {{$postValidated->comment}}</textarea>
                             </div>
                 
-                            
+                            <div class="flex justify-content-center">
+                                <small><a href="{{$postValidated->file_path}}" download>(Télécharger)</a></small>
+                            </div>
+                            <br/>
+
                     </fieldset>
                     <div class="flex justify-content-center">
                             <button type="submit" class="btn btn-info ">Modifier</button>
