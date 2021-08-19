@@ -13,7 +13,7 @@
         <p class="description ">Entrez les informations personnelles</p>
         <br/>
        <fieldset class="flex registrationForm">
-           <div class="fields">
+           <div class="col-12 col-md-6">
                 <div class="form-group">
                     <label for="firstname" > Prénom </label>
                     <input value="{{ old('firstname') }}" type="text" class="form-control" name="firstname" class=@error('firstname') is-invalid @enderror />
@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            <div class="fields">
+            <div class="col-12 col-md-6">
             
                 <div class="form-group">
                     <label for="address"> Adresse </label>
@@ -71,9 +71,30 @@
                         @endforeach
                     </select>
                 </div>
+
+            </div> 
+        </fieldset>
+        <br/>
+        <fieldset class="registrationForm registrationSessiongame">
+            <div class="form-group">
+                <label for="sessiongame">Sessions </label>
+                @foreach ($sessiongames as $sessiongame)
+                    <div class="form-check form-check-inline flex">
+                        <input class="form-check-input" type="checkbox" value="{{$sessiongame->id}}" name="sessiongames[]" class=@error('session') is-invalid @enderror>
+                        @if($sessiongame->type=="On The Road a Game")
+                            <label class="form-check-label" for="flexCheckDefault">
+                            {{$sessiongame->name}} du {{$sessiongame->start_date}} au {{$sessiongame->end_date}} (OTR)
+                            </label>
+                        @else 
+                            <label class="form-check-label" for="flexCheckDefault">
+                            {{$sessiongame->name}} du {{$sessiongame->start_date}} au {{$sessiongame->end_date}} (@Home)
+                            </label>
+                        @endif
+                    </div>
+                @endforeach
             </div>
-       
        </fieldset>
+      
        @if ($errors->any())
     <div class="alert alert-danger">
         <ul>

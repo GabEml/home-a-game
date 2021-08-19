@@ -24,9 +24,9 @@ class SessiongameUserController extends Controller
         $dateNow = new DateTime;
        $user = User::where('id', Auth::user()->id)->first();
         $sessionUser = $user->sessiongames->pluck('id');
-        $sessionpaschoisie = Sessiongame::whereNotIn('id', $sessionUser)->where("end_date" , '>' ,$dateNow)->get();
+        $sessionNotChosen = Sessiongame::whereNotIn('id', $sessionUser)->where("end_date" , '>' ,$dateNow)->get();
 
-        return view('sessiongameuser.create',['sessiongames'=>$sessionpaschoisie]);
+        return view('sessiongameuser.create',['sessiongames'=>$sessionNotChosen]);
     }
 
     /**
@@ -39,15 +39,9 @@ class SessiongameUserController extends Controller
     {
         $this->authorize('create', SessiongameUser::class);
         $validateData=$request->validate([
-            'sessiongames' => 'required|exists:sessiongames,id',
+            'sessiongames' => 'required|exists:sessiongames,id|unique:sessiongame_user,user_id,sessiongame_id',
         ]);
 
-        $test = DB::table('sessiongame_user')
-        ->where('sessiongame_id',$validateData["sessiongames"])
-        ->where('user_id',Auth::user()->id)
-        ->get();
-
-        if($test->isEmpty()){
         for ($i = 0; $i < sizeof($validateData["sessiongames"]); $i++) {
             $sessiongame=new SessiongameUser();
             $sessiongame->sessiongame_id = $validateData["sessiongames"][$i];
@@ -55,12 +49,7 @@ class SessiongameUserController extends Controller
             $sessiongame->save();
         }
         return redirect()->route('sessiongames.index');
-        }
-        else{
 
-        }
-
-        return redirect()->route('sessiongameusers.create');
     }
 
 }

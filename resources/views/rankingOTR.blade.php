@@ -50,23 +50,5 @@
 
 <br/>
 
-<div class="row">
-  <div class="col-12 text-center">
-      @auth
-          @if (Auth::user()->role->role==="Admin Défis")
-              <div>
-                  <a class="btn btn-info" href="{{route('winner_draw')}}">Tirage au sort</a>
-              </div>
-              <br/>
-              @if ($winner!=="") 
-                <div class="flex justify-content-center flex-column">
-                    <div><p class="price text-center"> Le/La grand(e) gagnant(e) est {{$winner}}</p></div>
-                </div>
-              @endif
-          @endif
-      @endif
-  </div>
-</div>
-
 <br/>
 @endsection
