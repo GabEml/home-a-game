@@ -251,12 +251,12 @@ class UserController extends Controller
         $this->authorize('updateSuperAdmin', User::class);
 
         $validateData=$request->validate([
-            'sessiongames' => 'required|exists:sessiongames,id|unique:sessiongame_user,user_id,sessiongame_id',
+            'sessiongame_id' => 'required|unique_with:sessiongame_user,user_id',
         ]);
 
-        for ($i = 0; $i < sizeof($validateData["sessiongames"]); $i++) {
+        for ($i = 0; $i < sizeof($validateData["sessiongame_id"]); $i++) {
             $sessiongame=new SessiongameUser();
-            $sessiongame->sessiongame_id = $validateData["sessiongames"][$i];
+            $sessiongame->sessiongame_id = $validateData["sessiongame_id"][$i];
             $sessiongame->user_id = $user->id;
             $sessiongame->save();
         }

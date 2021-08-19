@@ -110,7 +110,7 @@
             <br/>
             @foreach ($sessiongames as $sessiongame)
                 <div class="form-check form-check-inline flex justify-content-center ">
-                    <input class="form-check-input" type="checkbox" value="{{$sessiongame->id}}" name="sessiongames[]" class=@error('session') is-invalid @enderror>
+                    <input class="form-check-input" type="checkbox" value="{{$sessiongame->id}}" name="sessiongame_id[]" class=@error('sessiongame_id') is-invalid @enderror>
                     @if($sessiongame->type=="On The Road a Game")
                         <label class="form-check-label" for="flexCheckDefault">
                          {{$sessiongame->name}} du {{$sessiongame->start_date}} au {{$sessiongame->end_date}} (OTR)
@@ -125,7 +125,7 @@
             
         </fieldset>
         <br/>
-        @error('session')
+        @error('sessiongame_id')
         <div class="alert alert-danger"> {{$message}} </div>
         @enderror 
 
