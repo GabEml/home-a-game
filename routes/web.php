@@ -85,7 +85,7 @@ Route::get('utilisateurs/{user}/editer',[UserController::class, 'edit'])->middle
 Route::put('utilisateurs/{user}',[UserController::class, 'update'])->middleware('auth')->name('users.update');
 Route::put('utilisateurs/{user}/role',[UserController::class, 'updateRole'])->middleware('auth')->name('users.updateRole');
 Route::post('utilisateurs/{user}/sessiongames',[UserController::class, 'storeSessiongame'])->middleware('auth')->name('users.storeSessiongame');
-Route::delete('utilisateurs/{sessiongameUser}',[UserController::class, 'deleteSessiongameUser'])->middleware('auth')->name('users.destroySessiongameUser');
+Route::delete('utilisateurs/{sessiongameUser}/sessions',[UserController::class, 'deleteSessiongameUser'])->middleware('auth')->name('users.destroySessiongameUser');
 Route::delete('utilisateurs/{user}',[UserController::class, 'destroy'])->middleware('auth')->name('users.destroy');
 
 

@@ -122,7 +122,7 @@ class UserController extends Controller
             'city' => 'required| string| max:255',
             'country' => 'required| string| max:255',
             'role_id'=> 'required|integer|exists:roles,id',
-            'sessiongames' => 'exists:sessiongames,id|unique:sessiongame_user,user_id,sessiongame_id',
+            'sessiongame_id' => "required|exists:sessiongames,id",
         ]);
 
         $user = new User();
@@ -140,10 +140,14 @@ class UserController extends Controller
 
         $user->save();
 
-        if ($request->filled('sessiongames')){
-            for ($i = 0; $i < sizeof($validateData["sessiongames"]); $i++) {
+        if ($request->filled('sessiongame_id')){
+            for ($i = 0; $i < sizeof($validateData["sessiongame_id"]); $i++) {
+                $sessiongameUserExist = SessiongameUser::where('user_id',$user->id )->where('sessiongame_id',$validateData["sessiongame_id"][$i])->first();
+                if($sessiongameUserExist!=Null){
+                    continue;
+                }
                 $sessiongame=new SessiongameUser();
-                $sessiongame->sessiongame_id = $validateData["sessiongames"][$i];
+                $sessiongame->sessiongame_id = $validateData["sessiongame_id"][$i];
                 $sessiongame->user_id = $user->id;
                 $sessiongame->save();
             }
@@ -251,10 +255,14 @@ class UserController extends Controller
         $this->authorize('updateSuperAdmin', User::class);
 
         $validateData=$request->validate([
-            'sessiongame_id' => 'required|unique_with:sessiongame_user,user_id',
+            'sessiongame_id' => "required|exists:sessiongames,id",
         ]);
 
         for ($i = 0; $i < sizeof($validateData["sessiongame_id"]); $i++) {
+            $sessiongameUserExist = SessiongameUser::where('user_id',$user->id )->where('sessiongame_id',$validateData["sessiongame_id"][$i])->first();
+            if($sessiongameUserExist!=Null){
+                continue;
+            }
             $sessiongame=new SessiongameUser();
             $sessiongame->sessiongame_id = $validateData["sessiongame_id"][$i];
             $sessiongame->user_id = $user->id;
@@ -302,5 +310,6 @@ class UserController extends Controller
         
         return redirect()->route('users.indexUsers', ['users'=>$users]);
 
+        //print_r($user);
     }
 }

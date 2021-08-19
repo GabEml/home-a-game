@@ -80,7 +80,7 @@
                 <label for="sessiongame">Sessions </label>
                 @foreach ($sessiongames as $sessiongame)
                     <div class="form-check form-check-inline flex">
-                        <input class="form-check-input" type="checkbox" value="{{$sessiongame->id}}" name="sessiongames[]" class=@error('session') is-invalid @enderror>
+                        <input class="form-check-input" type="checkbox" value="{{$sessiongame->id}}" name="sessiongame_id[]" class=@error('session') is-invalid @enderror>
                         @if($sessiongame->type=="On The Road a Game")
                             <label class="form-check-label" for="flexCheckDefault">
                             {{$sessiongame->name}} du {{$sessiongame->start_date}} au {{$sessiongame->end_date}} (OTR)
