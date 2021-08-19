@@ -113,11 +113,11 @@
                     <input class="form-check-input" type="checkbox" value="{{$sessiongame->id}}" name="sessiongames[]" class=@error('session') is-invalid @enderror>
                     @if($sessiongame->type=="On The Road a Game")
                         <label class="form-check-label" for="flexCheckDefault">
-                        Session {{$sessiongame->name}} du {{$sessiongame->start_date}} au {{$sessiongame->end_date}} (OTR)
+                         {{$sessiongame->name}} du {{$sessiongame->start_date}} au {{$sessiongame->end_date}} (OTR)
                         </label>
                     @else 
                         <label class="form-check-label" for="flexCheckDefault">
-                        Session {{$sessiongame->name}} du {{$sessiongame->start_date}} au {{$sessiongame->end_date}} (@Home)
+                         {{$sessiongame->name}} du {{$sessiongame->start_date}} au {{$sessiongame->end_date}} (@Home)
                         </label>
                     @endif
                 </div>
@@ -160,9 +160,9 @@
                     <tbody>
                         <td>
                             @if($sessiongameUser->type=="On The Road a Game")
-                                Session {{$sessiongameUser->name}} du {{$sessiongameUser->start_date}} au {{$sessiongameUser->end_date}} (OTR)
+                                 {{$sessiongameUser->name}} du {{$sessiongameUser->start_date}} au {{$sessiongameUser->end_date}} (OTR)
                             @else 
-                                Session {{$sessiongameUser->name}} du {{$sessiongameUser->start_date}} au {{$sessiongameUser->end_date}} (@Home)
+                                 {{$sessiongameUser->name}} du {{$sessiongameUser->start_date}} au {{$sessiongameUser->end_date}} (@Home)
                             @endif
                         </td>
                         <td class="text-center">

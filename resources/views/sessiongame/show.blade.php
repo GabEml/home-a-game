@@ -12,7 +12,7 @@
        <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('sessiongames.index') }}">Espace Jeu</a></li>
-                <li class="breadcrumb-item active">Session {{$sessiongame->name}}</li>
+                <li class="breadcrumb-item active">{{$sessiongame->name}}</li>
                 
             </ol>
        </nav>

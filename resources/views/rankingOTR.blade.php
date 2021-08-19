@@ -15,7 +15,7 @@
 
 @if ($session==null)
 @else
-    <h2 class="titleProfile title">Session {{$session->name}} du {{$session->start_date}} au {{$session->end_date}}</h2>
+    <h2 class="titleProfile title"> {{$session->name}} du {{$session->start_date}} au {{$session->end_date}}</h2>
 @endif
 
 <br/><br/>

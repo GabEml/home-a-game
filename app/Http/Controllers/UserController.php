@@ -128,9 +128,9 @@ class UserController extends Controller
             'city' => 'required| string| max:255',
             'country' => 'required| string| max:255',
             'role_id'=> 'required|integer|exists:roles,id',
-            'sessiongames' => 'required|exists:sessiongames,id|unique:sessiongame_user,user_id,sessiongame_id',
+            'sessiongames' => 'exists:sessiongames,id|unique:sessiongame_user,user_id,sessiongame_id',
         ]);
-        
+
         $user = new User();
         $user ->firstname = $validateData['firstname'];
         $user ->lastname = $validateData['lastname'];
@@ -146,11 +146,13 @@ class UserController extends Controller
 
         $user->save();
 
-        for ($i = 0; $i < sizeof($validateData["sessiongames"]); $i++) {
-            $sessiongame=new SessiongameUser();
-            $sessiongame->sessiongame_id = $validateData["sessiongames"][$i];
-            $sessiongame->user_id = $user->id;
-            $sessiongame->save();
+        if ($request->filled('sessiongames')){
+            for ($i = 0; $i < sizeof($validateData["sessiongames"]); $i++) {
+                $sessiongame=new SessiongameUser();
+                $sessiongame->sessiongame_id = $validateData["sessiongames"][$i];
+                $sessiongame->user_id = $user->id;
+                $sessiongame->save();
+            }
         }
 
         $users= DB::table('users')
