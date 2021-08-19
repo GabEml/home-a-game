@@ -98,13 +98,7 @@ class UserController extends Controller
         $idUser=$validateData["user"];
         $user = User::where('id', $idUser)->first();
 
-        $dateNow = new DateTime;
-        $sessionUser = $user->sessiongames->pluck('id');
-        $sessiongames = Sessiongame::whereNotIn('id', $sessionUser)->where("end_date" , '>' ,$dateNow)->get();
-
-        $sessiongamesUser = $user->sessiongames;
-
-        return view('superadmin.edit', ['user'=>$user,'sessiongames'=>$sessiongames, 'sessiongamesUser'=>$sessiongamesUser]);
+        return redirect()->route('users.edit', ['user'=>$user]);
     }
 
     /**

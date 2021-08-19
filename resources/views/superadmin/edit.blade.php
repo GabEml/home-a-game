@@ -124,15 +124,10 @@
             @endforeach
             
         </fieldset>
-        @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+        <br/>
+        @error('session')
+        <div class="alert alert-danger"> {{$message}} </div>
+        @enderror 
 
         <br/>
 
