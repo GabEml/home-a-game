@@ -2,6 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Auth\Events\PasswordReset;
+use Laravel\Fortify\Fortify;
+use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\Registered;
+use Laravel\Fortify\Contracts\FailedPasswordResetLinkRequestResponse;
+use Laravel\Fortify\Contracts\SuccessfulPasswordResetLinkRequestResponse;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Sessiongame;
@@ -11,6 +18,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use DateTime;
+
+use Carbon\Carbon; 
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -122,7 +133,7 @@ class UserController extends Controller
             'city' => 'required| string| max:255',
             'country' => 'required| string| max:255',
             'role_id'=> 'required|integer|exists:roles,id',
-            'sessiongame_id' => "required|exists:sessiongames,id",
+            'sessiongame_id' => "exists:sessiongames,id",
         ]);
 
         $user = new User();
@@ -158,10 +169,39 @@ class UserController extends Controller
         ->where('roles.role',"User")
         ->join('roles','roles.id', '=', 'users.role_id')
         ->get();
-        
-        return view('superadmin.users', ['users'=>$users]);
 
+        //event(new Registered($user));
+        //event(new PasswordReset($user));
+        // $status = Password::sendResetLink(
+        //     $request->only('email'));
         
+        
+        // return $status === Password::RESET_LINK_SENT
+        //         ? back()->with(['status' => __($status)])
+        //         : back()->withErrors(['email' => __($status)]);
+
+        // $status = Password::sendResetLink(
+        //     $request->only(Fortify::email())
+        // );
+
+        // return $status == Password::RESET_LINK_SENT
+        //             ? app(SuccessfulPasswordResetLinkRequestResponse::class, ['status' => $status])
+        //             : app(FailedPasswordResetLinkRequestResponse::class, ['status' => $status]);
+
+        // $token = Str::random(64);
+  
+        //   DB::table('password_resets')->insert([
+        //       'email' => $request->email, 
+        //       'token' => $token, 
+        //       'created_at' => Carbon::now()
+        //     ]);
+  
+        //   Mail::send('presentation', ['token' => $token], function($message) use($request){
+        //       $message->to($request->email);
+        //       $message->subject('Reset Password');
+        //   });
+
+        return view('superadmin.users', ['users'=>$users]);
     }
 
     /**

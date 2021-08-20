@@ -16,7 +16,7 @@
             @csrf
 
             <div class="flex registrationForm">
-                <div class="fields">
+                <div class="col-12 col-md-6">
                     <div>
                         <x-jet-label for="firstname" value="{{ __('Prénom') }}" />
                         <x-jet-input id="firstname" class="block mt-1 w-full" type="text" name="firstname" :value="old('firstname')" required autofocus autocomplete="firstname" />
@@ -47,7 +47,7 @@
                         <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
                     </div>
                 </div>
-                <div class="fields">
+                <div class="col-12 col-md-6">
                     <div>
                         <x-jet-label for="phone" value="{{ __('Numéro de téléphone') }}" />
                         <x-jet-input pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$" id="phone" class="block mt-1 w-full" type="tel" name="phone" :value="old('phone')" required autofocus autocomplete="phone" />

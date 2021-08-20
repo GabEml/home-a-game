@@ -15,7 +15,7 @@
         <!-- Styles -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-        <link rel="icon" href="/images/logo.png" />
+        <link rel="icon" href="/images/logo.svg" />
         @livewireStyles
         
 
@@ -27,7 +27,14 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </head>
 
+    @auth
+    <body class="bodyGuest">
+
+    @else
     <body>
+
+    @endauth
+
         <nav class=" menuBug navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -99,7 +106,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="linkMenu">{{ Auth::user()->firstname }}</span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu dropdown-menu-left dropdownGuest" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item" href="{{ route('profile.show') }}">Mon Profil</a>
                       {{-- <a class="dropdown-item" href="{{ route('api-tokens.index')}}">API Token</a> --}}
                       <a class="dropdown-item" href="/deconnexion">Se déconnecter</a>
@@ -127,7 +134,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="linkMenu">{{ Auth::user()->firstname }}</span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu dropdown-menu-right dropdownGuest" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item" href="{{ route('profile.show') }}">Mon Profil</a>
                       {{-- <a class="dropdown-item" href="{{ route('api-tokens.index')}}">API Token</a> --}}
                       <a class="dropdown-item" href="/deconnexion">Se déconnecter</a>
@@ -148,6 +155,8 @@
                 @endif
         </div>
       </nav>
+      <br/>
+
         <div class="font-sans text-gray-900 antialiased">
             {{ $slot }}
             
