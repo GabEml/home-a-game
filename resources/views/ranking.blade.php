@@ -50,7 +50,7 @@
       @auth
           @if (Auth::user()->role->role==="Admin Défis")
               <div>
-                  <a class="btn btn-info" href="{{route('winner_draw')}}">Tirage au sort</a>
+                  <a class="btn btn-info" href="{{route('ranking.create')}}">Tirage au sort</a>
               </div>
               <br/>
               @if ($winner!=="") 

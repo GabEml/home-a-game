@@ -75,29 +75,40 @@ class RankingController extends Controller
     }
 
     /**
-     * ranking
+     * Create Draw
      *
      * @return \Illuminate\Http\Response
      */
-    public function winnerDraw()
+    public function create()
     {
         $this->authorize('draw', Sessiongame::class);
+        $sessiongames = Sessiongame::where("type" ,"Home a Game")->get();
+        $winner="";
+        
 
-        $nb_session = DB::table('sessiongames')
-        ->select (DB::raw('COUNT(*) as number'))
-        ->where ('start_date','like',date('Y'))
-        ->first();
+        return view('draw', ["sessiongames"=>$sessiongames, "winner"=>$winner]);
+    }
+
+    /**
+     * Store Draw
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $this->authorize('draw', Sessiongame::class);
+        $sessiongames = Sessiongame::where("type" ,"Home a Game")->get();
 
         $potentialWinners=array();
-        
-        $years = date('Y');
-        $sessions = SessionGame::where('start_date','like',"$years%")->get();
 
-        
-        foreach($sessions as $session) {
+        $validateData=$request->validate([
+            'sessiongames' => 'required|exists:sessiongames,id',
+        ]);
+
+        for ($i = 0; $i < sizeof($validateData["sessiongames"]); $i++) {
             $winnerSession = DB::table('users')
             ->select('users.firstname','users.lastname', 'users.email', DB::raw('SUM(user_point) as points'))
-            ->where('sessiongames.id',$session->id)
+            ->where('sessiongames.id',$validateData["sessiongames"][$i])
             ->groupBy ('user_id')
             ->join('posts','users.id', '=', 'posts.user_id')
             ->join('challenges','challenges.id', '=', 'posts.challenge_id')
@@ -110,29 +121,11 @@ class RankingController extends Controller
                 array_push($potentialWinners, $winnerSession->firstname . " " . $winnerSession->lastname . " ( " . $winnerSession->email . " ) ");
             }
         }
-        $potentialWinners = array_unique($potentialWinners);
 
         $indexWinner = array_rand ($potentialWinners , 1);
         $winner = $potentialWinners[$indexWinner];
+        
 
-
-        $sessionNow = DB::table('sessiongames')
-        ->select('id')
-        ->where('start_date','<',date('Y-m-d'))
-        ->where('end_date','>',date('Y-m-d'))
-        ->first();
-
-        $ranking= DB::table('users')
-        ->select('users.firstname','users.lastname', DB::raw('SUM(user_point) as points'))
-        ->where('sessiongames.id',$sessionNow->id)
-        ->groupBy ('user_id')
-        ->join('posts','users.id', '=', 'posts.user_id')
-        ->join('challenges','challenges.id', '=', 'posts.challenge_id')
-        ->join('sessiongames','sessiongames.id', '=', 'challenges.sessiongame_id')
-        ->orderByDesc('points')
-        ->get();
-
-        $position=0;
-        return view('ranking', ['users'=>$ranking, "position"=>$position, "session"=>$sessionNow, "winner"=>$winner]);
+        return view('draw', ["sessiongames"=>$sessiongames, "winner"=>$winner]);
     }
 }

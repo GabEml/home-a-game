@@ -88,8 +88,8 @@ Route::post('utilisateurs/{user}/sessiongames',[UserController::class, 'storeSes
 Route::delete('utilisateurs/{sessiongameUser}/sessions',[UserController::class, 'deleteSessiongameUser'])->middleware('auth','verified')->name('users.destroySessiongameUser');
 Route::delete('utilisateurs/{user}',[UserController::class, 'destroy'])->middleware('auth','verified')->name('users.destroy');
 
-
-Route::get('/tirage_gagnant',[RankingController::class, 'winnerDraw'])->middleware('auth','verified')->name('winner_draw');
+Route::get('/tirage_gagnant/create',[RankingController::class, 'create'])->middleware('auth','verified')->name('ranking.create');
+Route::post('/tirage_gagnant',[RankingController::class, 'store'])->middleware('auth','verified')->name('ranking.store');
 
 Route::get('goodies',[GoodieController::class, 'index'])->middleware('auth','verified')->name('goodies.index');
 Route::get('goodies/creer',[GoodieController::class, 'create'])->middleware('auth','verified')->name('goodies.create');

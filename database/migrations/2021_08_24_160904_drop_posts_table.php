@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePostsTable extends Migration
+class DropPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,6 +12,16 @@ class CreatePostsTable extends Migration
      * @return void
      */
     public function up()
+    {
+        Schema::dropIfExists('posts');
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
@@ -23,15 +33,5 @@ class CreatePostsTable extends Migration
             $table->foreignId('challenge_id')->constrained('challenges')->onDelete('cascade');
             $table->engine = 'InnoDB';
         });
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('posts');
     }
 }
