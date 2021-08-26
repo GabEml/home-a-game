@@ -4,7 +4,7 @@
     <head>
         <title>@yield('title') - @ Home a Game</title>
 
-        <meta name="description" content=@yield('description')>
+        <meta name="description" content="@yield('description')">
         <meta name="keywords" content="Home a Game, @Home a Game, OTR, On The Road a Game, jeu, défis, cadeaux, voyage">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
