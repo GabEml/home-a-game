@@ -2,6 +2,8 @@
 
 @section('title', 'Accueil')
 
+@section('description', "Découvrez @ Home a Game un jeu d'aventure hors du commun pour vivre l'expérience On The Road a Game près de chez soi ! Votre mission: relever un max de défis. Votre objectif: battre les autres et tenter de gagner un voyage.")
+
 @section('titlePage'," @ Home a Game : un jeu d'aventure hors du commun pour vivre l'expérience OTR près de chez soi")
 
 @section ('content')

@@ -2,6 +2,8 @@
 
 @section('title', 'Classement')
 
+@section('description', "Classement de la session en cours pour @ Home a Game Votre mission: relever un max de défis. Votre objectif: battre les autres et tenter de gagner un voyage.")
+
 @section('titlePage',"Classement")
 
 @section ('content')
