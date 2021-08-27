@@ -16,10 +16,11 @@ class Sessiongame extends Notification
      *
      * @return void
      */
-    public function __construct(array $sessiongames, $mailAdmin)
+    public function __construct(array $sessiongames, $mailAdmin, $user)
     {
         $this->sessiongames=$sessiongames;
         $this->mailAdmin=$mailAdmin;
+        $this->user=$user;
     }
 
     /**
@@ -45,9 +46,9 @@ class Sessiongame extends Notification
         return (new MailMessage)
         ->subject('Vous êtes inscrit à des sessions !')
         ->cc($this->mailAdmin)
-        ->line("Vous êtes inscrit à :")
+        ->line('Félicitations '. $this->user . ', vous êtes inscrit à :')
         ->line($this->sessiongames)
-        ->line('If you did not request a password reset, no further action is required.');
+        ->line('Allez vite participer à la session en cours pour gagner !');
     }
 
     /**

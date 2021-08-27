@@ -126,7 +126,7 @@ class User extends Authenticatable implements MustVerifyEmail
         //'profile_photo_url',
     ];
 
-    public function sendPasswordResetNotification($token)
+    public function sendPasswordResetNotificationAdmin($token)
     {
         // Your your own implementation.
         $this->notify(new ResetPasswordNotification($token));

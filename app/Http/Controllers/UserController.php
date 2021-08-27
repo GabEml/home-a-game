@@ -162,7 +162,7 @@ class UserController extends Controller
                 array_push($arrSessiongame, $sessiongame->sessiongame->name . " ", "et");
             }
                 array_pop($arrSessiongame);
-                $user->notify(new NotificationsSessiongame($arrSessiongame, Auth::user()->email ));
+                $user->notify(new NotificationsSessiongame($arrSessiongame, Auth::user()->email, $user->firstname . " " . $user->lastname ));
         }
 
         $users= DB::table('users')
@@ -179,7 +179,7 @@ class UserController extends Controller
                   'created_at' => Carbon::now()->timezone('Europe/Paris')
                 ]);
         
-        $user->sendPasswordResetNotification($token);
+        $user->sendPasswordResetNotificationAdmin($token);
     
 
         return view('superadmin.users', ['users'=>$users]);
