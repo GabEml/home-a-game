@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Auth\Events\PasswordReset;
-use Laravel\Fortify\Fortify;
-use Illuminate\Contracts\Support\Responsable;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Auth\Events\Registered;
-use Laravel\Fortify\Contracts\FailedPasswordResetLinkRequestResponse;
-use Laravel\Fortify\Contracts\SuccessfulPasswordResetLinkRequestResponse;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Sessiongame;
 use App\Models\SessiongameUser;
+use App\Notifications\Sessiongame as NotificationsSessiongame;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -122,6 +117,8 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
 
+        $arrSessiongame=array();
+
         $validateData=$request->validate([
             'firstname' => 'required| string| max:255',
             'lastname' => 'required| string| max:255',
@@ -161,7 +158,11 @@ class UserController extends Controller
                 $sessiongame->sessiongame_id = $validateData["sessiongame_id"][$i];
                 $sessiongame->user_id = $user->id;
                 $sessiongame->save();
+
+                array_push($arrSessiongame, $sessiongame->sessiongame->name . " ", "et");
             }
+                array_pop($arrSessiongame);
+                $user->notify(new NotificationsSessiongame($arrSessiongame, Auth::user()->email ));
         }
 
         $users= DB::table('users')
@@ -170,36 +171,16 @@ class UserController extends Controller
         ->join('roles','roles.id', '=', 'users.role_id')
         ->get();
 
-        //event(new Registered($user));
-        //event(new PasswordReset($user));
-        // $status = Password::sendResetLink(
-        //     $request->only('email'));
+         $token = Str::random(60);
+         $tokenHash = Hash::make($token);
+         DB::table('password_resets')->insert([
+                  'email' => $user->email, 
+                  'token' => $tokenHash, 
+                  'created_at' => Carbon::now()->timezone('Europe/Paris')
+                ]);
         
-        
-        // return $status === Password::RESET_LINK_SENT
-        //         ? back()->with(['status' => __($status)])
-        //         : back()->withErrors(['email' => __($status)]);
-
-        // $status = Password::sendResetLink(
-        //     $request->only(Fortify::email())
-        // );
-
-        // return $status == Password::RESET_LINK_SENT
-        //             ? app(SuccessfulPasswordResetLinkRequestResponse::class, ['status' => $status])
-        //             : app(FailedPasswordResetLinkRequestResponse::class, ['status' => $status]);
-
-        // $token = Str::random(64);
-  
-        //   DB::table('password_resets')->insert([
-        //       'email' => $request->email, 
-        //       'token' => $token, 
-        //       'created_at' => Carbon::now()
-        //     ]);
-  
-        //   Mail::send('presentation', ['token' => $token], function($message) use($request){
-        //       $message->to($request->email);
-        //       $message->subject('Reset Password');
-        //   });
+        $user->sendPasswordResetNotification($token);
+    
 
         return view('superadmin.users', ['users'=>$users]);
     }
