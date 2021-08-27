@@ -148,6 +148,16 @@ class UserController extends Controller
 
         $user->save();
 
+        $token = Str::random(60);
+        $tokenHash = Hash::make($token);
+        DB::table('password_resets')->insert([
+                 'email' => $user->email, 
+                 'token' => $tokenHash, 
+                 'created_at' => Carbon::now()->timezone('Europe/Paris')
+               ]);
+       
+       $user->sendPasswordResetNotificationAdmin($token);
+
         if ($request->filled('sessiongame_id')){
             for ($i = 0; $i < sizeof($validateData["sessiongame_id"]); $i++) {
                 $sessiongameUserExist = SessiongameUser::where('user_id',$user->id )->where('sessiongame_id',$validateData["sessiongame_id"][$i])->first();
@@ -170,17 +180,6 @@ class UserController extends Controller
         ->where('roles.role',"User")
         ->join('roles','roles.id', '=', 'users.role_id')
         ->get();
-
-         $token = Str::random(60);
-         $tokenHash = Hash::make($token);
-         DB::table('password_resets')->insert([
-                  'email' => $user->email, 
-                  'token' => $tokenHash, 
-                  'created_at' => Carbon::now()->timezone('Europe/Paris')
-                ]);
-        
-        $user->sendPasswordResetNotificationAdmin($token);
-    
 
         return view('superadmin.users', ['users'=>$users]);
     }
