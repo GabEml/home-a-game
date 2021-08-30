@@ -92,7 +92,6 @@ class UserController extends Controller
         $usersSearch = User::where('firstname', 'like', "%{$key}%")
             ->orWhere('lastname', 'like', "%{$key}%")
             ->orWhere('email', 'like', "%{$key}%")
-            ->andWhere('email', 'like', "%{$key}%")
             ->get();
         
         return view('superadmin.search', ['users'=>$users,'usersSearch'=>$usersSearch]);
