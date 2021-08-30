@@ -7,7 +7,7 @@
 @section ('content')
 
 <div class="row containerArticles">
-    @if (Auth::user()->role->role==="Admin Défis")
+    @if (Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
         @foreach ($sessiongames as $sessiongame)
                 <div class=" flex flex-col marginArticles col-lg-3 col-md-6 col-sm-12 containerPresentation justify-content-between">
                     <div class="flex flex-col">
@@ -67,7 +67,7 @@
     <div class="row">
         <div class="col-12 text-center">
             @auth
-                @if (Auth::user()->role->role==="Admin Défis")
+                @if (Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
                 <div>
                     <a class="btn btn-info" href="{{route('sessiongames.create')}}"> Ajouter une session</a>
                 </div>

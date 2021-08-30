@@ -19,7 +19,7 @@ class PostPolicy
      */
     public function viewAny(User $user)
     {
-        return Auth::user()->role->role==="Admin Défis";
+        return Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin";
     }
 
     /**
@@ -42,7 +42,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post)
     {
-        return Auth::user()->role->role==="Admin Défis";
+        return Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin";
     }
 
     /**
@@ -58,7 +58,7 @@ class PostPolicy
             return $post->state=="pending" or $post->challenge->editable==1;
         }
         else{
-            return Auth::user()->role->role==="Admin Défis";
+            return Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin";
         }
   
     }

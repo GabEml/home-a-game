@@ -38,7 +38,7 @@ class ChallengePolicy
      */
     public function create(User $user)
     {
-        return Auth::user()->role->role==="Admin Défis";
+        return Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin";
     }
 
     /**
@@ -50,7 +50,7 @@ class ChallengePolicy
      */
     public function update()
     {
-        return Auth::user()->role->role==="Admin Défis";
+        return Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin";
     }
 
     /**
@@ -62,7 +62,7 @@ class ChallengePolicy
      */
     public function delete()
     {
-        return Auth::user()->role->role==="Admin Défis";
+        return Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin";
     }
 
 }

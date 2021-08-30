@@ -87,6 +87,9 @@ Route::put('utilisateurs/{user}/role',[UserController::class, 'updateRole'])->mi
 Route::post('utilisateurs/{user}/sessiongames',[UserController::class, 'storeSessiongame'])->middleware('auth','verified')->name('users.storeSessiongame');
 Route::delete('utilisateurs/{sessiongameUser}/sessions',[UserController::class, 'deleteSessiongameUser'])->middleware('auth','verified')->name('users.destroySessiongameUser');
 Route::delete('utilisateurs/{user}',[UserController::class, 'destroy'])->middleware('auth','verified')->name('users.destroy');
+Route::get('utilisateurs/utilisateurs/search',[UserController::class, 'search'])->middleware('auth','verified')->name('users.search');
+
+
 
 Route::get('/tirage_gagnant/create',[RankingController::class, 'create'])->middleware('auth','verified')->name('ranking.create');
 Route::post('/tirage_gagnant',[RankingController::class, 'store'])->middleware('auth','verified')->name('ranking.store');

@@ -73,6 +73,33 @@ class UserController extends Controller
     }
 
     /**
+     * Search users
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $this->authorize('viewAny', User::class);
+
+        $key = $request->searchUser;
+
+        $users= DB::table('users')
+        ->select("users.id", "firstname", "lastname")
+        ->where('roles.role',"User")
+        ->join('roles','roles.id', '=', 'users.role_id')
+        ->get();
+
+        $usersSearch = User::where('firstname', 'like', "%{$key}%")
+            ->orWhere('lastname', 'like', "%{$key}%")
+            ->orWhere('email', 'like', "%{$key}%")
+            ->andWhere('email', 'like', "%{$key}%")
+            ->get();
+        
+        return view('superadmin.search', ['users'=>$users,'usersSearch'=>$usersSearch]);
+    }
+
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

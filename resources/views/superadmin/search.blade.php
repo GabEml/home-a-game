@@ -31,12 +31,35 @@
         <!-- Add CSRF Token -->
         @csrf
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Rechercher..." name="searchUser">
+            <input value="{{request()->searchUser ?? ''}}" type="text" class="form-control" placeholder="Rechercher..." name="searchUser">
             <span class="input-group-btn">
         <button class="btn btn-info" type="submit">Rechercher</button>
       </span>
         </div>
     </form>
+
+<br/><br/>
+@if ( $usersSearch->isEmpty())
+<div class="flex justify-content-center flex-column">
+    <div><p class="price text-center">Aucun utilisateurs trouvés !</p></div>
+</div>
+@else
+    <div class=" col-12 table-responsive">
+        <table class="table-bordered table-hover align-middle table tableGoodie">
+            @foreach ($usersSearch as $userSearch)
+            
+                <tbody>
+                    <td>
+                        {{$userSearch->firstname}} {{$userSearch->lastname}}  ({{$userSearch->email}})
+                    </td>
+                    <td class="text-center"> 
+                        <a class="btn btn-success" href="{{route('users.edit',$userSearch->id)}}"> Modifer</a>
+                    </td>
+                </tbody>
+            @endforeach
+        </table>
+    </div>
+@endif
 
     <br/><br/>
 

@@ -26,7 +26,7 @@ class SessiongamePolicy
             return Sessiongame::all()->where("id_user", $user->id)->where("id_sessiongame", $sessiongame->id)!==null;
         }
         else {
-            return Auth::user()->role->role==="Admin Défis";
+            return Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin";
         }
         
     }
@@ -45,7 +45,7 @@ class SessiongamePolicy
             and $sessiongame->start_date<=date('Y-m-d') and $sessiongame->end_date>=date('Y-m-d');
         }
         else {
-            return Auth::user()->role->role==="Admin Défis";
+            return Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin";
         }
         
     }
@@ -59,7 +59,7 @@ class SessiongamePolicy
      */
     public function create(User $user)
     {
-        return Auth::user()->role->role==="Admin Défis";
+        return Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin";
     }
 
     /**
@@ -71,7 +71,7 @@ class SessiongamePolicy
      */
     public function update()
     {
-        return Auth::user()->role->role==="Admin Défis";
+        return Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin";
     }
 
     /**
@@ -83,7 +83,7 @@ class SessiongamePolicy
      */
     public function delete()
     {
-        return Auth::user()->role->role==="Admin Défis";
+        return Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin";
     }
 
     /**
@@ -95,7 +95,7 @@ class SessiongamePolicy
      */
     public function draw()
     {
-        return Auth::user()->role->role==="Admin Défis";
+        return Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin";
     }
 
 }

@@ -22,7 +22,7 @@
                 <p>{{\Illuminate\Support\Str::limit($article->description, 100)}}</p>
                 <br/>
                 @auth
-                    @if (Auth::user()->role->role==="Admin Défis")
+                    @if (Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
                         <div class="flex justify-content-around">
                             <form action="{{route('articles.destroy',$article->id)}}" method="post">
                                 @csrf
@@ -49,7 +49,7 @@
     <div class="row">
         <div class="col-12 text-center">
             @auth
-                @if (Auth::user()->role->role==="Admin Défis")
+                @if (Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
                 <div>
                     <a class="btn btn-info" href="{{route('articles.create')}}"> Ajouter un article</a>
                 </div>

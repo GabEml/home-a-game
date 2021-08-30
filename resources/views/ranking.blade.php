@@ -50,7 +50,7 @@
 <div class="row">
   <div class="col-12 text-center">
       @auth
-          @if (Auth::user()->role->role==="Admin Défis")
+          @if (Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
               <div>
                   <a class="btn btn-info" href="{{route('ranking.create')}}">Tirage au sort</a>
               </div>

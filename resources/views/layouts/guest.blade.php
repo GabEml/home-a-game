@@ -62,7 +62,7 @@
                         </x-jet-nav-link>
                     </li>
                     @auth
-                    @if (Auth::user()->role->role==="User" or Auth::user()->role->role==="Admin Défis")
+                    @if (Auth::user()->role->role==="User" or Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
                         <li class="nav-item">
                             <x-jet-nav-link href="{{ route('sessiongames.index') }}" :active="request()->routeIs('sessiongames.index')">
                                 <h2 class="linkMenu">{{ __('Espace de jeu') }}</h2>
@@ -76,14 +76,14 @@
                             </x-jet-nav-link>
                         </li>
                     @endif
-                    @if (Auth::user()->role->role==="Admin Défis")
+                    @if (Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
                         <li class="nav-item">
                             <x-jet-nav-link href="{{ route('posts.indexPending') }}" :active="request()->routeIs('posts.indexPending')">
                                 <h2 class="linkMenu">{{ __('Validation défis') }}</h2>
                             </x-jet-nav-link>
                         </li>
                     @endif
-                    @if (Auth::user()->role->role==="User" or Auth::user()->role->role==="Admin Défis")
+                    @if (Auth::user()->role->role==="User" or Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
                         <li class="nav-item">
                             <x-jet-nav-link href="{{ route('goodies.index') }}" :active="request()->routeIs('goodies.index')">
                                 <h2 class="linkMenu">{{ __('Goodies') }}</h2>

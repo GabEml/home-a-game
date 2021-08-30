@@ -85,7 +85,7 @@ class GoodieController extends Controller
         $this->authorize('update', Goodie::class);
             $validateData=$request->validate([
                 'name' => "required|max:60|min:3|",Rule::unique('users')->ignore($goodie->id),
-                'image_path'=>'required|image|max:100000',
+                'image_path'=>'image|max:100000',
             ]);
 
             if ($request->hasFile('image_path')) {
