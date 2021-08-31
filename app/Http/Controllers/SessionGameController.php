@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sessiongame;
+use App\Models\Challenge;
 use App\Models\Goodie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +31,9 @@ class SessiongameController extends Controller
         // $dateNow= $dateNow['date'];
         $dateNow = date('Y-m-d');
 
-        return view('sessiongame.index',['sessiongames'=>$sessiongamesAll, 'sessiongamesUser'=>$sessiongamesUser, 'dateNow'=>$dateNow]);
+        $challengeCompleted = 0;
+
+        return view('sessiongame.index',['challengeCompleted'=>$challengeCompleted,'sessiongames'=>$sessiongamesAll, 'sessiongamesUser'=>$sessiongamesUser, 'dateNow'=>$dateNow]);
     }
 
     /**

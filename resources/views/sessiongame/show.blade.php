@@ -66,7 +66,7 @@
                     </div>
                 <br/>
                     <div>
-                        @if (Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
+                        @if (Auth::user()->role->role==="Admin Défis")
                             <div class="flex justify-content-around">
                                 <form action="{{route('challenges.destroy',$challenge->id)}}" method="post">
                                     @csrf
@@ -88,7 +88,7 @@
       </div>
 
 @auth
-    @if (Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
+    @if (Auth::user()->role->role==="Admin Défis")
         
         <div class="flex col-12 justify-content-between  btnChallengeAdmin">
             <div class="flex ">

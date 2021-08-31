@@ -48,6 +48,21 @@
                 <h2 class="align-self-center titleSession">{{$sessiongame->name}}</h2>
                 <br/>
                 <p class="align-self-center" >{{$sessiongame->start_date}} au {{$sessiongame->end_date}}</p>
+                <br/>
+                @php
+                $challengeCompleted=0
+                @endphp
+                @foreach ($sessiongame->challenges as $challenge)
+                    @foreach ($challenge->posts as $post)
+                        @if($post->user->id == Auth::user()->id)
+                            @php
+                                $challengeCompleted =$challengeCompleted+1
+                            @endphp
+                        @endif
+                    @endforeach
+                @endforeach
+                <p class="align-self-center" >Défis réalisés : {{$challengeCompleted}} sur {{$sessiongame->challenges->count()}}</p>
+               
             </div>
                     <br/>
                         <div>
