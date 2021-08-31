@@ -153,21 +153,23 @@
                 @foreach ($sessiongamesUser as $sessiongameUser)
                 
                     <tbody>
-                        <td>
-                            @if($sessiongameUser->type=="On The Road a Game")
-                                 {{$sessiongameUser->name}} du {{$sessiongameUser->start_date}} au {{$sessiongameUser->end_date}} (OTR)
-                            @else 
-                                 {{$sessiongameUser->name}} du {{$sessiongameUser->start_date}} au {{$sessiongameUser->end_date}} (@Home)
-                            @endif
-                        </td>
-                        <td class="text-center">
-                            <form class =" formDelete" action="{{ route('users.destroySessiongameUser',$sessiongameUser->pivot) }}" method="post">
-                                @method('DELETE')
-                                <!-- Add CSRF Token -->
-                                @csrf
-                                <button class="btn btn-danger" type="submit"> Supprimer </button> 
-                            </form>
-                        </td>
+                        <tr>
+                            <td>
+                                @if($sessiongameUser->type=="On The Road a Game")
+                                    {{$sessiongameUser->name}} du {{$sessiongameUser->start_date}} au {{$sessiongameUser->end_date}} (OTR)
+                                @else 
+                                    {{$sessiongameUser->name}} du {{$sessiongameUser->start_date}} au {{$sessiongameUser->end_date}} (@Home)
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                <form class =" formDelete" action="{{ route('users.destroySessiongameUser',$sessiongameUser->pivot) }}" method="post">
+                                    @method('DELETE')
+                                    <!-- Add CSRF Token -->
+                                    @csrf
+                                    <button class="btn btn-danger" type="submit"> Supprimer </button> 
+                                </form>
+                            </td>
+                        </tr>
                     </tbody>
                 @endforeach
             </table>

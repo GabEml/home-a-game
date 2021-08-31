@@ -54,14 +54,39 @@
               <div>
                   <a class="btn btn-info" href="{{route('ranking.create')}}">Tirage au sort</a>
               </div>
-              <br/>
-              @if ($winner!=="") 
-                <div class="flex justify-content-center flex-column">
-                    <div><p class="price text-center"> Le/La grand(e) gagnant(e) est {{$winner}}</p></div>
-                </div>
-              @endif
           @endif
       @endif
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 text-center">
+              <div>
+                <h2 class="titleProfile title">Voir le classement des sessions précédentes</h2>
+                <br/>
+                <div class=" col-12 table-responsive">
+                  <table class="table-bordered table-hover align-middle table tableGoodie">
+                      @foreach ($sessiongames as $sessiongame)
+                          <tbody>
+                            <tr>
+                                <td>
+                                  {{$sessiongame->name}} du {{$sessiongame->start_date}} au {{$sessiongame->end_date}}
+                                </td>
+                                <td class="text-center"> 
+                                    <a class="btn btn-info" href="{{route('ranking.previous',$sessiongame->id)}}"> Voir </a>
+                                </td>
+                            </tr>
+                      @endforeach
+                      <td>
+                        <strong>Session actuelle :</strong> {{$sessionCurrent->name}} du {{$sessionCurrent->start_date}} au {{$sessionCurrent->end_date}}
+                      </td>
+                      <td class="text-center"> 
+                          <a class="btn btn-info" href="{{route('ranking')}}"> Voir </a>
+                      </td>
+                    </tbody>
+                  </table>
+              </div>
+              </div>
   </div>
 </div>
 

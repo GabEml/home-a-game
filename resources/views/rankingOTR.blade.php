@@ -52,5 +52,36 @@
 
 <br/>
 
+<div class="row">
+  <div class="col-12 text-center">
+              <div>
+                <h2 class="titleProfile title">Voir le classement des sessions précédentes</h2>
+                <br/>
+                <div class=" col-12 table-responsive">
+                  <table class="table-bordered table-hover align-middle table tableGoodie">
+                      @foreach ($sessiongames as $sessiongame)
+                          <tbody>
+                            <tr>
+                                <td>
+                                  {{$sessiongame->name}} du {{$sessiongame->start_date}} au {{$sessiongame->end_date}}
+                                </td>
+                                <td class="text-center"> 
+                                    <a class="btn btn-info" href="{{route('rankingOTR.previous',$sessiongame->id)}}"> Voir </a>
+                                </td>
+                            </tr>
+                      @endforeach
+                      <td>
+                        <strong>Session actuelle :</strong> {{$sessionCurrent->name}} du {{$sessionCurrent->start_date}} au {{$sessionCurrent->end_date}}
+                      </td>
+                      <td class="text-center"> 
+                          <a class="btn btn-info" href="{{route('rankingOTR')}}"> Voir </a>
+                      </td>
+                    </tbody>
+                  </table>
+              </div>
+              </div>
+  </div>
+</div>
+
 <br/>
 @endsection

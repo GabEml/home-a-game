@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Sessiongame;
+use DateTime;
 
 class RankingController extends Controller
 {
@@ -37,12 +38,53 @@ class RankingController extends Controller
         }
 
         $position=0;
-        $winner="";
-        return view('ranking', ['users'=>$ranking, "position"=>$position, "session"=>$session, "winner"=>$winner]);
+
+        $dateNow = new DateTime;
+
+        $sessiongames = Sessiongame::where('type','Home a Game')->where("end_date" , '<' ,$dateNow)->get();
+        
+        return view('ranking', ['users'=>$ranking, "position"=>$position, "session"=>$session, "sessionCurrent"=>$session, "sessiongames"=>$sessiongames]);
     }
 
     /**
-     * ranking
+     * ranking previous
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function rankingPrevious(Sessiongame $sessiongame)
+    {
+        $sessionCurrent = DB::table('sessiongames')
+        ->where('start_date','<',date('Y-m-d'))
+        ->where('type','Home a Game')
+        ->orderByDesc('start_date')
+        ->first();
+
+        if($sessiongame!=NULL){
+            $ranking= DB::table('users')
+            ->select('users.firstname','users.lastname', DB::raw('SUM(user_point) as points'))
+            ->where('sessiongames.id',$sessiongame->id)
+            ->groupBy ('user_id')
+            ->join('posts','users.id', '=', 'posts.user_id')
+            ->join('challenges','challenges.id', '=', 'posts.challenge_id')
+            ->join('sessiongames','sessiongames.id', '=', 'challenges.sessiongame_id')
+            ->orderByDesc('points')
+            ->get();
+        }
+        else {
+            $ranking=NULL;
+        }
+
+        $position=0;
+
+        $dateNow = new DateTime;
+
+        $sessiongames = Sessiongame::where('type','Home a Game')->where("end_date" , '<' ,$dateNow)->get();
+        
+        return view('ranking', ['users'=>$ranking, "position"=>$position, "session"=>$sessiongame, "sessiongames"=>$sessiongames, "sessionCurrent"=>$sessionCurrent]);
+    }
+
+    /**
+     * ranking otr
      *
      * @return \Illuminate\Http\Response
      */
@@ -69,9 +111,49 @@ class RankingController extends Controller
             $ranking=NULL;
         }
 
+        $dateNow = new DateTime;
+
+        $sessiongames = Sessiongame::where('type','On The Road a Game')->where("end_date" , '<' ,$dateNow)->get();
+
         $position=0;
-        $winner="";
-        return view('rankingOTR', ['users'=>$ranking, "position"=>$position, "session"=>$session, "winner"=>$winner]);
+        return view('rankingOTR', ['users'=>$ranking, "position"=>$position, "session"=>$session,"sessionCurrent"=>$session, "sessiongames"=>$sessiongames]);
+    }
+
+    /**
+     * ranking otr previous
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function rankingOTRPrevious(Sessiongame $sessiongame)
+    {
+        $sessionCurrent = DB::table('sessiongames')
+        ->where('start_date','<',date('Y-m-d'))
+        ->where('type','On The Road a Game')
+        ->orderByDesc('start_date')
+        ->first();
+
+        if($sessiongame!=NULL){
+            $ranking= DB::table('users')
+            ->select('users.firstname','users.lastname', DB::raw('SUM(user_point) as points'))
+            ->where('sessiongames.id',$sessiongame->id)
+            ->groupBy ('user_id')
+            ->join('posts','users.id', '=', 'posts.user_id')
+            ->join('challenges','challenges.id', '=', 'posts.challenge_id')
+            ->join('sessiongames','sessiongames.id', '=', 'challenges.sessiongame_id')
+            ->orderByDesc('points')
+            ->get();
+        }
+        else {
+            $ranking=NULL;
+        }
+
+        $position=0;
+
+        $dateNow = new DateTime;
+
+        $sessiongames = Sessiongame::where('type','On The Road a Game')->where("end_date" , '<' ,$dateNow)->get();
+        
+        return view('rankingOTR', ['users'=>$ranking, "position"=>$position, "session"=>$sessiongame, "sessiongames"=>$sessiongames, "sessionCurrent"=>$sessionCurrent]);
     }
 
     /**

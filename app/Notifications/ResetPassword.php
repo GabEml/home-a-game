@@ -17,9 +17,10 @@ class ResetPassword extends Notification
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct($token, $email)
     {
         $this->token = $token;
+        $this->email = $email;
     }
 
      /**
@@ -82,6 +83,7 @@ class ResetPassword extends Notification
         
         return (new MailMessage)
             ->subject('Votre compte a été crée !')
+            ->cc($this->email)
             ->line('Vous recevez cet e-mail car un administrateur vient de créer votre compte sur @Home a Game !')
             ->line('Cliquer sur le lien pour configurer votre mot de passe')
             ->action('Configurer le mot de passe', $url)

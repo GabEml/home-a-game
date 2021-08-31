@@ -182,7 +182,7 @@ class UserController extends Controller
                  'created_at' => Carbon::now()->timezone('Europe/Paris')
                ]);
        
-       $user->sendPasswordResetNotificationAdmin($token);
+       $user->sendPasswordResetNotificationAdmin($token,Auth::user()->email);
 
         if ($request->filled('sessiongame_id')){
             for ($i = 0; $i < sizeof($validateData["sessiongame_id"]); $i++) {

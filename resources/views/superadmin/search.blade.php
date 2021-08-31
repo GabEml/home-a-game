@@ -49,12 +49,14 @@
             @foreach ($usersSearch as $userSearch)
             
                 <tbody>
-                    <td>
-                        {{$userSearch->firstname}} {{$userSearch->lastname}}  ({{$userSearch->email}})
-                    </td>
-                    <td class="text-center"> 
-                        <a class="btn btn-success" href="{{route('users.edit',$userSearch->id)}}"> Modifer</a>
-                    </td>
+                    <tr>
+                        <td>
+                            {{$userSearch->firstname}} {{$userSearch->lastname}}  ({{$userSearch->email}})
+                        </td>
+                        <td class="text-center"> 
+                            <a class="btn btn-success" href="{{route('users.edit',$userSearch->id)}}"> Modifer</a>
+                        </td>
+                </tr>
                 </tbody>
             @endforeach
         </table>

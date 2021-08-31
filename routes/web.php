@@ -44,6 +44,8 @@ Route::delete('articles/{article}',[ArticleController::class, 'destroy'])->middl
 
 Route::get('classement', [RankingController::class, 'ranking'])->name('ranking');
 Route::get('classement/OTR', [RankingController::class, 'rankingOTR'])->name('rankingOTR');
+Route::get('classement/OTR/{sessiongame}', [RankingController::class, 'rankingOTRPrevious'])->name('rankingOTR.previous');
+Route::get('classement/{sessiongame}', [RankingController::class, 'rankingPrevious'])->name('ranking.previous');
 
 Route::get('inscription_sessions', [SessiongameUserController::class, 'create'])->middleware('auth','verified')->name('sessiongameusers.create');
 Route::post('inscription_sessions',[SessiongameUserController::class, 'store'])->middleware('auth','verified')->name('sessiongameusers.store');
