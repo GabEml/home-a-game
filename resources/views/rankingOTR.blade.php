@@ -54,38 +54,39 @@
 
 <div class="row">
   <div class="col-12 text-center">
-              <div>
-                <h2 class="titleProfile title">Voir le classement des sessions précédentes</h2>
-                <br/>
-                <div class=" col-12 table-responsive">
-                  <table class="table-bordered table-hover align-middle table tableGoodie">
-                      @foreach ($sessiongames as $sessiongame)
-                          <tbody>
-                            @if($sessiongame->id != $session->id and $sessiongame->id !=$sessionCurrent->id)
-                              <tr>
-                                  <td>
-                                    {{$sessiongame->name}} du {{$sessiongame->start_date}} au {{$sessiongame->end_date}}
-                                  </td>
-                                  <td class="text-center"> 
-                                      <a class="btn btn-info" href="{{route('rankingOTR.previous',$sessiongame->id)}}"> Voir </a>
-                                  </td>
-                              </tr>
-                            @endif
-                      @endforeach
-                      @if($sessionCurrent->id != $session->id)
-                        <td>
-                          <strong>Session actuelle :</strong> {{$sessionCurrent->name}} du {{$sessionCurrent->start_date}} au {{$sessionCurrent->end_date}}
-                        </td>
-                        <td class="text-center"> 
-                            <a class="btn btn-info" href="{{route('rankingOTR')}}"> Voir </a>
-                        </td>
-                      @endif
-                    </tbody>
-                  </table>
-              </div>
-              </div>
+    <div>
+      <h2 class="titleProfile title">Voir le classement des sessions précédentes</h2>
+      <br/>
+      <div class=" col-12 table-responsive">
+          <table class="table-bordered table-hover align-middle table tableGoodie">
+            <tbody>
+              @foreach ($sessiongames as $sessiongame)
+                @if($sessiongame->id != $session->id and $sessiongame->id !=$sessionCurrent->id)
+                  <tr>
+                    <td>
+                      {{$sessiongame->name}} du {{$sessiongame->start_date}} au {{$sessiongame->end_date}}
+                    </td>
+                    <td class="text-center"> 
+                      <a class="btn btn-info" href="{{route('rankingOTR.previous',$sessiongame->id)}}"> Voir </a>
+                    </td>
+                  </tr>
+                @else 
+                  <p class="text-center">Il n'y a pas encore d'anciens classements !</p>
+                @endif
+              @endforeach
+              @if($sessionCurrent->id != $session->id)
+                <td>
+                  <strong>Session actuelle :</strong> {{$sessionCurrent->name}} du {{$sessionCurrent->start_date}} au {{$sessionCurrent->end_date}}
+                </td>
+                <td class="text-center"> 
+                  <a class="btn btn-info" href="{{route('rankingOTR')}}"> Voir </a>
+                </td>
+              @endif
+            </tbody>
+          </table>
+      </div>
+    </div>
   </div>
 </div>
-
 <br/>
 @endsection
