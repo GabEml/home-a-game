@@ -23,6 +23,19 @@
     <div class='col-12'>
         <p class="text-center">{{$sessiongame->description}}</p>
         <p class="text-center">Pour cette session, vous pouvez avoir la chance de gagner : {{$sessiongame->goodie->name}} !</p>
+        @if ($users==null)
+        <p class="text-center">Vous avez pour le moment 0 point, vous êtes dernier du classement !</p>
+        @else
+          @foreach ($users as $user)
+            @php
+                $position=$position+1
+            @endphp
+            @if($user->id == Auth::user()->id)
+                <p class="text-center">Vous avez pour le moment {{$user->points}} points, vous êtes {{$position}} du classement !</p>
+                @break
+            @endif
+            @endforeach
+         @endif
     </div>
     <br/>
 

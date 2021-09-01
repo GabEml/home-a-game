@@ -39,7 +39,11 @@
                   <tr>
                       <th scope="row">{{$position=$position+1}}</th>
                       <td>{{$user->firstname}} {{$user->lastname}}</td>
-                      <td>{{$user->points}}</td>
+                      @if ($user->points == NULL)
+                      <td>0</td>
+                      @else
+                        <td>{{$user->points}}</td>
+                      @endif
                   </tr>
               @endforeach
               @else 
@@ -73,8 +77,8 @@
                       <a class="btn btn-info" href="{{route('rankingOTR.previous',$sessiongame->id)}}"> Voir </a>
                     </td>
                   </tr>
-                @else 
-                <p class="text-center">Il n'y a pas encore d'anciens classements !</p>
+                @elseif($sessionCurrent->id == $session->id) 
+                  <p class="text-center">Il n'y a pas encore d'anciens classements !</p>
                 @endif
               @endforeach
               @if($sessionCurrent->id != $session->id)

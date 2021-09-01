@@ -37,7 +37,11 @@
                 <tr>
                     <th scope="row">{{$position=$position+1}}</th>
                     <td>{{$user->firstname}} {{$user->lastname}}</td>
-                    <td>{{$user->points}}</td>
+                    @if ($user->points == NULL)
+                      <td>0</td>
+                    @else
+                      <td>{{$user->points}}</td>
+                    @endif
                 </tr>
             @endforeach
            @endif
@@ -66,7 +70,7 @@
       <br/>
       <div class=" col-12 table-responsive">
         @if($sessiongames->isEmpty())
-          <p class="text-center">Il n'y a pas encore d'anciens classements !</p>
+          <p class="text-center">Il n'y a pas encore d'anciens classements !!</p>
         @else
           <table class="table-bordered table-hover align-middle table tableGoodie">
             <tbody>
@@ -80,7 +84,7 @@
                       <a class="btn btn-info" href="{{route('ranking.previous',$sessiongame->id)}}"> Voir </a>
                     </td>
                   </tr>
-                @else 
+                @elseif($sessionCurrent->id == $session->id) 
                   <p class="text-center">Il n'y a pas encore d'anciens classements !</p>
                 @endif
               @endforeach

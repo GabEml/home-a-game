@@ -106,7 +106,23 @@ class SessiongameController extends Controller
     public function show(SessionGame $sessiongame)
     {
         $this->authorize('view', $sessiongame);
-        return view('sessiongame.show', compact('sessiongame'));
+        if($sessiongame!=NULL){
+            $ranking= DB::table('users')
+            ->select('users.id', DB::raw('SUM(user_point) as points'))
+            ->where('sessiongames.id',$sessiongame->id)
+            ->groupBy ('user_id')
+            ->join('posts','users.id', '=', 'posts.user_id')
+            ->join('challenges','challenges.id', '=', 'posts.challenge_id')
+            ->join('sessiongames','sessiongames.id', '=', 'challenges.sessiongame_id')
+            ->orderByDesc('points')
+            ->get();
+        }
+        else {
+            $ranking=NULL;
+        }
+        $position=0;
+    
+        return view('sessiongame.show', ['users'=>$ranking, "position"=>$position, "sessiongame"=>$sessiongame]);
     }
 
     /**

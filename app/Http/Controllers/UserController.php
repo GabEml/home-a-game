@@ -164,7 +164,7 @@ class UserController extends Controller
         $user ->lastname = $validateData['lastname'];
         $user ->date_of_birth = $validateData['date_of_birth'];
         $user ->email = $validateData['email'];
-        $user ->password = Hash::make($validateData['firstname'].$validateData['lastname']);
+        $user ->password = Hash::make(Str::random(12));
         $user ->phone = $validateData['phone'];
         $user ->address = $validateData['address'];
         $user ->postal_code = $validateData['postal_code'];
