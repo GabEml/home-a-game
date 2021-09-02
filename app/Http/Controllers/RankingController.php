@@ -24,7 +24,7 @@ class RankingController extends Controller
 
         if($session!=NULL){
             $ranking= DB::table('sessiongame_user')
-            ->select('users.firstname','users.lastname', DB::raw('SUM(user_point) as points'))
+            ->select('users.id','users.firstname','users.lastname', DB::raw('SUM(user_point) as points'))
             ->join('users','users.id','=','sessiongame_user.user_id')
             ->leftjoin('posts', function ($join) use($session) {
                 $join->on('users.id', '=', 'posts.user_id')
@@ -56,7 +56,7 @@ class RankingController extends Controller
 
         $dateNow = new DateTime;
 
-        $sessiongames = Sessiongame::where('type','Home a Game')->where("end_date" , '<' ,$dateNow)->get();
+        $sessiongames = Sessiongame::where('type','Home a Game')->where("end_date" , '<' ,$dateNow)->where('id','!=',$session->id)->get();
         
         return view('ranking', ['users'=>$ranking, "position"=>$position, "session"=>$session, "sessionCurrent"=>$session, "sessiongames"=>$sessiongames]);
     }
@@ -79,7 +79,7 @@ class RankingController extends Controller
 
         if($sessiongame!=NULL){
             $ranking= DB::table('sessiongame_user')
-            ->select('users.firstname','users.lastname', DB::raw('SUM(user_point) as points'))
+            ->select('users.id','users.firstname','users.lastname', DB::raw('SUM(user_point) as points'))
             ->join('users','users.id','=','sessiongame_user.user_id')
             ->leftjoin('posts', function ($join) use($sessiongame){
                 $join->on('users.id', '=', 'posts.user_id')
@@ -110,7 +110,7 @@ class RankingController extends Controller
 
         $dateNow = new DateTime;
 
-        $sessiongames = Sessiongame::where('type','Home a Game')->where("end_date" , '<' ,$dateNow)->get();
+        $sessiongames = Sessiongame::where('type','Home a Game')->where("end_date" , '<' ,$dateNow)->where('id','!=',$sessionCurrent->id)->get();
         
         return view('ranking', ['users'=>$ranking, "position"=>$position, "session"=>$sessiongame, "sessiongames"=>$sessiongames, "sessionCurrent"=>$sessionCurrent]);
     }
@@ -130,7 +130,7 @@ class RankingController extends Controller
 
         if($session!=NULL){
             $ranking= DB::table('sessiongame_user')
-            ->select('users.firstname','users.lastname', DB::raw('SUM(user_point) as points'))
+            ->select('users.id','users.firstname','users.lastname', DB::raw('SUM(user_point) as points'))
             ->join('users','users.id','=','sessiongame_user.user_id')
             ->leftjoin('posts', function ($join) use($session){
                 $join->on('users.id', '=', 'posts.user_id')
@@ -159,7 +159,7 @@ class RankingController extends Controller
 
         $dateNow = new DateTime;
 
-        $sessiongames = Sessiongame::where('type','On The Road a Game')->where("end_date" , '<' ,$dateNow)->get();
+        $sessiongames = Sessiongame::where('type','On The Road a Game')->where("end_date" , '<' ,$dateNow)->where('id','!=',$session->id)->get();
 
         $position=0;
         return view('rankingOTR', ['users'=>$ranking, "position"=>$position, "session"=>$session,"sessionCurrent"=>$session, "sessiongames"=>$sessiongames]);
@@ -182,7 +182,7 @@ class RankingController extends Controller
 
         if($sessiongame!=NULL){
             $ranking= DB::table('sessiongame_user')
-            ->select('users.firstname','users.lastname', DB::raw('SUM(user_point) as points'))
+            ->select('users.id','users.firstname','users.lastname', DB::raw('SUM(user_point) as points'))
             ->join('users','users.id','=','sessiongame_user.user_id')
             ->leftjoin('posts', function ($join) use($sessiongame){
                 $join->on('users.id', '=', 'posts.user_id')
@@ -213,7 +213,7 @@ class RankingController extends Controller
 
         $dateNow = new DateTime;
 
-        $sessiongames = Sessiongame::where('type','On The Road a Game')->where("end_date" , '<' ,$dateNow)->get();
+        $sessiongames = Sessiongame::where('type','On The Road a Game')->where("end_date" , '<' ,$dateNow)->where('id','!=',$sessionCurrent->id)->get();
         
         return view('rankingOTR', ['users'=>$ranking, "position"=>$position, "session"=>$sessiongame, "sessiongames"=>$sessiongames, "sessionCurrent"=>$sessionCurrent]);
     }

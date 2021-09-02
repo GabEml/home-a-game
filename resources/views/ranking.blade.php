@@ -70,7 +70,7 @@
       <br/>
       <div class=" col-12 table-responsive">
         @if($sessiongames->isEmpty())
-          <p class="text-center">Il n'y a pas encore d'anciens classements !!</p>
+          <p class="text-center">Il n'y a pas encore d'anciens classements !</p>
         @else
           <table class="table-bordered table-hover align-middle table tableGoodie">
             <tbody>
@@ -84,8 +84,6 @@
                       <a class="btn btn-info" href="{{route('ranking.previous',$sessiongame->id)}}"> Voir </a>
                     </td>
                   </tr>
-                @elseif($sessionCurrent->id == $session->id) 
-                  <p class="text-center">Il n'y a pas encore d'anciens classements !</p>
                 @endif
               @endforeach
               @if($sessionCurrent->id != $session->id)
