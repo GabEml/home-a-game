@@ -25,10 +25,7 @@ class SessiongameController extends Controller
         $sessiongamesAll= Sessiongame::orderBy('start_date')->get();
         
         $user=User::where('id', Auth::user()->id)->first();
-        $sessiongamesUser = $user->sessiongames;
-
-        // $dateNow = new DateTime;
-        // $dateNow= $dateNow['date'];
+        $sessiongamesUser = $user->sessiongames()->orderByDesc('start_date')->get();
         $dateNow = date('Y-m-d');
 
         $challengeCompleted = 0;
@@ -107,13 +104,27 @@ class SessiongameController extends Controller
     {
         $this->authorize('view', $sessiongame);
         if($sessiongame!=NULL){
-            $ranking= DB::table('users')
+            $ranking= DB::table('sessiongame_user')
             ->select('users.id', DB::raw('SUM(user_point) as points'))
-            ->where('sessiongames.id',$sessiongame->id)
-            ->groupBy ('user_id')
-            ->join('posts','users.id', '=', 'posts.user_id')
-            ->join('challenges','challenges.id', '=', 'posts.challenge_id')
-            ->join('sessiongames','sessiongames.id', '=', 'challenges.sessiongame_id')
+            ->join('users','users.id','=','sessiongame_user.user_id')
+            ->leftjoin('posts', function ($join) use($sessiongame){
+                $join->on('users.id', '=', 'posts.user_id')
+                    ->whereIn('posts.challenge_id', function($query) use($sessiongame)
+                    {
+                        $query->select('id')
+                              ->from('challenges')
+                              ->where('sessiongame_id', "=", $sessiongame->id);
+                    });
+            })
+            ->leftJoin('challenges','challenges.id', '=', 'posts.challenge_id')
+            ->leftJoin('sessiongames','sessiongames.id', '=', 'challenges.sessiongame_id')
+            ->where('sessiongame_user.sessiongame_id',$sessiongame->id)
+            ->where('challenges.sessiongame_id',$sessiongame->id)
+            ->orWhere(function($query) use($sessiongame) {
+                $query->where('sessiongame_user.sessiongame_id', $sessiongame->id)
+                      ->whereNull('challenges.sessiongame_id');
+            })
+            ->groupBy ('sessiongames.id','sessiongame_user.user_id')
             ->orderByDesc('points')
             ->get();
         }

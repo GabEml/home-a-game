@@ -46,7 +46,7 @@ class PostController extends Controller
      */
     public function store(Request $request, Challenge $challenge)
     {
-        $this->authorize('create', Post::class);
+        $this->authorize('createPost', $challenge);
         if($challenge->type_of_file=="picture"){
 
             $validateData=$request->validate([

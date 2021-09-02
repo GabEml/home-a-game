@@ -67,41 +67,46 @@
             <br/><br/>
             <div>
                 <p class="titleChallenge">Votre post</p>
+                    
+                        @if($post==NULL)
+                        @can('createPost', $challenge)
+                            <br/>
+                            <form action="{{ route('challenges.posts.store',$challenge->id) }}" method="post" enctype="multipart/form-data">
+                                <!-- Add CSRF Token -->
+                                @csrf
+                            <fieldset>
+                                    
+                                    <div class="form-group">
+                                        @if ($challenge->type_of_file=="picture")
+                                            <label for="file_path" >Choississez votre photo (max 100Mo)</label>
+                                        @elseif ($challenge->type_of_file=="video")
+                                            <label for="file_path" >Choississez votre vidéo (max 100Mo)</label>
+                                        @else
+                                        <label for="file_path" >Choississez votre photo ou vidéo (max 100Mo)</label>
+                                        @endif
+                                        <br/>
+                                        <input type="file" class="form-control-file" name="file_path" required class=@error('file_path') is-invalid @enderror>
+                                    </div>
+                                    
+                            </fieldset> 
+                            @if($challenge->editable ==0)
+                                <p class="align-self-center text-center list-group-item list-group-item-danger"> <span class="warning">ATTENTION </span>, vous n'avez qu'une chance pour ce défi, une fois validée par l'administrateur vous ne pourrez pas le refaire !</p>
+                            @else
+                            <p class="align-self-center text-center list-group-item list-group-item-info">Vous avez plusieurs chance pour réaliser ce défi</p>
+                            @endif
+                            <br/>
+                                @error('file_path')
+                                <div class="alert alert-danger"> {{$message}} </div>
+                                @enderror 
+                            <br/>
+                            <div class="infoChallenge">
+                                <button type="submit" class="btn btn-info ">Ajouter</button>
+                            </div>
+                            </form>
 
-                    @if($post==NULL)
-                        <br/>
-                        <form action="{{ route('challenges.posts.store',$challenge->id) }}" method="post" enctype="multipart/form-data">
-                            <!-- Add CSRF Token -->
-                            @csrf
-                        <fieldset>
-                                
-                                <div class="form-group">
-                                    @if ($challenge->type_of_file=="picture")
-                                        <label for="file_path" >Choississez votre photo (max 100Mo)</label>
-                                    @elseif ($challenge->type_of_file=="video")
-                                        <label for="file_path" >Choississez votre vidéo (Accepté : mp4 | max 100Mo)</label>
-                                    @else
-                                    <label for="file_path" >Choississez votre photo ou vidéo (Accepté : mp4 et toutes images | max 100Mo)</label>
-                                    @endif
-                                    <br/>
-                                    <input type="file" class="form-control-file" name="file_path" required class=@error('file_path') is-invalid @enderror>
-                                </div>
-                                
-                        </fieldset> 
-                        @if($challenge->editable ==0)
-                            <p class="align-self-center text-center list-group-item list-group-item-danger"> <span class="warning">ATTENTION </span>, vous n'avez qu'une chance pour ce défi, une fois validée par l'administrateur vous ne pourrez pas le refaire !</p>
-                        @else
-                        <p class="align-self-center text-center list-group-item list-group-item-info">Vous avez plusieurs chance pour réaliser ce défi</p>
-                        @endif
-                        <br/>
-                            @error('file_path')
-                            <div class="alert alert-danger"> {{$message}} </div>
-                            @enderror 
-                        <br/>
-                        <div class="infoChallenge">
-                            <button type="submit" class="btn btn-info ">Ajouter</button>
-                        </div>
-                        </form>
+                    @else 
+                        <p class="list-group-item list-group-item-info text-center"> Vous ne pouvez plus poster la session est terminée.</p>
+                    @endcan
 
                     @else
 
@@ -139,6 +144,7 @@
 
                             @endif
                     @endif
+                    
             </div>
         </div>
         <div class="offset-lg-1 col-lg-4 col-md-12 contourChallenge validationPost backgroundValidation">

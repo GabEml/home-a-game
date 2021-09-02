@@ -77,8 +77,6 @@
                       <a class="btn btn-info" href="{{route('rankingOTR.previous',$sessiongame->id)}}"> Voir </a>
                     </td>
                   </tr>
-                @elseif($sessionCurrent->id == $session->id) 
-                  <p class="text-center">Il n'y a pas encore d'anciens classements !</p>
                 @endif
               @endforeach
               @if($sessionCurrent->id != $session->id)

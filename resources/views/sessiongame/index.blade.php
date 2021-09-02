@@ -62,11 +62,18 @@
                     @endforeach
                 @endforeach
                 <p class="align-self-center" >Défis réalisés : {{$challengeCompleted}} sur {{$sessiongame->challenges->count()}}</p>
-               
+                <br/>
+                @if($sessiongame->end_date<=$dateNow)
+                    <p class="statusSessiongame align-self-center text-danger "> Terminée</p>
+                @elseif($sessiongame->start_date<=$dateNow and $sessiongame->end_date>=$dateNow)
+                    <p class="statusSessiongame align-self-center text-success"> En cours</p>
+                @else
+                    <p class="statusSessiongame align-self-center text-info "> Prochainement..</p>
+                @endif
             </div>
                     <br/>
                         <div>
-                            @if($sessiongame->start_date<=$dateNow and $sessiongame->end_date>=$dateNow)
+                            @if($sessiongame->start_date<=$dateNow and $sessiongame->end_date>=$dateNow or $sessiongame->end_date<=$dateNow)
                             <a class="btn seeMore" href="{{route('sessiongames.show',$sessiongame->id)}}"> Voir</a>
                             @else
                             <a class="btn seeMore disabled" href="{{route('sessiongames.show',$sessiongame->id)}}"> Voir</a>

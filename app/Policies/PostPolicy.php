@@ -4,6 +4,8 @@ namespace App\Policies;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Challenge;
+use App\Models\SessiongameUser;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,9 +30,11 @@ class PostPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function create()
+    public function createPost(Challenge $challenge)
     {
-        return Auth::user()->role->role==="User";
+        return Auth::user()->role->role==="User"
+        and SessiongameUser::where("user_id", Auth::user()->id)->where("sessiongame_id", $challenge->sessiongame->id)->get()->isNotEmpty()
+        and $challenge->sessiongame->start_date<date('Y-m-d') and $challenge->sessiongame->end_date>date('Y-m-d') or $challenge->sessiongame->end_date<=date('Y-m-d');
     }
 
     /**

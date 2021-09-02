@@ -8,11 +8,46 @@ use App\Models\Goodie;
 use App\Models\SessiongameUser;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Auth;
+use Facade\FlareClient\Flare;
 
 class SessiongamePolicy
 {
     use HandlesAuthorization;
 
+
+    /**
+     * Determine whether the user view ranking previous.
+     *
+     * @param  \App\Models\Sessiongame  $sessiongame
+     * @return mixed
+     */
+    public function viewRanking(User $user, Sessiongame $sessiongame)
+    {
+    
+        $sessiongameCurrent=Sessiongame::where('start_date','<',date('Y-m-d'))
+        ->where('type','Home a Game')
+        ->orderByDesc('start_date')
+        ->first();
+
+        return $sessiongame->end_date<date('Y-m-d') and $sessiongame->type=="Home a Game" or $sessiongame->id == $sessiongameCurrent->id;
+    }
+
+    /**
+     * Determine whether the user view ranking previous.
+     *
+     * @param  \App\Models\Sessiongame  $sessiongame
+     * @return mixed
+     */
+    public function viewRankingOTR(User $user, Sessiongame $sessiongame)
+    {
+    
+        $sessiongameCurrent=Sessiongame::where('start_date','<',date('Y-m-d'))
+        ->where('type','On The Road a Game')
+        ->orderByDesc('start_date')
+        ->first();
+
+        return $sessiongame->end_date<date('Y-m-d') and $sessiongame->type=="On The Road a Game" or $sessiongame->id == $sessiongameCurrent->id;
+    }
 
     /**
      * Determine whether the user view models.
@@ -42,7 +77,7 @@ class SessiongamePolicy
         if (Auth::user()->role->role==="User"){
            
             return SessiongameUser::where("user_id", Auth::user()->id)->where("sessiongame_id", $sessiongame->id)->get()->isNotEmpty()
-            and $sessiongame->start_date<=date('Y-m-d') and $sessiongame->end_date>=date('Y-m-d');
+            and $sessiongame->start_date<=date('Y-m-d') and $sessiongame->end_date>=date('Y-m-d') or $sessiongame->end_date<=date('Y-m-d');
         }
         else {
             return Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin";

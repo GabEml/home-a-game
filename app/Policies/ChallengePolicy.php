@@ -25,7 +25,7 @@ class ChallengePolicy
  
         return Auth::user()->role->role==="User" 
         and SessiongameUser::where("user_id", Auth::user()->id)->where("sessiongame_id", $challenge->sessiongame->id)->get()->isNotEmpty()
-        and $challenge->sessiongame->start_date<date('Y-m-d') and $challenge->sessiongame->end_date>date('Y-m-d');
+        and $challenge->sessiongame->start_date<date('Y-m-d') and $challenge->sessiongame->end_date>date('Y-m-d') or $challenge->sessiongame->end_date<=date('Y-m-d');
 
         
     }
@@ -39,6 +39,19 @@ class ChallengePolicy
     public function create(User $user)
     {
         return Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin";
+    }
+
+    /**
+     * Determine whether the user can create models.
+     *
+     * @param  \App\Models\User  $user
+     * @return mixed
+     */
+    public function createPost(User $user,Challenge $challenge)
+    {
+        return Auth::user()->role->role==="User"
+        and SessiongameUser::where("user_id", Auth::user()->id)->where("sessiongame_id", $challenge->sessiongame->id)->get()->isNotEmpty()
+        and $challenge->sessiongame->start_date<date('Y-m-d') and $challenge->sessiongame->end_date>date('Y-m-d');
     }
 
     /**

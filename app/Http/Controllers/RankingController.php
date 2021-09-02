@@ -68,6 +68,9 @@ class RankingController extends Controller
      */
     public function rankingPrevious(Sessiongame $sessiongame)
     {
+        $this->authorize('viewRanking', $sessiongame);
+
+
         $sessionCurrent = DB::table('sessiongames')
         ->where('start_date','<',date('Y-m-d'))
         ->where('type','Home a Game')
@@ -129,17 +132,20 @@ class RankingController extends Controller
             $ranking= DB::table('sessiongame_user')
             ->select('users.firstname','users.lastname', DB::raw('SUM(user_point) as points'))
             ->join('users','users.id','=','sessiongame_user.user_id')
-            ->leftJoin('posts','users.id', '=', 'posts.user_id')
+            ->leftjoin('posts', function ($join) use($session){
+                $join->on('users.id', '=', 'posts.user_id')
+                    ->whereIn('posts.challenge_id', function($query) use($session)
+                    {
+                        $query->select('id')
+                              ->from('challenges')
+                              ->where('sessiongame_id', "=", $session->id);
+                    });
+            })
             ->leftJoin('challenges','challenges.id', '=', 'posts.challenge_id')
             ->leftJoin('sessiongames','sessiongames.id', '=', 'challenges.sessiongame_id')
             ->where('sessiongame_user.sessiongame_id',$session->id)
             ->where('challenges.sessiongame_id',$session->id)
-            ->orWhere(function($query) {
-                $session = DB::table('sessiongames')
-                ->where('start_date','<',date('Y-m-d'))
-                ->where('type','On The Road a Game')
-                ->orderByDesc('start_date')
-                ->first();
+            ->orWhere(function($query) use($session) {
                 $query->where('sessiongame_user.sessiongame_id', $session->id)
                       ->whereNull('challenges.sessiongame_id');
             })
@@ -166,6 +172,8 @@ class RankingController extends Controller
      */
     public function rankingOTRPrevious(Sessiongame $sessiongame)
     {
+        $this->authorize('viewRankingOTR', $sessiongame);
+
         $sessionCurrent = DB::table('sessiongames')
         ->where('start_date','<',date('Y-m-d'))
         ->where('type','On The Road a Game')
@@ -176,17 +184,20 @@ class RankingController extends Controller
             $ranking= DB::table('sessiongame_user')
             ->select('users.firstname','users.lastname', DB::raw('SUM(user_point) as points'))
             ->join('users','users.id','=','sessiongame_user.user_id')
-            ->leftJoin('posts','users.id', '=', 'posts.user_id')
+            ->leftjoin('posts', function ($join) use($sessiongame){
+                $join->on('users.id', '=', 'posts.user_id')
+                    ->whereIn('posts.challenge_id', function($query) use($sessiongame)
+                    {
+                        $query->select('id')
+                              ->from('challenges')
+                              ->where('sessiongame_id', "=", $sessiongame->id);
+                    });
+            })
             ->leftJoin('challenges','challenges.id', '=', 'posts.challenge_id')
             ->leftJoin('sessiongames','sessiongames.id', '=', 'challenges.sessiongame_id')
             ->where('sessiongame_user.sessiongame_id',$sessiongame->id)
             ->where('challenges.sessiongame_id',$sessiongame->id)
-            ->orWhere(function($query) {
-                $sessiongame = DB::table('sessiongames')
-                ->where('start_date','<',date('Y-m-d'))
-                ->where('type','On The Road a Game')
-                ->orderByDesc('start_date')
-                ->first();
+            ->orWhere(function($query) use($sessiongame) {
                 $query->where('sessiongame_user.sessiongame_id', $sessiongame->id)
                       ->whereNull('challenges.sessiongame_id');
             })
