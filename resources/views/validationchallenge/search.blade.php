@@ -20,7 +20,7 @@
         <!-- Add CSRF Token -->
         @csrf
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Rechercher..." name="searchPost">
+            <input value="{{request()->searchPost ?? ''}}" type="text" class="form-control" placeholder="Rechercher..." name="searchPost">
             <span class="input-group-btn">
         <button class="btn btn-info" type="submit">Rechercher</button>
       </span>
@@ -32,7 +32,7 @@
 
 <div class="row containerArticles">
     @if ($postsPending->isEmpty())
-        <div><p class="message">Vous avez validé tous les défis en attente !</p></div>
+        <div><p class="message">Aucun défi correspondant !</p></div>
     @else
         @foreach ($postsPending as $postPending)
                 <div class=" positionButton marginArticles col-lg-3 col-md-6 col-sm-12 containerPresentation">
@@ -45,7 +45,7 @@
                     </div>
                     <div class="flex flex-col justify-content-center">
                         @if (false !==mb_strpos($postPending->file_path, "/images"))
-                        <a href="{{$postPending->file_path}}"><img width="280px" height="auto" class="align-self-center imagePresentation" src="{{$postPending->file_path}}" alt="{{$postPending->challenge->title}}"></a>
+                        <a href="{{$postPending->file_path}}"><img width="280px" height="auto" class="align-self-center imagePresentation" src="{{$postPending->file_path}}" alt="{{$postPending->title}}"></a>
                             @else
                                 <video class="videoChallengePost" controls>
 
@@ -54,16 +54,16 @@
                                     <source src="{{$postPending->file_path}}" type="video/ogg">
                                 </video>
                             @endif
-                        <h2 class="align-self-center titleArticleHome">{{$postPending->challenge->title}}</h2>
+                        <h2 class="align-self-center titleArticleHome">{{$postPending->title}}</h2>
                     </div>
                     <br/>
                     <div>
                         <div class="">
-                            <div> <p>De : {{$postPending->user->firstname}} {{$postPending->user->lastname}}</p></div>
-                            @if ($postPending->challenge->unlimited_points ==1)
+                            <div> <p>De : {{$postPending->firstname}} {{$postPending->lastname}}</p></div>
+                            @if ($postPending->unlimited_points ==1)
                             <div> <p> Nombres de points : Illimités</p></div>
                             @else
-                                <div> <p> Nombres de points : {{$postPending->challenge->points}}</p></div>
+                                <div> <p> Nombres de points : {{$postPending->points}}</p></div>
                             @endif
                             
                         </div>

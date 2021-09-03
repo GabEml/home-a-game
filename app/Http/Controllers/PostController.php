@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use App\Models\Challenge;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -22,6 +24,31 @@ class PostController extends Controller
         
         return view('validationchallenge.pending', ['postsPending'=>$postsPending]);
 
+    }
+
+    /**
+     * Search users posts
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $this->authorize('viewAny', Post::class);
+
+        $key = $request->searchPost;
+
+        $postsSearch = User::where('posts.state',"pending")
+            ->where(function($query) use($key){
+                $query->orWhere('lastname', 'like', "%{$key}%")
+                    ->orWhere('firstname', 'like', "%{$key}%")
+                    ->orWhere('email', 'like', "%{$key}%")
+                    ->orWhere('challenges.title', 'like', "%{$key}%");
+            })
+            ->join('posts','users.id', '=', 'posts.user_id')
+            ->join('challenges','challenges.id', '=', 'posts.challenge_id')
+            ->get();
+        
+        return view('validationchallenge.search', ['postsPending'=>$postsSearch]);
     }
 
     /**

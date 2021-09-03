@@ -89,9 +89,13 @@ class UserController extends Controller
         ->join('roles','roles.id', '=', 'users.role_id')
         ->get();
 
-        $usersSearch = User::where('firstname', 'like', "%{$key}%")
-            ->orWhere('lastname', 'like', "%{$key}%")
-            ->orWhere('email', 'like', "%{$key}%")
+        $usersSearch = User::where('roles.role',"User")
+                ->where(function($query) use($key){
+                    $query->orWhere('lastname', 'like', "%{$key}%")
+                          ->orWhere('firstname', 'like', "%{$key}%")
+                          ->orWhere('email', 'like', "%{$key}%");
+                })
+            ->join('roles','roles.id', '=', 'users.role_id')
             ->get();
         
         return view('superadmin.search', ['users'=>$users,'usersSearch'=>$usersSearch]);
