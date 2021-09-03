@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use DateTime;
+use App\Notifications\DeleteUser as NotificationsDeleteUser;
 
 use Carbon\Carbon; 
 use Illuminate\Support\Facades\Mail;
@@ -351,6 +352,7 @@ class UserController extends Controller
 
         $user->tokens->each->delete();
         $user->delete();
+        $user->notify(new NotificationsDeleteUser($user->firstname . " " . $user->lastname));
 
         $users= DB::table('users')
         ->select("users.id", "firstname", "lastname")

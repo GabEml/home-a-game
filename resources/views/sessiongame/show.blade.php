@@ -40,7 +40,7 @@
                         @if($position==1)
                         vous êtes {{$position}}<sup>er</sup> du classement !</p>
                         @else 
-                        vous êtes {{$position}}<sup>ème</sup> du classement !</p>
+                        <sup>ème</sup> du classement !</p>
                         @endif
                     @else
                     le classement n'est pas encore dévoilé ! </p>
@@ -91,7 +91,7 @@
                     </div>
                 <br/>
                     <div>
-                        @if (Auth::user()->role->role==="Admin Défis")
+                        @if (Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
                             <div class="flex justify-content-around">
                                 <form action="{{route('challenges.destroy',$challenge->id)}}" method="post">
                                     @csrf
@@ -113,7 +113,7 @@
       </div>
 
 @auth
-    @if (Auth::user()->role->role==="Admin Défis")
+    @if (Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
         
         <div class="flex col-12 justify-content-between  btnChallengeAdmin">
             <div class="flex ">

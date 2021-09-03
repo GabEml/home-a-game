@@ -84,13 +84,15 @@ class ResetPassword extends Notification
         return (new MailMessage)
             ->subject('Votre compte a été crée !')
             ->cc($this->email)
+            ->line('Bonjour !')
             ->line('Vous recevez cet e-mail car un administrateur vient de créer votre compte sur @Home a Game !')
             ->line('Cliquer sur le lien pour configurer votre mot de passe')
             ->action('Configurer le mot de passe', $url)
-            ->line(" ")
+            ->line("\n")
             ->line(Lang::get('Ce lien expirera dans :count minutes.', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')]))
-            ->line("Si vous n'avez pas demandé à ce qu'on vous créer un compte, aucune autre action n'est requise");
-    }
+            ->line("Si vous n'avez pas demandé à ce qu'on vous créer un compte, aucune autre action n'est requise")
+            ->line('Cordialement,');
+        }
 
     /**
      * Get the array representation of the notification.

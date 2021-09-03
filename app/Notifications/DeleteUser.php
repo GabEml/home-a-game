@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class Sessiongame extends Notification
+class DeleteUser extends Notification
 {
     use Queueable;
 
@@ -16,10 +16,8 @@ class Sessiongame extends Notification
      *
      * @return void
      */
-    public function __construct(array $sessiongames, $mailAdmin, $user)
+    public function __construct($user)
     {
-        $this->sessiongames=$sessiongames;
-        $this->mailAdmin=$mailAdmin;
         $this->user=$user;
     }
 
@@ -42,15 +40,15 @@ class Sessiongame extends Notification
      */
     public function toMail($notifiable)
     {
-       
         return (new MailMessage)
-        ->subject('Vous êtes inscrit à des sessions !')
-        ->cc($this->mailAdmin)
-        ->line('Bonjour !')
-        ->line('Félicitations '. $this->user . ', vous êtes inscrit à :')
-        ->line($this->sessiongames)
-        ->line('Allez vite participer à la session en cours pour gagner !')
-        ->line('Cordialement,');
+        ->subject('Compte supprimé')
+        ->cc('athomeagame@gmail.com')
+        ->line('Bonjour '. $this->user . ',')
+        ->line('Nous avons bien procédé à la suppression de vos données utilisateur sur la plateforme de jeu On The Road a Game At Home Edition.')
+        ->line("Nous espérons que vous avez apprécié votre expérience avec nous et que ce départ n'est qu'un au revoir - pour mieux nous revenir dans un futur proche.")
+        ->line('A bientôt, on the road...')
+        ->line("L'équipe d'On The Road a Game")
+        ;
     }
 
     /**

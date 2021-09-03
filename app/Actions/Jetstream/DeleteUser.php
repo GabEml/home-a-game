@@ -3,6 +3,7 @@
 namespace App\Actions\Jetstream;
 
 use Laravel\Jetstream\Contracts\DeletesUsers;
+use App\Notifications\DeleteUser as NotificationsDeleteUser;
 
 class DeleteUser implements DeletesUsers
 {
@@ -17,5 +18,6 @@ class DeleteUser implements DeletesUsers
         //$user->deleteProfilePhoto();
         $user->tokens->each->delete();
         $user->delete();
+        $user->notify(new NotificationsDeleteUser($user->firstname . " " . $user->lastname));
     }
 }
