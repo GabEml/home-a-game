@@ -163,8 +163,9 @@
         
       </nav>
         <div class="logoImage flex flex-col">
-            <a href="{{ route('home') }}"><img src="/images/fondLogo.png"  alt="logo"></a>
-            <br/>
+            <a class="backgroundLogo" href="{{ route('home') }}"><img src="/images/fond.png"  alt="fond logo"></a>
+            <img class="logo" src="/images/logo.svg"  alt="logo">
+            <br/><br/>
             <h1 class="h1 title"> @yield('titlePage') </h1>
         </div>
         <br/>
