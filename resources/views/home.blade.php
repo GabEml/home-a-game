@@ -12,29 +12,29 @@
 <div class="row containerHome">
     <div class=" col-12 col-md-6 col-lg-3 d-flex containerPresentation">
         <div class="centerImageHome flex flex-col justify-content-center">
-            <img width="190px" height=auto class="align-self-center imagePresentation imagePresentationTimer" src="/images/sablier.png" alt="sablier">
-            <h2 class="align-self-center titlePresentation">Plusieurs sessions par an, limitées dans le temps</h2>
+            <a class="flex flex-col justify-content-center" href="{{route('presentation')}}#timer"><img width="190px" height=auto class="align-self-center imagePresentation imagePresentationTimer" src="/images/sablier.png" alt="sablier"></a>
+            <a class="titleLink" href="{{route('presentation')}}#timer"><h2 class="align-self-center titlePresentation">Plusieurs sessions par an, limitées dans le temps</h2></a>
         </div>
     </div>
 
     <div class=" col-12 col-md-6 col-lg-3 d-flex containerPresentation">
         <div class="centerImageHome flex flex-col justify-content-center">
-            <img width="180px" height=auto class="align-self-center imagePresentation imagePresentationTarget" src="/images/defis.png" alt="cible">
-            <h2 class="align-self-center titlePresentation">Des défis à relever seul ou en équipe</h2>
+             <a class="flex flex-col justify-content-center" href="{{route('presentation')}}#challenge"><img width="180px" height=auto class="align-self-center imagePresentation imagePresentationTarget" src="/images/defis.png" alt="cible"></a>
+           <a class="titleLink" href="{{route('presentation')}}#challenge"> <h2 class="align-self-center titlePresentation">Des défis à relever seul ou en équipe</h2></a>
         </div>
     </div>
 
     <div class=" col-12 col-md-6 col-lg-3 d-flex containerPresentation">
         <div class="centerImageHome flex flex-col justify-content-center">
-            <img width="180px" height=auto class="align-self-center imagePresentation imagePresentationGift" src="/images/cadeau.png" alt="cadeau">
-            <h2 class="align-self-center titlePresentation">Des cadeaux à gagner à chaque session</h2>
+             <a class="flex flex-col justify-content-center" href="{{route('presentation')}}#gift"><img width="180px" height=auto class="align-self-center imagePresentation imagePresentationGift" src="/images/cadeau.png" alt="cadeau"></a>
+           <a class="titleLink" href="{{route('presentation')}}#gift"> <h2 class="align-self-center titlePresentation">Des cadeaux à gagner à chaque session</h2></a>
         </div>
     </div>
 
     <div class=" col-12 col-md-6 col-lg-3 d-flex containerPresentation">
         <div class="centerImageHome flex flex-col justify-content-center">
-            <img width="180px" height=auto class="align-self-center imagePresentation imagePresentationMap" src="/images/ville.png" alt="ville">
-            <h2 class="align-self-center titlePresentation">Un moyen original de (re)découvrir sa région</h2>
+             <a class="flex flex-col justify-content-center" href="{{route('presentation')}}#city"><img width="180px" height=auto class="align-self-center imagePresentation imagePresentationMap" src="/images/ville.png" alt="ville"></a>
+           <a class="titleLink" href="{{route('presentation')}}#city"> <h2 class="align-self-center titlePresentation">Un moyen original de (re)découvrir sa région</h2></a>
         </div>
     </div>
 
@@ -58,7 +58,7 @@
     @foreach ($articles as $article)
             <div class=" positionButton col-12 col-md-6 col-lg-3 containerPresentation containerTheArticle">
                 <div class="flex flex-col justify-content-center">
-                    <img width="180px" height=auto class="align-self-center imagePresentation" src="{{$article->image_path}}" alt="trophee">
+                     <a class="flex flex-col justify-content-center" href="{{route('presentation')}}#city"><img width="180px" height=auto class="align-self-center imagePresentation" src="{{$article->image_path}}" alt="trophee">
                     <h2 class="align-self-center titleArticleHome">{{$article->title}}</h2>
                 </div>
                 <br/>

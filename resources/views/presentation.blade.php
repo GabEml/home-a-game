@@ -10,7 +10,7 @@
 
 
 <div class="row">
-    <div class="col-12 containerPresentation">
+    <div class="col-12 containerPresentation" id="timer">
         <div class="flex flex-col justify-content-center">
             <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/sablier.png" alt="sablier">
             <h2 class="align-self-center titlePresentation">Plusieurs sessions par an, limitées dans le temps</h2>
@@ -21,7 +21,7 @@
             <p>Vous pouvez évidemment participer à plusieurs sessions si vous le souhaitez et si vous vous sentez prêt à relever les défis !</p>
     </div>
 
-    <div class="col-12 containerPresentation">
+    <div class="col-12 containerPresentation" id="challenge">
         <div class="flex flex-col justify-content-center">
             <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/defis.png" alt="cible">
             <h2 class="align-self-center titlePresentation">Des défis à relever seul ou en équipe</h2>
@@ -34,7 +34,7 @@
             <p>Vous n'avez pas tous les points ? Pas de panique ! Vous pouvez toujours poster à nouveau au risque de faire moins bien !</p>
         </div>
 
-    <div class="col-12 containerPresentation">
+    <div class="col-12 containerPresentation" id="gift">
         <div class="flex flex-col justify-content-center">
             <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/cadeau.png" alt="cadeau">
             <h2 class="align-self-center titlePresentation">Des cadeaux à gagner à chaque session</h2>
@@ -45,7 +45,7 @@
             <p>Comme dit précédemment vous pouvez participer à plusieurs sessions, mais si vous êtes le grand vainqueur de plusieurs sessions, vous ne pouvez participer qu'une fois au tirage au sort</p>
     </div>
 
-    <div class="col-12 containerPresentation">
+    <div class="col-12 containerPresentation" id="city">
         <div class="flex flex-col justify-content-center">
             <img width="180px" height=auto class="align-self-center imagePresentation" src="/images/ville.png" alt="ville">
             <h2 class="align-self-center titlePresentation">Un moyen original de (re)découvrir sa région</h2>

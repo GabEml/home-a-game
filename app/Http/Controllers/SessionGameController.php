@@ -25,12 +25,24 @@ class SessiongameController extends Controller
         $sessiongamesAll= Sessiongame::orderBy('start_date')->get();
         
         $user=User::where('id', Auth::user()->id)->first();
-        $sessiongamesUser = $user->sessiongames()->orderByDesc('start_date')->get();
+
+        //On récupère les sessions de l'utilisateur qui sont en cours
+        $sessiongamesUserNow = $user->sessiongames()->where('start_date','<',date('Y-m-d'))
+        ->where('end_date','>',date('Y-m-d'))
+        ->orderBy('end_date')
+        ->get();
+
+        //On récupère les ids des sessions en cours pour ne pas les afficher 2 fois
+        $idSessiongamesNow = $sessiongamesUserNow->pluck('id');
+
+        //On récupère toutes les autres sessions auquelles il est inscrit, qu'elles soient futur ou passés
+        $sessiongamesUser = $user->sessiongames()->whereNotIn('sessiongames.id', $idSessiongamesNow)->orderByDesc('end_date')->get();
+
         $dateNow = date('Y-m-d');
 
         $challengeCompleted = 0;
 
-        return view('sessiongame.index',['challengeCompleted'=>$challengeCompleted,'sessiongames'=>$sessiongamesAll, 'sessiongamesUser'=>$sessiongamesUser, 'dateNow'=>$dateNow]);
+        return view('sessiongame.index',['challengeCompleted'=>$challengeCompleted,'sessiongames'=>$sessiongamesAll, 'sessiongamesUser'=>$sessiongamesUser,'sessiongamesUserNow'=>$sessiongamesUserNow, 'dateNow'=>$dateNow]);
     }
 
     /**
