@@ -12,11 +12,11 @@
         @csrf
        <fieldset>
            
-            {{-- <div class="form-group">
+            <div class="form-group">
                 <label for="price" >Prix (€)</label>
-                <input value="{{ old('price') }}" type="number" step="any" class="form-control" name="price" class=@error('price') is-invalid @enderror />
-            <small>Si vous ne mettez pas de prix, il est fixé à 40€ par défault</small>
-            </div> --}}
+                <input value="{{ old('price') }}" required type="number" step="any" class="form-control" name="price" class=@error('price') is-invalid @enderror />
+            {{-- <small>Si vous ne mettez pas de prix, il est fixé à 40€ par défault</small> --}}
+            </div>
             
             <div class="form-group">
                 <label for="name">Nom </label>

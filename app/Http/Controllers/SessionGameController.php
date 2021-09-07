@@ -71,7 +71,7 @@ class SessiongameController extends Controller
         $sessiongame=new Sessiongame();
         
             $validateData=$request->validate([
-                'price' => 'numeric',
+                'price' => 'required|numeric',
                 'name' => 'required|max:60|min:3',
                 'description' => 'required|min:5', 
                 'start_date' => 'required|date|after_or_equal:tomorrow', 
@@ -82,9 +82,6 @@ class SessiongameController extends Controller
                 'see_ranking'=> 'integer|in:0,1',
             ]);
 
-            if ($request->filled('price')){
-            $sessiongame->price = $validateData["price"];
-            }
             if ($request->filled('see_ranking')){
                 $sessiongame->see_ranking = $validateData["see_ranking"];
             }
@@ -98,6 +95,7 @@ class SessiongameController extends Controller
         $sessiongame->description = $validateData["description"];
         $sessiongame->start_date = $validateData["start_date"];
         $sessiongame->end_date = $validateData["end_date"];
+        $sessiongame->price = $validateData["price"];
         $sessiongame->image_path=$path;
         $sessiongame->goodie_id = $validateData["goodie"];
         $sessiongame->save();
@@ -176,7 +174,7 @@ class SessiongameController extends Controller
             $validateData=$request->validate([
                 'name' => 'required|max:60|min:3',
                 'description' => 'required|min:5', 
-                'price' => 'numeric',
+                'price' => 'required|numeric',
                 'start_date' => 'required|date|', 
                 'end_date'=>'required|date|after:start_date',
                 'goodie'=>'required|integer|exists:goodies,id',
@@ -190,10 +188,6 @@ class SessiongameController extends Controller
             }
             else{
                 $sessiongame->see_ranking = 1;
-            }
-
-            if ($request->filled('price')){
-                $sessiongame->price = $validateData["price"];
             }
         
 
@@ -220,6 +214,7 @@ class SessiongameController extends Controller
         $sessiongame->description = $validateData["description"];
         $sessiongame->start_date = $validateData["start_date"];
         $sessiongame->end_date = $validateData["end_date"];
+        $sessiongame->price = $validateData["price"];
         $sessiongame->type = $validateData["type"];
         $sessiongame->goodie_id = $validateData["goodie"];
         $sessiongame->update();

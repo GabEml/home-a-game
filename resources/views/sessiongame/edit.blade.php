@@ -11,11 +11,11 @@
         <!-- Add CSRF Token -->
         @csrf
         @method('PUT')
-        {{-- <div class="form-group">
+        <div class="form-group">
             <label for="price" >Prix (€)</label>
-            <input type="number" value="{{$sessiongame->price}}" step="any" class="form-control" name="price" class=@error('price') is-invalid @enderror />
-        <small>Si vous ne mettez pas de prix, il est fixé à 40€ par défault</small>
-        </div> --}}
+            <input type="number" value="{{$sessiongame->price}}" required step="any" class="form-control" name="price" class=@error('price') is-invalid @enderror />
+        {{-- <small>Si vous ne mettez pas de prix, il est fixé à 40€ par défault</small> --}}
+        </div>
         <div class="form-group">
             <label for="name">Nom </label>
             <input value="{{$sessiongame->name}}" type="text" required name="name" id="name" class="form-control"class=@error('name') is-invalid @enderror >
