@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
@@ -13,11 +14,15 @@ use Laravel\Sanctum\HasApiTokens;
 /**
  * Le modèle User qui est lié à la table users dans la base de données
  * 
- * @author Clara Vesval et Giovanni Ventoso B2B Info <clara.vesval@ynov.com> <giovanni.ventoso@ynov.com>
+ * @author Clara Vesval <clara.vesval@ynov.com> 
  * 
  */
 
-class User extends Authenticatable
+// Pour l'envoi de mail
+// class User extends Authenticatable implements MustVerifyEmail
+
+
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
@@ -120,4 +125,10 @@ class User extends Authenticatable
     protected $appends = [
         //'profile_photo_url',
     ];
+
+    public function sendPasswordResetNotificationAdmin($token, $email)
+    {
+        // Your your own implementation.
+        $this->notify(new ResetPasswordNotification($token, $email));
+    }
 }

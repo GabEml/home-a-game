@@ -16,6 +16,7 @@ class CreateGoodiesTable extends Migration
         Schema::create('goodies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('image_path');
             $table->engine = 'InnoDB';
         });
     }

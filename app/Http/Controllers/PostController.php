@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use App\Models\Challenge;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -22,6 +24,31 @@ class PostController extends Controller
         
         return view('validationchallenge.pending', ['postsPending'=>$postsPending]);
 
+    }
+
+    /**
+     * Search users posts
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $this->authorize('viewAny', Post::class);
+
+        $key = $request->searchPost;
+
+        $postsSearch = User::where('posts.state',"pending")
+            ->where(function($query) use($key){
+                $query->orWhere('lastname', 'like', "%{$key}%")
+                    ->orWhere('firstname', 'like', "%{$key}%")
+                    ->orWhere('email', 'like', "%{$key}%")
+                    ->orWhere('challenges.title', 'like', "%{$key}%");
+            })
+            ->join('posts','users.id', '=', 'posts.user_id')
+            ->join('challenges','challenges.id', '=', 'posts.challenge_id')
+            ->get();
+        
+        return view('validationchallenge.search', ['postsPending'=>$postsSearch]);
     }
 
     /**
@@ -46,11 +73,14 @@ class PostController extends Controller
      */
     public function store(Request $request, Challenge $challenge)
     {
-        $this->authorize('create', Post::class);
+        $this->authorize('createPost', $challenge);
         if($challenge->type_of_file=="picture"){
 
             $validateData=$request->validate([
-                'file_path'=>'required|image|max:5000',
+                'file_path'=>'required|image|max:100000',
+            ],[
+                'file_path.image'=>'Le fichier de preuve doit être une image.',
+                'file_path.max'=>'Vous dépassez la taille maximale (100Mo).'
             ]);
 
             // Save the file locally in the storage/public/ folder under a new folder named /product
@@ -58,27 +88,48 @@ class PostController extends Controller
             $path ="/".$request->file('file_path')->store('images');
             }
 
-            if($challenge->type_of_file=="video"){
+        else if($challenge->type_of_file=="video"){
 
-                $validateData=$request->validate([
-                    'file_path'=>'required|mimes:mp4|max:5000',
-                ]);
+            $validateData=$request->validate([
+                'file_path'=>'required|mimetypes:video/x-ms-wmv,video/webm,video/ogg,video/x-m4v,video/x-msvideo,video/3gpp,video/MP2T,application/x-mpegURL,video/x-flv,video/mp4,video/avi,video/mpeg,video/quicktime|max:100000',
+            ],[
+                'file_path.mimes'=>'Le fichier de preuve doit être une vidéo mp4',
+                'file_path.max'=>'Vous dépassez la taille maximale (100Mo).'
+            ]);
     
-                // Save the file locally in the storage/public/ folder under a new folder named /product
+            // Save the file locally in the storage/public/ folder under a new folder named /product
+            $request->file_path->store('videos', 'public');
+            $path ="/".$request->file('file_path')->store('videos');
+        }
+        else {
+            $validateData=$request->validate([
+                'file_path'=>'required|mimetypes:image/png,image/svg+xml,image/bmp,image/jpeg,image/webp,image/gif,
+                video/x-ms-wmv,video/webm,video/ogg,video/x-m4v,video/x-msvideo,video/3gpp,video/MP2T,application/x-mpegURL,video/x-flv,video/mp4,video/avi,video/mpeg,video/quicktime|max:100000',
+            ],[
+                'file_path.mimes'=>"Le fichier de preuve n'a pas le bon format",
+                'file_path.max'=>'Vous dépassez la taille maximale (100Mo).'
+            ]);
+ 
+            //On vérifie si c'est une image
+            if (false !== mb_strpos($validateData["file_path"]->getMimeType(), "image")) {
+                $request->file_path->store('images', 'public');
+                $path ="/".$request->file('file_path')->store('images');
+            }
+            else {
                 $request->file_path->store('videos', 'public');
                 $path ="/".$request->file('file_path')->store('videos');
-                }
-    
-    
+            }
+        }
+
             $post=new Post();
             $post->file_path=$path;
             $post->user_id=Auth::user()->id;
             $post->challenge_id=$challenge->id;
             $post->state="pending";
-            $post->save();
-        
+            $post->save();  
 
             return redirect()->route('challenges.show', ['challenge'=>$challenge]);
+            
     }
 
 
@@ -99,16 +150,39 @@ class PostController extends Controller
         else{
             $test=32;
         }
-        $maxPoints = $post->challenge->points;
 
-        $validateData=$request->validate([
+        $maxPointsPost = $post->challenge->points;
+
+        if($post->challenge->unlimited_points==1){
+            $validateData=$request->validate([
             'state' => 'required|in:validated,partly_validated,not_validated', 
-            'user_point'=>"required|min:0|max:$maxPoints",
-            'comment'=>'required|max:255|min:4'
+            'user_point'=>"required_if:state,partly_validated|numeric|nullable|min:0|max:2147483647",
+            'comment'=>'nullable|max:255|min:2'
         ]);
-        
+
         $post->state = $validateData["state"];
         $post->user_point = $validateData["user_point"];
+        }
+
+        else {
+            $validateData=$request->validate([
+            'state' => 'required|in:validated,partly_validated,not_validated', 
+            'user_point'=>"required_if:state,partly_validated|numeric|nullable|min:0|max:$maxPointsPost",
+            'comment'=>'nullable|max:255|min:2'
+            ]);
+        
+            $post->state = $validateData["state"];
+            if($validateData["state"]==="validated"){
+                $post->user_point =$maxPointsPost;
+            }
+            else if($validateData["state"]==="partly_validated"){
+                $post->user_point = $validateData["user_point"];
+            }
+            else{
+                $post->user_point =0;
+            }
+        }
+
         $post->comment = $validateData["comment"];
         $post->update();
 
@@ -134,6 +208,16 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('delete', $post);
+        $path = $post->file_path;
+
+            //Pour utiliser is_file, il faur enlever le "/" qui est au début du chemin de l'image dans la bdd
+            $path = substr($path,1);
+            
+            if(is_file($path))
+            {
+            //Supprimer l'image du dossier
+            unlink(public_path($post->file_path));
+        }
         $post->delete();
         $challenge=$post->challenge;
 

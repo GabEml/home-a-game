@@ -19,7 +19,7 @@ class CreatePostsTable extends Migration
             $table->string('file_path');
             $table->integer('user_point')->nullable();
             $table->enum('state', ['pending','validated','partly_validated','not_validated'])->default('pending');
-            $table-> foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table-> foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('challenge_id')->constrained('challenges')->onDelete('cascade');
             $table->engine = 'InnoDB';
         });

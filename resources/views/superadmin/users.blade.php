@@ -17,11 +17,7 @@
 <br/><br/>
 
 <div class=" contourForm col-12 col-md-6 offset-md-3">
-    <form action="{{ route('users.store') }}" method="post" class="">
-        <!-- Add CSRF Token -->
-        @csrf
-       <fieldset>
-        @if ($users->isEmpty())
+    @if ($users->isEmpty())
         <div class="flex justify-content-center flex-column">
             <div><p class="price text-center">Il n'y a aucun utilisateurs !</p></div>
         </div>
@@ -30,6 +26,24 @@
             <p class="sessions text-center">Choississez un utilisateur a modifier</p>
         </div>
         <br/>
+
+    <form action="{{ route('users.search') }}" method="get" role="search">
+        <!-- Add CSRF Token -->
+        @csrf
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Rechercher..." name="searchUser">
+            <span class="input-group-btn">
+        <button class="btn btn-info" type="submit">Rechercher</button>
+      </span>
+        </div>
+    </form>
+
+    <br/><br/>
+
+    <form action="{{ route('users.store') }}" method="post" class="">
+        <!-- Add CSRF Token -->
+        @csrf
+       <fieldset>
 
         <div class="form-group">
                 <br/>
@@ -51,9 +65,8 @@
             </div>
        </div>
        @endif
-
-       </div>
     </form>
+
 </div>
 
 <br/>

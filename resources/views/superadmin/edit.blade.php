@@ -42,7 +42,7 @@
 
                     <div class="form-group">
                         <label for="phone" >Numéro de téléphone </label>
-                        <input value="{{$user->phone }}" type="tel" pattern="0[1-9][0-9]{8}" class="form-control" name="phone" class=@error('phone') is-invalid @enderror />
+                        <input value="{{$user->phone }}" type="tel" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$" class="form-control" name="phone" class=@error('phone') is-invalid @enderror />
                     </div>
             
                 
@@ -89,8 +89,98 @@
     </div>
 
     <div class="col-md-4 col-12 informationsProfil">
+        <h2 class="titleEditProfile">Gérer les sessions de l'utilisateur</h2>
+        <p>Ajouter ou supprimer des sessions à l'utilisateur.</p>
+    </div>
+
+    <div class="ProfileForm col-12 col-md-8">
+
+        <form action="{{ route('users.storeSessiongame',$user->id) }}" method="post">
+            @method('POST')
+            <!-- Add CSRF Token -->
+            @csrf
+        <fieldset>
+            <h3 class="titleProfileSession"> Ajouter des sessions</h3>
+            <br/>
+            @if ($sessiongames->isEmpty())
+            <div class="flex justify-content-center flex-column">
+                <div><p class="price text-center">Il n'y a aucunes sessions à ajouter pour le moment !</p></div>
+            </div>
+            @else
+            <br/>
+            @foreach ($sessiongames as $sessiongame)
+                <div class="form-check form-check-inline flex justify-content-center ">
+                    <input class="form-check-input" type="checkbox" value="{{$sessiongame->id}}" name="sessiongame_id[]" class=@error('sessiongame_id') is-invalid @enderror>
+                    @if($sessiongame->type=="On The Road a Game")
+                        <label class="form-check-label" for="flexCheckDefault">
+                         {{$sessiongame->name}} du {{$sessiongame->start_date}} au {{$sessiongame->end_date}} (OTR)
+                        </label>
+                    @else 
+                        <label class="form-check-label" for="flexCheckDefault">
+                         {{$sessiongame->name}} du {{$sessiongame->start_date}} au {{$sessiongame->end_date}} (@Home)
+                        </label>
+                    @endif
+                </div>
+            @endforeach
+            
+        </fieldset>
+        <br/>
+        @error('sessiongame_id')
+        <div class="alert alert-danger"> {{$message}} </div>
+        @enderror 
+
+        <br/>
+
+        <div class="flex justify-content-end">
+            <button type="submit" class="btn btn-info ">Ajouter</button>
+        </div>
+        @endif
+        </form>
+
+        <br/>
+            
+       
+        <h3 class="titleProfileSession"> Supprimer des sessions</h3>
+        @if ($sessiongamesUser->isEmpty())
+            <div class="flex justify-content-center flex-column">
+                <div><p class="price text-center">Il n'a aucune session pour le moment !</p></div>
+            </div> 
+        
+        @else
+        <br/>
+        <div class=" col-12 table-responsive">
+            <table class="table-bordered table-hover align-middle table tableGoodie">
+                @foreach ($sessiongamesUser as $sessiongameUser)
+                
+                    <tbody>
+                        <tr>
+                            <td>
+                                @if($sessiongameUser->type=="On The Road a Game")
+                                    {{$sessiongameUser->name}} du {{$sessiongameUser->start_date}} au {{$sessiongameUser->end_date}} (OTR)
+                                @else 
+                                    {{$sessiongameUser->name}} du {{$sessiongameUser->start_date}} au {{$sessiongameUser->end_date}} (@Home)
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                <form class =" formDelete" action="{{ route('users.destroySessiongameUser',$sessiongameUser->pivot) }}" method="post">
+                                    @method('DELETE')
+                                    <!-- Add CSRF Token -->
+                                    @csrf
+                                    <button class="btn btn-danger" type="submit"> Supprimer </button> 
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                @endforeach
+            </table>
+        </div>
+        @endif
+        <br/>
+    </div>
+
+    <div class="col-md-4 col-12 informationsProfil">
         <h2 class="titleEditProfile">Modifier son rôle</h2>
-        <p>Assurez-vous de données les bons droits.</p>
+        <p>Assurez-vous de donner les bons droits.</p>
     </div>
 
     <div class="ProfileForm col-12 col-md-8">
@@ -98,7 +188,7 @@
             @method('PUT')
             <!-- Add CSRF Token -->
             @csrf
-        <fieldset class="">
+        <fieldset>
             
                     <div class="form-group">
                         <label for="role" > Rôle </label>
@@ -146,7 +236,7 @@
     <fieldset class="">
         
                 <div class="form-group">
-                    <label for="delete" > Une fois votre compte supprimé, toutes ses ressources et données seront définitivement supprimées. </label>
+                    <label for="delete" > Une fois le compte supprimé, toutes ses ressources et données seront définitivement supprimées. </label>
                 </div>
 
     </fieldset>
@@ -171,4 +261,7 @@
 
     </div>
 </div>
+
+<br/>
+
 @endsection

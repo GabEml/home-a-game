@@ -1,8 +1,9 @@
+<meta name="description" content="Inscrivez-vous à @ Home a Game un jeu d'aventure hors du commun pour vivre l'expérience On The Road a Game près de chez soi ! Votre mission: relever un max de défis. Votre objectif: battre les autres et tenter de gagner un voyage.">
 <x-guest-layout>
     <x-jet-authentication-card>
         
         <x-slot name="logo">
-            <div class="logoRegister flex flex-col">
+            <div class="logoRegister testLogo flex flex-col">
             <x-jet-authentication-card-logo />
             <h1 class="h1 title"> Créer son compte </h1>
             <p class="description ">Entrez vos informations personnelles</p>
@@ -16,7 +17,7 @@
             @csrf
 
             <div class="flex registrationForm">
-                <div class="fields">
+                <div class="col-12 col-md-6">
                     <div>
                         <x-jet-label for="firstname" value="{{ __('Prénom') }}" />
                         <x-jet-input id="firstname" class="block mt-1 w-full" type="text" name="firstname" :value="old('firstname')" required autofocus autocomplete="firstname" />
@@ -29,7 +30,7 @@
 
                     <div class="mt-4">
                         <x-jet-label for="date_of_birth" value="{{ __('Date de naissance') }}" />
-                        <x-jet-input id="date_of_birth" class="block mt-1 w-full" type="date" name="date_of_birth" required />
+                        <x-jet-input id="date_of_birth" :value="old('date_of_birth')" class="block mt-1 w-full" type="date" name="date_of_birth" required />
                     </div>
 
                     <div class="mt-4">
@@ -47,10 +48,10 @@
                         <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
                     </div>
                 </div>
-                <div class="fields">
+                <div class="col-12 col-md-6">
                     <div>
                         <x-jet-label for="phone" value="{{ __('Numéro de téléphone') }}" />
-                        <x-jet-input pattern="0[1-9][0-9]{8}" id="phone" class="block mt-1 w-full" type="tel" name="phone" :value="old('phone')" required autofocus autocomplete="phone" />
+                        <x-jet-input pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$" id="phone" class="block mt-1 w-full" type="tel" name="phone" :value="old('phone')" required autofocus autocomplete="phone" />
                     </div>
 
                     <div class="mt-4">
@@ -65,7 +66,7 @@
 
                     <div class="mt-4">
                         <x-jet-label for="city" value="{{ __('Ville') }}" />
-                        <x-jet-input id="city" class="block mt-1 w-full" type="text" name="city" :value="old('city')" required autocomplete="new-password" />
+                        <x-jet-input id="city" class="block mt-1 w-full" type="text" name="city" :value="old('city')" required />
                     </div>
 
                     <div class="mt-4">

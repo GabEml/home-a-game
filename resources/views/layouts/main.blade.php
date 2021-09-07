@@ -2,18 +2,22 @@
 
 <html>
     <head>
-        <title>Home a Game - @yield('title')</title>
+        <title>@yield('title') - @ Home a Game</title>
 
+        <meta name="description" content="@yield('description')">
+        <meta name="keywords" content="Home a Game, @Home a Game, OTR, On The Road a Game, jeu, défis, cadeaux, voyage">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Acme&family=Poppins:wght@100&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
         
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-        <link rel="icon" href="/images/logo.png" />
+        <link rel="icon" href="/images/logo.svg" />
         
 
         <!-- Styles -->
@@ -63,7 +67,7 @@
                         </x-jet-nav-link>
                     </li>
                     @auth
-                    @if (Auth::user()->role->role==="User" or Auth::user()->role->role==="Admin Défis")
+                    @if (Auth::user()->role->role==="User" or Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
                         <li class="nav-item">
                             <x-jet-nav-link href="{{ route('sessiongames.index') }}" :active="request()->routeIs('sessiongames.index')">
                                 <h2 class="linkMenu">{{ __('Espace de jeu') }}</h2>
@@ -77,14 +81,14 @@
                             </x-jet-nav-link>
                         </li>
                     @endif
-                    @if (Auth::user()->role->role==="Admin Défis")
+                    @if (Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
                         <li class="nav-item">
                             <x-jet-nav-link href="{{ route('posts.indexPending') }}" :active="request()->routeIs('posts.indexPending')">
                                 <h2 class="linkMenu">{{ __('Validation défis') }}</h2>
                             </x-jet-nav-link>
                         </li>
                     @endif
-                    @if (Auth::user()->role->role==="Admin Défis")
+                    @if (Auth::user()->role->role==="User" or Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
                         <li class="nav-item">
                             <x-jet-nav-link href="{{ route('goodies.index') }}" :active="request()->routeIs('goodies.index')">
                                 <h2 class="linkMenu">{{ __('Goodies') }}</h2>
@@ -109,7 +113,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item" href="{{ route('profile.show') }}">Mon Profil</a>
-                      <a class="dropdown-item" href="{{ route('api-tokens.index')}}">API Token</a>
+                      {{-- <a class="dropdown-item" href="{{ route('api-tokens.index')}}">API Token</a> --}}
                       <a class="dropdown-item" href="/deconnexion">Se déconnecter</a>
                       
                       
@@ -138,6 +142,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item" href="{{ route('profile.show') }}">Mon Profil</a>
+                      {{-- <a class="dropdown-item" href="{{ route('api-tokens.index')}}">API Token</a> --}}
                       <a class="dropdown-item" href="/deconnexion">Se déconnecter</a>
                       
                     </div>
@@ -145,12 +150,12 @@
                 @else
                     <div>
                         <x-jet-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
-                            <h2 class="linkMenu">{{ __('Se connecter') }}</h2>
+                            <h2 class="linkMenu linkMenuNotConnected">{{ __('Se connecter') }}</h2>
                         </x-jet-nav-link>
                     </div>
                     <div>
                         <x-jet-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
-                            <h2 class="linkMenu"> {{ __("S'inscrire") }}</h2>
+                            <h2 class="linkMenu linkMenuNotConnected linkRegister"> {{ __("S'inscrire") }}</h2>
                         </x-jet-nav-link>
                     </div>
                 @endif
@@ -158,8 +163,9 @@
         
       </nav>
         <div class="logoImage flex flex-col">
-            <img src="/images/fondLogo.png"  alt="logo">
-            <br/>
+            <a  href="{{ route('home') }}"><img class="backgroundLogo" src="/images/fond.png"  alt="fond logo"></a>
+            <a class="logo" href="{{ route('home') }}"><img class="logo" src="/images/logo.svg"  alt="logo"></a>
+            <br/><br/>
             <h1 class="h1 title"> @yield('titlePage') </h1>
         </div>
         <br/>

@@ -20,8 +20,23 @@
             
             <div class="form-group">
                 <label for="points">Nombres de points</label>
-                <input value="{{ $challenge->points }}" type="number" required name="points" id="points" class="form-control" class=@error('points') is-invalid @enderror >
+                <input value="{{ $challenge->points }}" type="number"  name="points" id="points" class="form-control" class=@error('points') is-invalid @enderror >
             </div>
+
+            <div class="form-check form-check-inline flex justify-content-center ">
+                @if($challenge->unlimited_points == 0)
+                    <input class="form-check-input" type="checkbox" value="1" name="unlimited_points" class=@error('unlimited_points') is-invalid @enderror>
+                @else
+                    <input class="form-check-input" type="checkbox" checked value="1" name="unlimited_points" class=@error('unlimited_points') is-invalid @enderror>
+                @endif
+                
+                
+                <label class="form-check-label" for="flexCheckDefault">
+                    Points illimités
+                </label>
+            </div>
+
+            <br/>
             
             <div class="form-group">
                 <label for='type_of_file'> Type de post accepté</label>
@@ -30,16 +45,22 @@
                         @if($challenge->type_of_file =="picture")
                         <option value="picture" selected> Photo </option>
                         <option value="video"> Vidéo </option>
-                        @else 
+                        <option value="both"> Les deux </option>
+                        @elseif ($challenge->type_of_file =="video")
                         <option value="picture" > Photo </option>
                         <option value="video" selected> Vidéo </option>
+                        <option value="both"> Les deux </option>
+                        @else
+                        <option value="picture" > Photo </option>
+                        <option value="video"> Vidéo </option>
+                        <option value="both" selected> Les deux </option>
                         @endif
                     </select>
             </div>
 
             <br/>
 
-            <label for='filenames'> Images</label>
+            <label for='filenames'> Images (max 100Mo)</label>
             <div class="form-group input-group control-group increment flex justify-content-between">
                 <input type="file" name="filenames[]" class=@error('filename') is-invalid @enderror>
                 <div > 
@@ -56,7 +77,19 @@
             </div>
             <small> Vous pouvez choisir autant d'images que vous le souhaitez</small>
 
-            <br/>
+            <br/><br/>
+
+            <div class="form-check form-check-inline flex justify-content-center ">
+                @if($challenge->editable == 0)
+                    <input class="form-check-input" type="checkbox" value="1" name="editable" class=@error('editable') is-invalid @enderror>
+                @else
+                    <input class="form-check-input" type="checkbox" value="1" name="editable" checked class=@error('editable')  is-invalid @enderror>
+                @endif  
+                
+                <label class="form-check-label" for="flexCheckDefault">
+                    Ce défi peut être réalisé plusieurs fois
+                </label>
+            </div>
             
        </fieldset>
        @if ($errors->any())

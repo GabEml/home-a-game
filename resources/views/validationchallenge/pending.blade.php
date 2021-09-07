@@ -13,7 +13,22 @@
     </div>
 </div>
 
-<br/><br/>
+<br/>
+
+<div class=" col-12 col-md-6 offset-md-3">
+    <form action="{{ route('posts.search') }}" method="get" role="search">
+        <!-- Add CSRF Token -->
+        @csrf
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Rechercher..." name="searchPost">
+            <span class="input-group-btn">
+        <button class="btn btn-info" type="submit">Rechercher</button>
+      </span>
+        </div>
+    </form>
+</div>
+
+<br/>
 
 <div class="row containerArticles">
     @if ($postsPending->isEmpty())
@@ -29,13 +44,14 @@
                         </form>
                     </div>
                     <div class="flex flex-col justify-content-center">
-                        @if ($postPending->challenge->type_of_file=="picture")
-                        <img width="280px" height="auto" class="align-self-center imagePresentation" src="{{$postPending->file_path}}" alt="{{$postPending->challenge->title}}">
+                        @if (false !==mb_strpos($postPending->file_path, "/images"))
+                        <a href="{{$postPending->file_path}}"><img width="280px" height="auto" class="align-self-center imagePresentation" src="{{$postPending->file_path}}" alt="{{$postPending->challenge->title}}"></a>
                             @else
                                 <video class="videoChallengePost" controls>
 
-                                    <source src="{{$postPending->file_path}}"
-                                            type="video/mp4">
+                                    <source src="{{$postPending->file_path}}" type="video/webm">
+                                    <source src="{{$postPending->file_path}}" type="video/mp4">
+                                    <source src="{{$postPending->file_path}}" type="video/ogg">
                                 </video>
                             @endif
                         <h2 class="align-self-center titleArticleHome">{{$postPending->challenge->title}}</h2>
@@ -43,8 +59,13 @@
                     <br/>
                     <div>
                         <div class="">
-                            <div> <p>De : {{$postPending->user->firstname}}</p></div>
-                            <div> <p> Nombres de points : {{$postPending->challenge->points}}</p></div>
+                            <div> <p>De : {{$postPending->user->firstname}} {{$postPending->user->lastname}}</p></div>
+                            @if ($postPending->challenge->unlimited_points ==1)
+                            <div> <p> Nombres de points : Illimités</p></div>
+                            @else
+                                <div> <p> Nombres de points : {{$postPending->challenge->points}}</p></div>
+                            @endif
+                            
                         </div>
                         <br/>
                         <form action="{{route('posts.update',$postPending->id)}}" method="post">
@@ -62,16 +83,19 @@
                             
                             <div class="form-group">
                                 <label for="user_point">Nombres de points :</label>
-                                <input type="number" min=0 max="{{$postPending->challenge->points}}"  value="{{$postPending->user_point}}" required name="user_point" id="user_point" class="form-control"class=@error('user_point') is-invalid @enderror ></input>
+                                <input type="number" min=0  value="{{$postPending->user_point}}" name="user_point" id="user_point" class="form-control"class=@error('user_point') is-invalid @enderror >
                             </div>
                             
                             <div class="form-group">
                                 <label for="comment">Commentaire :</label>
-                                <textarea required name="comment" id="comment" class="form-control"class=@error('comment') is-invalid @enderror ></textarea>
+                                <textarea name="comment" id="comment" class="form-control"class=@error('comment') is-invalid @enderror ></textarea>
                             </div>
-                
-                            
+                            <div class="flex justify-content-center">
+                                <small><a href="{{$postPending->file_path}}" download>(Télécharger)</a></small>
+                            </div>
+                            <br/>
                     </fieldset>
+                    
                     <div class="flex justify-content-center">
                             <button type="submit" class="btn btn-info ">Valider</button>
                     </div>

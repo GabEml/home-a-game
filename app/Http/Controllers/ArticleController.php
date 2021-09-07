@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
@@ -56,8 +57,8 @@ class ArticleController extends Controller
         $this->authorize('create', Article::class);
             $validateData=$request->validate([
                 'title' => 'required|max:60|min:5|unique:articles',
-                'description' => 'required|min:10', // Only allow .jpg, .bmp and .png file types.
-                'image_path'=>'required|image|max:5000',
+                'description' => 'required|min:10', 
+                'image_path'=>'required|image|max:100000',// Only allow .jpg, .bmp and .png file types.
             ]);
 
             // Save the file locally in the storage/public/ folder under a new folder named /product
@@ -111,17 +112,29 @@ class ArticleController extends Controller
     {
         $this->authorize('update', Article::class);
         $validateData=$request->validate([
-            'title' => 'required|max:60|min:5',
-            'description' => 'required|min:10', // Only allow .jpg, .bmp and .png file types.
-            'image_path'=>'image|max:5000',
+            'title' => 'required|max:60|min:5',Rule::unique('users')->ignore($article->id),
+            'description' => 'required|min:10', 
+            'image_path'=>'image|max:100000',// Only allow .jpg, .bmp and .png file types.
         ]);
 
         if ($request->hasFile('image_path')) {
-        // Save the file locally in the storage/public/ folder under a new folder named /product
-        $request->image_path->store('images', 'public');
-        $path ="/".$request->file('image_path')->store('images');
+            $path = $article->image_path;
 
-        $article->image_path=$path;
+            //Pour utiliser is_file, il faur enlever le "/" qui est au début du chemin de l'image dans la bdd
+            $path = substr($path,1);
+            
+            if(is_file($path))
+            {
+                //Supprimer l'image du dossier
+                unlink(public_path($article->image_path));
+        
+
+                // Save the file locally in the storage/public/ folder under a new folder named /product
+                $request->image_path->store('images', 'public');
+                $path ="/".$request->file('image_path')->store('images');
+
+                $article->image_path=$path;
+            }
         }
 
         $article->title = $validateData["title"];
@@ -140,6 +153,16 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $this->authorize('delete', Article::class);
+        $path = $article->image_path;
+
+        //Pour utiliser is_file, il faur enlever le "/" qui est au début du chemin de l'image dans la bdd
+        $path = substr($path,1);
+
+        if(is_file($path))
+        {
+        //Supprimer l'image du dossier
+        unlink(public_path($article->image_path));
+        }
         $article->delete();
         return redirect('/articles');
     }

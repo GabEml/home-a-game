@@ -12,7 +12,7 @@
        <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('sessiongames.index') }}">Espace Jeu</a></li>
-                <li class="breadcrumb-item "><a href="{{ route('sessiongames.show', $sessiongame->id) }}">Session du {{$sessiongame->start_date}} au {{$sessiongame->end_date}} </a></li>
+                <li class="breadcrumb-item "><a href="{{ route('sessiongames.show', $sessiongame->id) }}">{{$sessiongame->name}} </a></li>
                 <li class="breadcrumb-item active">{{$challenge->title}}</li>
                 
             </ol>
@@ -52,54 +52,79 @@
                 <p class="titleChallenge">{{$challenge->title}}</p>
                 @if ($challenge->type_of_file=="picture")
                     <p> Vous devez fournir une photo</p>
-                @else
+                @elseif ($challenge->type_of_file=="video")
                     <p> Vous devez fournir une vidéo</p>
+                @else 
+                <p> Vous devez fournir une photo ou bien une vidéo</p>
                 @endif
-                <p>Nombres de points : {{$challenge->points}}</p>
+                @if ($challenge->unlimited_points==1)
+                <p>Nombres de points : Illimités</p>
+                @else
+                    <p>Nombres de points : {{$challenge->points}}</p>
+                @endif
+                
             </div>
             <br/><br/>
             <div>
                 <p class="titleChallenge">Votre post</p>
+                    
+                        @if($post==NULL)
+                        @can('createPost', $challenge)
+                            <br/>
+                            <form action="{{ route('challenges.posts.store',$challenge->id) }}" method="post" enctype="multipart/form-data">
+                                <!-- Add CSRF Token -->
+                                @csrf
+                            <fieldset>
+                                    
+                                    <div class="form-group">
+                                        @if ($challenge->type_of_file=="picture")
+                                            <label for="file_path" >Choississez votre photo (max 100Mo)</label>
+                                        @elseif ($challenge->type_of_file=="video")
+                                            <label for="file_path" >Choississez votre vidéo (max 100Mo)</label>
+                                        @else
+                                        <label for="file_path" >Choississez votre photo ou vidéo (max 100Mo)</label>
+                                        @endif
+                                        <br/>
+                                        <input type="file" class="form-control-file" name="file_path" required class=@error('file_path') is-invalid @enderror>
+                                    </div>
+                                    
+                            </fieldset> 
+                            @if($challenge->editable ==0)
+                                <p class="align-self-center text-center list-group-item list-group-item-danger"> <span class="warning">ATTENTION </span>, vous n'avez qu'une chance pour ce défi, une fois validée par l'administrateur vous ne pourrez pas le refaire !</p>
+                            @else
+                            <p class="align-self-center text-center list-group-item list-group-item-info">Vous avez plusieurs chance pour réaliser ce défi</p>
+                            @endif
+                            <br/>
+                                @error('file_path')
+                                <div class="alert alert-danger"> {{$message}} </div>
+                                @enderror 
+                            <br/>
+                            <div class="infoChallenge">
+                                <button type="submit" class="btn btn-info ">Ajouter</button>
+                            </div>
+                            </form>
 
-                    @if($post==NULL)
-                        <br/>
-                        <form action="{{ route('challenges.posts.store',$challenge->id) }}" method="post" enctype="multipart/form-data">
-                            <!-- Add CSRF Token -->
-                            @csrf
-                        <fieldset>
-                                
-                                <div class="form-group">
-                                    @if ($challenge->type_of_file=="picture")
-                                        <label for="file_path" >Choississez votre photo</label>
-                                    @else
-                                        <label for="file_path" >Choississez votre vidéo (Accepté : mp4)</label>
-                                    @endif
-                                    <br/>
-                                    <input type="file" name="file_path" required class=@error('file_path') is-invalid @enderror>
-                                </div>
-                                
-                        </fieldset> 
-                        @error('file_path')
-                            <div class="alert alert-danger"> {{$message}} </div>
-                            @enderror 
-                        <br/>
-                        <div class="infoChallenge">
-                            <button type="submit" class="btn btn-info ">Ajouter</button>
-                        </div>
-                        </form>
+                    @else 
+                        <p class="list-group-item list-group-item-info text-center"> Vous ne pouvez plus poster la session est terminée.</p>
+                    @endcan
 
                     @else
 
-                        @if ($challenge->type_of_file=="picture")
+                        @if (false !==mb_strpos($post->file_path, "/images"))
                             <img src="{{$post->file_path}}" alt="{{$challenge->title}}" class="d-block imageChallengePost" />
                         @else
                             <video class="videoChallengePost" controls width="250">
 
-                                <source src="{{$post->file_path}}"
-                                        type="video/mp4">
+                                <source src="{{$post->file_path}}" type="video/webm">
+                                <source src="{{$post->file_path}}" type="video/mp4">
+                                <source src="{{$post->file_path}}" type="video/ogg">
                             </video>
+                        
+                            <p class="text-center"> Pas de panique si votre vidéo ne s'affiche pas, <a href="{{$post->file_path}}" download>cliquez ici pour la télécharger</a></p>
+                            <p class="text-center"> Si vous n'arrivez pas à la télécharger, il faut changer le format de la vidéo !</p>
+                            
                         @endif
-                            @if($post->state!="validated")
+                            @if($challenge->editable==1 or $post->state=="pending")
                                 <div class="infoChallenge">
                                     <form action="{{route('posts.destroy',$post->id)}}" method="post">
                                         @csrf
@@ -108,13 +133,18 @@
                                     </form>
 
                                     <div>
-                                        <p>Si votre défi est en attente ou que vous n'avez pas tous les points vous pouvez le supprimer et reposter</p>
-                                        <br/>
-                                        <p class="list-group-item list-group-item-danger"> <span class="warning">ATTENTION </span>, si vous le supprimez, vous perdrez vos points, quitte à en gagner moins avec un autre post !</p>
-                                    </div>
+                                        @if($post->state=="pending")
+                                        <p class="align-self-center text-center list-group-item list-group-item-info">Tant que le défi est en attente, vous pouvez toujours le supprimer et poster à nouveau</p>
+                                        @else
+                                            <p class="list-group-item list-group-item-info"> <span class="warning">ATTENTION </span>, si vous supprimez votre post, vous perdrez vos points pour ce défi, quitte à en gagner moins avec un autre post !</p>
+                                        @endif
+                                        </div>
                                 </div>
+
+
                             @endif
                     @endif
+                    
             </div>
         </div>
         <div class="offset-lg-1 col-lg-4 col-md-12 contourChallenge validationPost backgroundValidation">
@@ -144,11 +174,20 @@
                     </tr>
                     <tr>
                         <td class="infoValidation">Commentaire : </td>
+                        @if ($post->comment==NULL)
+                        <td class="resultValidation">Aucun commentaire</td>
+                        @else
                             <td class="resultValidation">{{$post->comment}}</td>
+                        @endif
+                            
                     </tr>
                     <tr>
                         <td class="infoValidation">Nombres de points :</td>
-                        <td class="resultValidation">{{$post->user_point}}/{{$challenge->points}}</td>
+                        @if ($challenge->unlimited_points==1)
+                            <td class="resultValidation">{{$post->user_point}}</td>
+                        @else 
+                            <td class="resultValidation">{{$post->user_point}}/{{$challenge->points}}</td>
+                        @endif
                     </tr>
                 @endif
             </table>

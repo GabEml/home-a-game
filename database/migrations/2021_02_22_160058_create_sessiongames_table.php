@@ -15,9 +15,12 @@ class CreateSessiongamesTable extends Migration
     {
         Schema::create('sessiongames', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->text('description');
             $table->float('price')->default(40.00);
             $table->date('start_date');
             $table->date('end_date');
+            $table->string('image_path');
             $table -> foreignId('goodie_id')->nullable()->constrained('goodies')->onDelete('set null');
             $table->engine = 'InnoDB';
         });

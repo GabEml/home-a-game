@@ -1,6 +1,9 @@
+   <meta name="description" content="Connectez-vous à @ Home a Game un jeu d'aventure hors du commun pour vivre l'expérience On The Road a Game près de chez soi ! Votre mission: relever un max de défis. Votre objectif: battre les autres et tenter de gagner un voyage.">
+
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
+            <div class="logoRegister flex flex-col">
             <x-jet-authentication-card-logo />
             <h1 class="h1 title"> Se connecter </h1>
         </x-slot>

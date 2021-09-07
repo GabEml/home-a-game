@@ -1,6 +1,7 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
+            <div class="logoRegister testLogo flex flex-col">
             <x-jet-authentication-card-logo />
         </x-slot>
 
@@ -28,9 +29,10 @@
 
             <div class="flex items-center justify-end mt-4">
                 <x-jet-button>
-                    {{ __('Reset Password') }}
+                    {{ __('Réinitialiser mon mot de passe') }}
                 </x-jet-button>
             </div>
         </form>
     </x-jet-authentication-card>
+    <br/>
 </x-guest-layout>

@@ -2,12 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Sessiongame;
+use App\Models\SessiongameUser;
+use App\Notifications\Sessiongame as NotificationsSessiongame;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use DateTime;
+use App\Notifications\DeleteUser as NotificationsDeleteUser;
+
+use Carbon\Carbon; 
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -64,6 +74,36 @@ class UserController extends Controller
     }
 
     /**
+     * Search users
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $this->authorize('viewAny', User::class);
+
+        $key = $request->searchUser;
+
+        $users= DB::table('users')
+        ->select("users.id", "firstname", "lastname")
+        ->where('roles.role',"User")
+        ->join('roles','roles.id', '=', 'users.role_id')
+        ->get();
+
+        $usersSearch = User::where('roles.role',"User")
+                ->where(function($query) use($key){
+                    $query->orWhere('lastname', 'like', "%{$key}%")
+                          ->orWhere('firstname', 'like', "%{$key}%")
+                          ->orWhere('email', 'like', "%{$key}%");
+                })
+            ->join('roles','roles.id', '=', 'users.role_id')
+            ->get();
+        
+        return view('superadmin.search', ['users'=>$users,'usersSearch'=>$usersSearch]);
+    }
+
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -71,8 +111,11 @@ class UserController extends Controller
     public function create()
     {
         $this->authorize('create', User::class);
+        $dateNow = new DateTime;
+
         $roles= Role::all();
-        return view('superadmin.create',['roles'=>$roles]);
+        $sessiongames = Sessiongame::where("end_date" , '>' ,$dateNow)->get();
+        return view('superadmin.create',['roles'=>$roles,'sessiongames'=>$sessiongames]);
     }
 
     /**
@@ -92,7 +135,7 @@ class UserController extends Controller
         $idUser=$validateData["user"];
         $user = User::where('id', $idUser)->first();
 
-        return view('superadmin.edit', ['user'=>$user]);
+        return redirect()->route('users.edit', ['user'=>$user]);
     }
 
     /**
@@ -105,6 +148,8 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
 
+        $arrSessiongame=array();
+
         $validateData=$request->validate([
             'firstname' => 'required| string| max:255',
             'lastname' => 'required| string| max:255',
@@ -116,13 +161,15 @@ class UserController extends Controller
             'city' => 'required| string| max:255',
             'country' => 'required| string| max:255',
             'role_id'=> 'required|integer|exists:roles,id',
+            'sessiongame_id' => "exists:sessiongames,id",
         ]);
+
         $user = new User();
         $user ->firstname = $validateData['firstname'];
         $user ->lastname = $validateData['lastname'];
         $user ->date_of_birth = $validateData['date_of_birth'];
         $user ->email = $validateData['email'];
-        $user ->password = Hash::make($validateData['firstname'].$validateData['lastname']);
+        $user ->password = Hash::make(Str::random(12));
         $user ->phone = $validateData['phone'];
         $user ->address = $validateData['address'];
         $user ->postal_code = $validateData['postal_code'];
@@ -132,15 +179,40 @@ class UserController extends Controller
 
         $user->save();
 
+        $token = Str::random(60);
+        $tokenHash = Hash::make($token);
+        DB::table('password_resets')->insert([
+                 'email' => $user->email, 
+                 'token' => $tokenHash, 
+                 'created_at' => Carbon::now()->timezone('Europe/Paris')
+               ]);
+       
+       $user->sendPasswordResetNotificationAdmin($token,Auth::user()->email);
+
+        if ($request->filled('sessiongame_id')){
+            for ($i = 0; $i < sizeof($validateData["sessiongame_id"]); $i++) {
+                $sessiongameUserExist = SessiongameUser::where('user_id',$user->id )->where('sessiongame_id',$validateData["sessiongame_id"][$i])->first();
+                if($sessiongameUserExist!=Null){
+                    continue;
+                }
+                $sessiongame=new SessiongameUser();
+                $sessiongame->sessiongame_id = $validateData["sessiongame_id"][$i];
+                $sessiongame->user_id = $user->id;
+                $sessiongame->save();
+
+                array_push($arrSessiongame, $sessiongame->sessiongame->name . " ", "et");
+            }
+                array_pop($arrSessiongame);
+                $user->notify(new NotificationsSessiongame($arrSessiongame, Auth::user()->email, $user->firstname . " " . $user->lastname ));
+        }
+
         $users= DB::table('users')
         ->select("users.id", "firstname", "lastname")
         ->where('roles.role',"User")
         ->join('roles','roles.id', '=', 'users.role_id')
         ->get();
-        
-        return view('superadmin.users', ['users'=>$users]);
 
-        
+        return view('superadmin.users', ['users'=>$users]);
     }
 
     /**
@@ -152,7 +224,13 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $this->authorize('updateSuperAdmin', User::class);
-        return view('superadmin.edit',['user'=>$user]);
+        $dateNow = new DateTime;
+        $sessionUser = $user->sessiongames->pluck('id');
+        $sessiongames = Sessiongame::whereNotIn('id', $sessionUser)->where("end_date" , '>' ,$dateNow)->get();
+
+        $sessiongamesUser = $user->sessiongames;
+
+        return view('superadmin.edit', ['user'=>$user,'sessiongames'=>$sessiongames, 'sessiongamesUser'=>$sessiongamesUser]);
     }
 
     /**
@@ -191,13 +269,7 @@ class UserController extends Controller
 
         $user->update();
 
-        $users= DB::table('users')
-        ->select("users.id", "firstname", "lastname")
-        ->where('roles.role',"User")
-        ->join('roles','roles.id', '=', 'users.role_id')
-        ->get();
-
-        return redirect()->route('users.indexUsers', ['users'=>$users]);
+        return redirect()->route('users.edit', ['user'=>$user]);
     }
 
     /**
@@ -219,14 +291,53 @@ class UserController extends Controller
         $user->role_id = $validateData["role_id"];
         $user->update();
     
+        return redirect()->route('users.edit', ['user'=>$user]);
+    }
 
-        $users= DB::table('users')
-        ->select("users.id", "firstname", "lastname")
-        ->where('roles.role',"User")
-        ->join('roles','roles.id', '=', 'users.role_id')
-        ->get();
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function storeSessionGame(Request $request, User $user)
+    {
+        $this->authorize('updateSuperAdmin', User::class);
+
+        $validateData=$request->validate([
+            'sessiongame_id' => "required|exists:sessiongames,id",
+        ]);
+
+        for ($i = 0; $i < sizeof($validateData["sessiongame_id"]); $i++) {
+            $sessiongameUserExist = SessiongameUser::where('user_id',$user->id )->where('sessiongame_id',$validateData["sessiongame_id"][$i])->first();
+            if($sessiongameUserExist!=Null){
+                continue;
+            }
+            $sessiongame=new SessiongameUser();
+            $sessiongame->sessiongame_id = $validateData["sessiongame_id"][$i];
+            $sessiongame->user_id = $user->id;
+            $sessiongame->save();
+        }
         
-        return redirect()->route('users.indexUsers', ['users'=>$users]);
+        return redirect()->route('users.edit', ['user'=>$user]);
+    }
+
+    /**
+     * Delete SessiongameUser.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteSessiongameUser(Request $request, SessiongameUser $sessiongameUser)
+    {
+        $this->authorize('updateSuperAdmin', User::class);
+
+        $sessiongameUser->delete();
+        $user=$sessiongameUser->user;
+        
+        return redirect()->route('users.edit', ['user'=>$user]);
     }
 
     /**
@@ -241,6 +352,7 @@ class UserController extends Controller
 
         $user->tokens->each->delete();
         $user->delete();
+        $user->notify(new NotificationsDeleteUser($user->firstname . " " . $user->lastname));
 
         $users= DB::table('users')
         ->select("users.id", "firstname", "lastname")

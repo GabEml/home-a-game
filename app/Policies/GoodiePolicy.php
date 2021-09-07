@@ -19,7 +19,7 @@ class GoodiePolicy
      */
     public function viewAny(User $user)
     {
-        return Auth::user()->role->role==="Admin Défis";
+        return Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin" or Auth::user()->role->role==="User";
     }
 
 
@@ -31,7 +31,7 @@ class GoodiePolicy
      */
     public function create()
     {
-        return Auth::user()->role->role==="Admin Défis";
+        return Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin";
     }
 
     /**
@@ -43,7 +43,7 @@ class GoodiePolicy
      */
     public function update()
     {
-        return Auth::user()->role->role==="Admin Défis";
+        return Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin";
     }
 
     /**
@@ -55,6 +55,6 @@ class GoodiePolicy
      */
     public function delete()
     {
-        return Auth::user()->role->role==="Admin Défis";
+        return Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin";
     }
 }

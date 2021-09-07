@@ -16,8 +16,9 @@ class CreateChallengesTable extends Migration
         Schema::create('challenges', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->integer('points');
-            $table->enum('type_of_file', ['picture','video']);
+            $table->integer('points')->nullable();
+            $table->enum('type_of_file', ['picture','video','both']);
+            $table->boolean('editable')->default(false);
             $table -> foreignId('sessiongame_id')->constrained('sessiongames')->onDelete('cascade');
             $table->engine = 'InnoDB';
         });

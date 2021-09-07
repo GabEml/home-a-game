@@ -24,7 +24,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'firstname' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
             'date_of_birth'=>['required','date','before_or_equal:today'],
-            'phone'=>['required', 'string','max:10'],
+            'phone'=>['required', 'string','max:16'],
             'address'=>['required','string', 'max:255'],
             'postal_code' => ['required', 'string', 'max:5'],
             'city' => ['required', 'string', 'max:255'],
@@ -63,8 +63,15 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     protected function updateVerifiedUser($user, array $input)
     {
         $user->forceFill([
-            'name' => $input['name'],
+            'firstname' => $input['firstname'],
+            'lastname' => $input['lastname'],
+            'date_of_birth' => $input['date_of_birth'],
             'email' => $input['email'],
+            'phone' => $input['phone'],
+            'address' => $input['address'],
+            'postal_code' => $input['postal_code'],
+            'city' => $input['city'],
+            'country' => $input['country'],
             'email_verified_at' => null,
         ])->save();
 

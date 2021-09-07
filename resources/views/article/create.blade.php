@@ -19,13 +19,13 @@
             
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea value="{{ old('description') }}" required name="description" id="description" rows="8" class="form-control"class=@error('description') is-invalid @enderror ></textarea>
+                <textarea value="{{ old('description') }}" required name="description" id="description" rows="8" class="form-control"class=@error('description') is-invalid @enderror >{{ old('description') }}</textarea>
             </div>
             
             <div class="form-group">
-                <label for="image_path" >Image</label>
+                <label for="image_path" >Image (max 100Mo)</label>
                 <br/>
-                <input type="file" name="image_path" required class=@error('image_path') is-invalid @enderror>
+                <input type="file" class="form-control-file" name="image_path" required class=@error('image_path') is-invalid @enderror>
             </div>
             
        </fieldset>

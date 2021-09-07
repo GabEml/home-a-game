@@ -6,55 +6,52 @@
 
 @section ('content')
 
-<div class=" contourForm col-12 col-md-6 offset-md-3 table-responsive">
-    <table class="table table-bordered table-hover tableGoodies">
-        <thead>
-            <th>Nom</th>
-            <th colspan="2">Actions</th>
-        </thead>
-    @foreach($goodies as $goodie)
-    <tbody>
-     <td class="goodies cellGoodies">{{$goodie->name}}</td>
-    <td class="cellGoodies"> <form action="{{route('goodies.update', $goodie)}}" method="POST">
-        @csrf
-        @method('PUT')
-        <div class="form-group">
-            <input value={{$goodie->name}} class="form-control" type="text" id="goodie" name="name" class=@error('goodie')  is-invalid @enderror>
+<div class="row containerArticles">
+    @auth
+    @if ($goodies->isEmpty())
+        <div class="flex justify-content-center flex-column">
+            <div><p class="price text-center">Aucuns goodies pour le moment !!</p></div>
         </div>
-        @error('goodie')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <button class="btn btn-success" type="submit">Modifier</button>
-    </form>
-    </td>
-   
-    <td class="cellGoodies"> <form action="{{route('goodies.destroy',$goodie->id)}}" method="post">
-        @csrf
-        @method('DELETE')
-        <button class="btn btn-danger" type="submit"> X </button> 
-    </form>
-    </td>
-   
-    </tbody>
+    @else
+
+    @foreach ($goodies as $goodie)
+        <div class=" flex flex-col marginArticles col-lg-3 col-md-6 col-sm-12 containerPresentation justify-content-between">
+            <div class="flex flex-col">
+                <img width="280px" class="align-self-center imagePresentation" src="{{$goodie->image_path}}" alt="{{$goodie->title}}">
+            </div>
+            <div>
+                <div class="flex flex-col">
+                    <h2 class="align-self-center titleSession">{{$goodie->name}}</h2>
+                    <br/>
+                    <div>
+                        @if (Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
+                            <div class="flex justify-content-around">
+                                <form action="{{route('goodies.destroy',$goodie->id)}}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="buttonAdmin btn btn-danger" type="submit"> Supprimer </button>
+                                </form>
+                                <a class="btn buttonAdmin btn-success " href="{{route('goodies.edit',$goodie->id)}}"> Modifier</a>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
     @endforeach
-</table>
-
-<br/>
-
-<form action="{{route('goodies.store', $goodie->id)}}" method="POST">
-    @csrf
-    <div class="form-group">
-        <label for='text'> Goodie </label>
-        <input type="text" class="form-control" id="goodie" name="name" class=@error('goodie') is-invalid @enderror>
-    </div>
-    @error('goodie')
-        <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
-    <div class="col-12 text-center">
-        <button class="btn btn-info" type="submit">Ajouter</button>
-    </div>
-</form>
+    @endif
 </div>
+
+    <div class="row">
+        <div class="col-12 text-center">
+                @if (Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
+                <div>
+                    <a class="btn btn-info" href="{{route('goodies.create')}}"> Ajouter un goodie</a>
+                </div>
+                @endif
+        </div>
+    </div>
+@endif
 
 <br/><br/>
 
