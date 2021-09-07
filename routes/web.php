@@ -49,7 +49,7 @@ Route::get('classement/{sessiongame}', [RankingController::class, 'rankingPrevio
 
 Route::get('inscription_sessions', [SessiongameUserController::class, 'create'])->middleware('auth','verified')->name('sessiongameusers.create');
 Route::post('inscription_sessions',[SessiongameUserController::class, 'store'])->middleware('auth','verified')->name('sessiongameusers.store');
-
+Route::post('inscription_sessions/paiement', [SessiongameUserController::class, 'storePayment'])->middleware('auth','verified')->name('sessiongameusers.storePayment');
 
 Route::get('sessions',[SessiongameController::class, 'index'])->middleware('auth','verified')->name('sessiongames.index');
 Route::get('sessions/creer',[SessiongameController::class, 'create'])->middleware('auth','verified')->name('sessiongames.create');
