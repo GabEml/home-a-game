@@ -105,7 +105,8 @@ class SessiongameUserController extends Controller
                     $sessiongame->user_id = Auth::user()->id;
                     $sessiongame->save();
                 }
-                return redirect()->route('sessiongames.index')->with('success_message', 'Thank You! Your payment has been successfully accepted!');
+                //return redirect()->route('sessiongames.index')->with('success_message', 'Thank You! Your payment has been successfully accepted!');
+                return view('confirm');
             }
             catch(Exception $e){
                 back()->withErrors('Error! '. $e->getMessage());
