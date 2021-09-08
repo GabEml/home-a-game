@@ -39,7 +39,8 @@
     </form>
 
 <br/><br/>
-@if ( $usersSearch->isEmpty())
+{{-- @if ( $usersSearch->isEmpty()) --}}
+@if (false)
 <div class="flex justify-content-center flex-column">
     <div><p class="price text-center">Aucun utilisateurs trouvés !</p></div>
 </div>
@@ -51,6 +52,7 @@
                 <tbody>
                     <tr>
                         <td>
+                            {{$userSearch}}
                             {{$userSearch->firstname}} {{$userSearch->lastname}}  ({{$userSearch->email}})
                         </td>
                         <td class="text-center"> 

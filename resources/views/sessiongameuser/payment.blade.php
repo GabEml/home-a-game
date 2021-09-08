@@ -84,9 +84,12 @@
 </div>
 @endif
 
+
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-    const stripe = Stripe(" {{ env('STRIPE_KEY') }} ");
+    const stripe = Stripe(" {{ env('STRIPE_KEY') }} ", {
+  locale: 'fr'
+});
     const elements = stripe.elements();
     const cardElement = elements.create('card', {
         classes: {
@@ -106,11 +109,12 @@
             'card', cardElement
         );
         if (error) {
-            alert(error)
+            alert(error.message)
         } else {
             document.getElementById('payment_method').value = paymentMethod.id;
+            document.getElementById('form').submit();
         }
-        document.getElementById('form').submit();
+        
     });
 </script>
 

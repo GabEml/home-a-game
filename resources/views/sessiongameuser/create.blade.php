@@ -78,4 +78,82 @@
     </form>
 </div>
 
+@if ($message = Session::get('success'))
+<div class=" modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" >
+  <div class=" modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content modalSuccess">
+      <div class="modal-header">
+        <h5 class="modal-title alert-heading" id="exampleModalLongTitle">Paiement réussi !</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{$message}}
+        <br/><br/>
+        <p>Vous allez recevoir un mail de confirmation.</p>
+      </div>
+      <div class="modal-footer">
+        <a href="{{ route('sessiongames.index') }}" type="button" class="btn btn-info">Accéder à l'espace de jeu</a>
+      </div>
+    </div>
+  </div>
+</div>
+@endif
+
+@if ($message = Session::get('error'))
+<div class=" modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class=" modalDanger modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title alert-heading" id="exampleModalLongTitle">Erreur !</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {{$message}}
+          <br/><br/>
+          <p>Veuillez réessayer.</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+@endif
+
+  @if ($message = Session::get('errorStripe'))
+  <div class=" modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class=" modalDanger modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title alert-heading" id="exampleModalLongTitle">Erreur paiement !</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {{$message}}
+          <br/><br/>
+          <p>Veuillez réessayer.</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+@endif
+
+
+
+<script>
+    $(window).on('load',function(){
+  $('#exampleModalCenter').modal('show');
+});
+</script>
+
 @endsection
