@@ -50,6 +50,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'city' => $input['city'],
             'country' => $input['country'],
             ])->save();
+            $user->updateStripeCustomer();
         }
     }
 
