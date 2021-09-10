@@ -48,10 +48,10 @@
                     <tr>
                         <td colspan="2" class="text-right lead"> Total : {{$totalPrice}} €</td>
                         <td>{{ env('STRIPE_KEY') }}</td>
-                        <td>{{STRIPE_KEY}}</td>
+                        {{-- <td>{{STRIPE_KEY}}</td> --}}
                         <td>{{'STRIPE_KEY'}}</td>
-                        <td>'{STRIPE_KEY}'</td>
-                        <td>'{{STRIPE_KEY}}'</td>
+                        {{-- <td>'{STRIPE_KEY}'</td>
+                        <td>'{{STRIPE_KEY}}'</td> --}}
                     </tr>
                 </tfoot>
             </table>
