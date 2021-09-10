@@ -112,7 +112,7 @@
                         <span class="linkMenu">{{ Auth::user()->firstname }}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="{{ route('profile.show') }}">Mon Profil</a>
+                      <a class="dropdown-item" href="{{ route('profile') }}">Mon Profil</a>
                       {{-- <a class="dropdown-item" href="{{ route('api-tokens.index')}}">API Token</a> --}}
                       <a class="dropdown-item" href="/deconnexion">Se déconnecter</a>
                       
@@ -141,7 +141,7 @@
                         <span class="linkMenu">{{ Auth::user()->firstname }}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="{{ route('profile.show') }}">Mon Profil</a>
+                      <a class="dropdown-item" href="{{ route('profile') }}">Mon Profil</a>
                       {{-- <a class="dropdown-item" href="{{ route('api-tokens.index')}}">API Token</a> --}}
                       <a class="dropdown-item" href="/deconnexion">Se déconnecter</a>
                       

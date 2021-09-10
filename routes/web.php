@@ -94,7 +94,7 @@ Route::delete('utilisateurs/{sessiongameUser}/sessions',[UserController::class, 
 Route::delete('utilisateurs/{user}',[UserController::class, 'destroy'])->middleware('auth','verified')->name('users.destroy');
 Route::get('utilisateurs/utilisateurs/search',[UserController::class, 'search'])->middleware('auth','verified')->name('users.search');
 
-Route::get('/utilisateur/profil', [UserProfileController::class, 'show'])->middleware('auth')->name('profile.show');
+Route::get('/utilisateur/profil', [UserProfileController::class, 'show'])->middleware('auth')->name('profile');
 Route::get('paiement/{id}/{sessiongames?}', [PaymentController::class, 'show'])->middleware('auth','verified')->name('payment');
 
 Route::get('/tirage_gagnant/create',[RankingController::class, 'create'])->middleware('auth','verified')->name('ranking.create');
