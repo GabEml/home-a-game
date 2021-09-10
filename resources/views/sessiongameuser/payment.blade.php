@@ -48,6 +48,10 @@
                     <tr>
                         <td colspan="2" class="text-right lead"> Total : {{$totalPrice}} €</td>
                         <td>{{ env('STRIPE_KEY') }}</td>
+                        <td>{{STRIPE_KEY}}</td>
+                        <td>{{'STRIPE_KEY'}}</td>
+                        <td>'{STRIPE_KEY}'</td>
+                        <td>'{{STRIPE_KEY}}'</td>
                     </tr>
                 </tfoot>
             </table>
@@ -88,9 +92,11 @@
 
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-    const stripe = Stripe(" {{ env('STRIPE_KEY') }} ", {
-  locale: 'fr'
-});
+//     const stripe = Stripe(" {{ env('STRIPE_KEY') }} ", {
+//   locale: 'fr'
+
+// });
+//var stripe = Stripe(" {{ env('STRIPE_KEY') }} ";
     const elements = stripe.elements();
     const cardElement = elements.create('card', {
         classes: {
