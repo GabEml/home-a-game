@@ -138,6 +138,14 @@ class SessiongameUserController extends Controller
             $totalPrice = Sessiongame::whereIn('id',$validateData["sessiongames"])->sum('price');
 
             $user=User::where('id', Auth::user()->id)->first();
+            $user->createOrGetStripeCustomer();
+            $user->updateStripeCustomer(
+                ['address'=>
+                    ['city'=>$user->city, 'country'=>$user->country,'line1'=>$user->address,'postal_code'=>$user->postal_code], 
+                'name' => $user->firstname ." ". $user->lastname,
+                'metadata' => ['user_id' => $user->id],
+            ]);
+
             try{
                 $user->charge(
                 $totalPrice*100, $request->payment_method, [
@@ -202,7 +210,7 @@ class SessiongameUserController extends Controller
                     }
 
                     return redirect()->route(
-                        'cashier.payment',
+                        'payment',
                         [$e->payment->id,$sessiongames, 'redirect' => route('sessiongames.index')]
                     );
 

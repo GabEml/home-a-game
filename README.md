@@ -92,10 +92,12 @@ Vous y accéderez sur : http://127.0.0.1:8000/
 Vous pourrez ensuite créer un compte, vous serez un simple utilisateur, vous pourrez sous inscrire à une session, y participer.
 
 Si vous voulez tester en tant qu'administrateur des défis : 
-- Mail : test@test.com 
-- Mot de passe : test
+- Mail : admin@defis.com 
+- Mot de passe : admindefis
 
 Si vous voulez tester en tant que super Administrateur : 
-- Mail : test2@test.com 
-- Mot de passe : test
+- Mail : super@admin.com 
+- Mot de passe : superadmin
+
+
 
