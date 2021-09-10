@@ -47,14 +47,6 @@
                 <tfoot>
                     <tr>
                         <td colspan="2" class="text-right lead"> Total : {{$totalPrice}} €</td>
-                        <td>{{ env('STRIPE_KEY') }}</td>
-                        <td>{{ env('APP_NAME') }}</td>
-                        {{-- <td>{{STRIPE_KEY}}</td> --}}
-                        {{-- <td>{{'STRIPE_KEY'}}</td> --}}
-                        {{-- <td>'{STRIPE_KEY}'</td> --}}
-                        {{-- <td>'{{STRIPE_KEY}}'</td> --}}
-                        <td>{{ config('app.name') }}</td>
-                        <td>{{ config('app.stripe_key') }}</td>
                     </tr>
                 </tfoot>
             </table>
@@ -97,8 +89,7 @@
 <script>
     const stripe = Stripe(" {{ config('app.stripe_key') }} ", {
   locale: 'fr'
-
-// });
+});
 //var stripe = Stripe(" {{ env('STRIPE_KEY') }} ";
 //var stripe = Stripe(‘{STRIPE_KEY}’);
     const elements = stripe.elements();
