@@ -15,7 +15,7 @@
     <div id="app" class="h-full md:flex md:justify-center md:items-center">
         <div class="w-full max-w-lg">
             <h1 class="text-4xl font-bold text-center p-4 sm:p-6 mt-4">
-                Paiement deeeeeeeee {{ $amount }}
+                Paiement de {{ $amount }}
             </h1>
 
             <!-- Status Messages -->
