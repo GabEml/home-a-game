@@ -54,6 +54,7 @@
                         {{-- <td>'{STRIPE_KEY}'</td> --}}
                         {{-- <td>'{{STRIPE_KEY}}'</td> --}}
                         <td>{{ config('app.name') }}</td>
+                        <td>{{ config('app.stripe_key') }}</td>
                     </tr>
                 </tfoot>
             </table>
@@ -94,12 +95,12 @@
 
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-//     const stripe = Stripe(" {{ env('STRIPE_KEY') }} ", {
-//   locale: 'fr'
+    const stripe = Stripe(" {{ config('app.stripe_key') }} ", {
+  locale: 'fr'
 
 // });
 //var stripe = Stripe(" {{ env('STRIPE_KEY') }} ";
-var stripe = Stripe(‘{STRIPE_KEY}’);
+//var stripe = Stripe(‘{STRIPE_KEY}’);
     const elements = stripe.elements();
     const cardElement = elements.create('card', {
         classes: {
