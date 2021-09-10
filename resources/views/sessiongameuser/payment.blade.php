@@ -52,7 +52,7 @@
                         {{-- <td>{{STRIPE_KEY}}</td> --}}
                         {{-- <td>{{'STRIPE_KEY'}}</td> --}}
                         {{-- <td>'{STRIPE_KEY}'</td> --}}
-                        <td>'{{STRIPE_KEY}}'</td>
+                        {{-- <td>'{{STRIPE_KEY}}'</td> --}}
                         <td>{{ config('app.name') }}</td>
                     </tr>
                 </tfoot>
