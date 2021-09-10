@@ -10,6 +10,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Notifications\ResetPasswordAdmin as ResetPasswordAdminNotification;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
 use App\Notifications\VerifyEmail as VerifyEmailNotification;
 
@@ -133,7 +134,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendPasswordResetNotificationAdmin($token, $email)
     {
         // Your your own implementation.
-        $this->notify(new ResetPasswordNotification($token, $email));
+        $this->notify(new ResetPasswordAdminNotification($token, $email));
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        // Your your own implementation.
+        $this->notify(new ResetPasswordNotification($token));
     }
 
     public function sendEmailVerificationNotification(){
