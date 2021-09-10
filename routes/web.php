@@ -11,6 +11,8 @@ use App\Http\Controllers\RankingController;
 use App\Http\Controllers\GoodieController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\WebhookController;
+
 
 
 use Illuminate\Support\Facades\Route;
@@ -95,7 +97,8 @@ Route::delete('utilisateurs/{user}',[UserController::class, 'destroy'])->middlew
 Route::get('utilisateurs/utilisateurs/search',[UserController::class, 'search'])->middleware('auth','verified')->name('users.search');
 
 Route::get('/utilisateur/profil', [UserProfileController::class, 'show'])->middleware('auth')->name('profile');
-Route::post('paiement/{id}/{sessiongames?}', [PaymentController::class, 'show'])->middleware('auth','verified')->name('payment');
+Route::get('paiement/{id}/{sessiongames?}', [PaymentController::class, 'show'])->middleware('auth','verified')->name('payment');
+Route::post('webhook', [WebhookController::class, 'show'])->middleware('auth','verified')->name('webhook');
 
 Route::get('/tirage_gagnant/create',[RankingController::class, 'create'])->middleware('auth','verified')->name('ranking.create');
 Route::post('/tirage_gagnant',[RankingController::class, 'store'])->middleware('auth','verified')->name('ranking.store');
