@@ -64,7 +64,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('posts/valides',[PostController::class, 'indexValidated']);
     Route::get('posts/en-attente',[PostController::class, 'indexPending']);
     Route::put('posts/{post}',[PostController::class, 'update']);
-    Route::get('posts/{post}',[PostdefiController::class, 'show']);
+    //Route::get('posts/{post}',[PostdefiController::class, 'show']);
 
     Route::get('utilisateurs/utilisateurs',[UserController::class, 'indexUsers']);
     Route::get('utilisateurs/admin-defis',[UserController::class, 'indexAdminChallenge']);

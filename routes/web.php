@@ -9,6 +9,11 @@ use App\Http\Controllers\SessiongameUserController;
 use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\RankingController;
 use App\Http\Controllers\GoodieController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\WebhookController;
+
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -49,7 +54,7 @@ Route::get('classement/{sessiongame}', [RankingController::class, 'rankingPrevio
 
 Route::get('inscription_sessions', [SessiongameUserController::class, 'create'])->middleware('auth','verified')->name('sessiongameusers.create');
 Route::post('inscription_sessions',[SessiongameUserController::class, 'store'])->middleware('auth','verified')->name('sessiongameusers.store');
-
+Route::post('inscription_sessions/paiement', [SessiongameUserController::class, 'storePayment'])->middleware('auth','verified')->name('sessiongameusers.storePayment');
 
 Route::get('sessions',[SessiongameController::class, 'index'])->middleware('auth','verified')->name('sessiongames.index');
 Route::get('sessions/creer',[SessiongameController::class, 'create'])->middleware('auth','verified')->name('sessiongames.create');
@@ -91,7 +96,9 @@ Route::delete('utilisateurs/{sessiongameUser}/sessions',[UserController::class, 
 Route::delete('utilisateurs/{user}',[UserController::class, 'destroy'])->middleware('auth','verified')->name('users.destroy');
 Route::get('utilisateurs/utilisateurs/search',[UserController::class, 'search'])->middleware('auth','verified')->name('users.search');
 
-
+Route::get('/utilisateur/profil', [UserProfileController::class, 'show'])->middleware('auth')->name('profile');
+Route::get('paiement/{id}/{sessiongames?}', [PaymentController::class, 'show'])->middleware('auth','verified')->name('payment');
+Route::post('webhook', [WebhookController::class, 'show'])->middleware('auth','verified')->name('webhook');
 
 Route::get('/tirage_gagnant/create',[RankingController::class, 'create'])->middleware('auth','verified')->name('ranking.create');
 Route::post('/tirage_gagnant',[RankingController::class, 'store'])->middleware('auth','verified')->name('ranking.store');

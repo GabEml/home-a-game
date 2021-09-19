@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
+use Laravel\Cashier\Billable;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Jetstream\HasProfilePhoto;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Notifications\ResetPasswordAdmin as ResetPasswordAdminNotification;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
-use Laravel\Sanctum\HasApiTokens;
+use App\Notifications\VerifyEmail as VerifyEmailNotification;
+
 
 /**
  * Le modèle User qui est lié à la table users dans la base de données
@@ -29,6 +33,7 @@ class User extends Authenticatable implements MustVerifyEmail
     //use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use Billable;
 
     public $timestamps = false;
 
@@ -129,6 +134,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendPasswordResetNotificationAdmin($token, $email)
     {
         // Your your own implementation.
-        $this->notify(new ResetPasswordNotification($token, $email));
+        $this->notify(new ResetPasswordAdminNotification($token, $email));
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        // Your your own implementation.
+        $this->notify(new ResetPasswordNotification($token));
+    }
+
+    public function sendEmailVerificationNotification(){
+        $this->notify(new VerifyEmailNotification());
     }
 }

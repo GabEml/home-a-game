@@ -2,28 +2,20 @@
 
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Lang;
 
 class ResetPassword extends Notification
 {
+    /**
+     * The password reset token.
+     *
+     * @var string
+     */
     public $token;
 
     /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
-    public function __construct($token, $email)
-    {
-        $this->token = $token;
-        $this->email = $email;
-    }
-
-     /**
      * The callback that should be used to create the reset password URL.
      *
      * @var \Closure|null
@@ -38,10 +30,21 @@ class ResetPassword extends Notification
     public static $toMailCallback;
 
     /**
-     * Get the notification's delivery channels.
+     * Create a notification instance.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function __construct($token)
+    {
+        $this->token = $token;
+    }
+
+    /**
+     * Get the notification's channels.
      *
      * @param  mixed  $notifiable
-     * @return array
+     * @return array|string
      */
     public function via($notifiable)
     {
@@ -56,20 +59,31 @@ class ResetPassword extends Notification
      */
     public function toMail($notifiable)
     {
+        $url = $this->resetUrl($notifiable);
+
         if (static::$toMailCallback) {
-            return call_user_func(static::$toMailCallback, $notifiable, $this->token);
+            return call_user_func(static::$toMailCallback, $notifiable, $this->token, $url);
         }
 
+        return $this->buildMailMessage($url);
+    }
+
+    /**
+     * Get the password reset URL for the given notifiable.
+     *
+     * @param  mixed  $notifiable
+     * @return string
+     */
+    protected function resetUrl($notifiable)
+    {
         if (static::$createUrlCallback) {
-            $url = call_user_func(static::$createUrlCallback, $notifiable, $this->token);
+            return call_user_func(static::$createUrlCallback, $notifiable, $this->token);
         } else {
-            $url = url(route('password.reset', [
+            return url(route('password.reset', [
                 'token' => $this->token,
                 'email' => $notifiable->getEmailForPasswordReset(),
             ], false));
         }
-
-        return $this->buildMailMessage($url);
     }
 
     /**
@@ -80,30 +94,33 @@ class ResetPassword extends Notification
      */
     protected function buildMailMessage($url)
     {
-        
         return (new MailMessage)
-            ->subject('Votre compte a été crée !')
-            ->cc($this->email)
-            ->line('Bonjour !')
-            ->line('Vous recevez cet e-mail car un administrateur vient de créer votre compte sur @Home a Game !')
-            ->line('Cliquer sur le lien pour configurer votre mot de passe')
-            ->action('Configurer le mot de passe', $url)
-            ->line("\n")
-            ->line(Lang::get('Ce lien expirera dans :count minutes.', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')]))
-            ->line("Si vous n'avez pas demandé à ce qu'on vous créer un compte, aucune autre action n'est requise")
-            ->line('Cordialement,');
-        }
+            ->subject(Lang::get('Notification de réinitialisation de mot de passe'))
+            ->line(Lang::get('Vous recevez cet e-mail car nous avons reçu une demande de réinitialisation de mot de passe pour votre compte.'))
+            ->action(Lang::get('Réinitialiser le mot de passe'), $url)
+            ->line(Lang::get('Ce lien de réinitialisation de mot de passe expirera dans :count minutes.', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')]))
+            ->line(Lang::get("Si vous n'avez pas demandé de réinitialisation de mot de passe, aucune autre action n'est requise."));
+    }
 
     /**
-     * Get the array representation of the notification.
+     * Set a callback that should be used when creating the reset password button URL.
      *
-     * @param  mixed  $notifiable
-     * @return array
+     * @param  \Closure  $callback
+     * @return void
      */
-    public function toArray($notifiable)
+    public static function createUrlUsing($callback)
     {
-        return [
-            //
-        ];
+        static::$createUrlCallback = $callback;
+    }
+
+    /**
+     * Set a callback that should be used when building the notification mail message.
+     *
+     * @param  \Closure  $callback
+     * @return void
+     */
+    public static function toMailUsing($callback)
+    {
+        static::$toMailCallback = $callback;
     }
 }

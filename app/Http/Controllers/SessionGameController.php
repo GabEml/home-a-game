@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Sessiongame;
-use App\Models\Challenge;
+use Datetime;
+use App\Models\User;
 use App\Models\Goodie;
+use App\Models\Challenge;
+use App\Models\Sessiongame;
 use Illuminate\Http\Request;
+use App\Models\SessiongameUser;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use Datetime;
 use phpDocumentor\Reflection\Types\Object_;
+use App\Notifications\Sessiongame as NotificationsSessiongame;
 
 class SessiongameController extends Controller
 {
@@ -19,12 +21,38 @@ class SessiongameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Sessiongame $sessiongame)
+    public function index(Sessiongame $sessiongame, Request $request)
     {
         $this->authorize('viewAny', $sessiongame);
+        $success = $request->input('success');
+        $sessiongames=$request->input('sessiongames');
+
         $sessiongamesAll= Sessiongame::orderBy('start_date')->get();
         
         $user=User::where('id', Auth::user()->id)->first();
+
+        $dateNow = date('Y-m-d');
+
+        $challengeCompleted = 0;
+
+        $arrSessiongame=array();
+
+        $sessiongamesArray=explode(" ", $sessiongames);
+
+    
+        if($success=="true"){
+            for ($i = 0; $i < sizeof($sessiongamesArray); $i++) {
+                $sessiongame=new SessiongameUser();
+                $sessiongame->sessiongame_id = $sessiongamesArray[$i];
+                $sessiongame->user_id = Auth::user()->id;
+                $sessiongame->save();
+
+                array_push($arrSessiongame, $sessiongame->sessiongame->name . " ", "et");
+            }
+            
+            array_pop($arrSessiongame);
+            $user->notify(new NotificationsSessiongame($arrSessiongame, Auth::user()->email, $user->firstname . " " . $user->lastname ));
+        }
 
         //On récupère les sessions de l'utilisateur qui sont en cours
         $sessiongamesUserNow = $user->sessiongames()->where('start_date','<',date('Y-m-d'))
@@ -38,9 +66,6 @@ class SessiongameController extends Controller
         //On récupère toutes les autres sessions auquelles il est inscrit, qu'elles soient futur ou passés
         $sessiongamesUser = $user->sessiongames()->whereNotIn('sessiongames.id', $idSessiongamesNow)->orderByDesc('end_date')->get();
 
-        $dateNow = date('Y-m-d');
-
-        $challengeCompleted = 0;
 
         return view('sessiongame.index',['challengeCompleted'=>$challengeCompleted,'sessiongames'=>$sessiongamesAll, 'sessiongamesUser'=>$sessiongamesUser,'sessiongamesUserNow'=>$sessiongamesUserNow, 'dateNow'=>$dateNow]);
     }

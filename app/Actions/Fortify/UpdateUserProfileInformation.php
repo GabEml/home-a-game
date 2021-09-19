@@ -50,6 +50,16 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'city' => $input['city'],
             'country' => $input['country'],
             ])->save();
+            if($user->stripe_id!=null){
+                $user->updateStripeCustomer(
+                    ['address'=>
+                        ['city'=>$user->city, 'country'=>$user->country,'line1'=>$user->address,'postal_code'=>$user->postal_code], 
+                    'name' => $user->firstname ." ". $user->lastname,
+                    'metadata' => ['user_id' => $user->id],
+                    'phone'=> $user->phone,
+                    'email'=>$user->email,
+                ]);
+            }
         }
     }
 
@@ -76,5 +86,15 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         ])->save();
 
         $user->sendEmailVerificationNotification();
+        if($user->stripe_id!=null){
+        $user->updateStripeCustomer(
+            ['address'=>
+                ['city'=>$user->city, 'country'=>$user->country,'line1'=>$user->address,'postal_code'=>$user->postal_code], 
+            'name' => $user->firstname ." ". $user->lastname,
+            'metadata' => ['user_id' => $user->id],
+            'phone'=> $user->phone,
+            'email'=>$user->email,
+        ]);
+    }
     }
 }

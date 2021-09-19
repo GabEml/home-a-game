@@ -90,7 +90,8 @@ class UserController extends Controller
         ->join('roles','roles.id', '=', 'users.role_id')
         ->get();
 
-        $usersSearch = User::where('roles.role',"User")
+        $usersSearch = User::select('users.id','lastname','firstname','email')
+                ->where('roles.role',"User")
                 ->where(function($query) use($key){
                     $query->orWhere('lastname', 'like', "%{$key}%")
                           ->orWhere('firstname', 'like', "%{$key}%")
@@ -203,7 +204,7 @@ class UserController extends Controller
                 array_push($arrSessiongame, $sessiongame->sessiongame->name . " ", "et");
             }
                 array_pop($arrSessiongame);
-                $user->notify(new NotificationsSessiongame($arrSessiongame, Auth::user()->email, $user->firstname . " " . $user->lastname ));
+                $user->notify(new NotificationsSessiongame($arrSessiongame, "athomeagame@gmail.com", $user->firstname . " " . $user->lastname ));
         }
 
         $users= DB::table('users')
@@ -305,6 +306,8 @@ class UserController extends Controller
     {
         $this->authorize('updateSuperAdmin', User::class);
 
+        $arrSessiongame=array();
+        
         $validateData=$request->validate([
             'sessiongame_id' => "required|exists:sessiongames,id",
         ]);
@@ -318,7 +321,10 @@ class UserController extends Controller
             $sessiongame->sessiongame_id = $validateData["sessiongame_id"][$i];
             $sessiongame->user_id = $user->id;
             $sessiongame->save();
+            array_push($arrSessiongame, $sessiongame->sessiongame->name . " ", "et");
         }
+            array_pop($arrSessiongame);
+            $user->notify(new NotificationsSessiongame($arrSessiongame, "athomeagame@gmail.com", $user->firstname . " " . $user->lastname ));
         
         return redirect()->route('users.edit', ['user'=>$user]);
     }

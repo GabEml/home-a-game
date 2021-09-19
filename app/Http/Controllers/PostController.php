@@ -37,7 +37,8 @@ class PostController extends Controller
 
         $key = $request->searchPost;
 
-        $postsSearch = User::where('posts.state',"pending")
+        $postsSearch = User::select("*",'posts.id as post_id')
+        ->where('posts.state',"pending")
             ->where(function($query) use($key){
                 $query->orWhere('lastname', 'like', "%{$key}%")
                     ->orWhere('firstname', 'like', "%{$key}%")

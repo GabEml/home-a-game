@@ -37,7 +37,7 @@
         @foreach ($postsPending as $postPending)
                 <div class=" positionButton marginArticles col-lg-3 col-md-6 col-sm-12 containerPresentation">
                     <div class="flex justify-content-end buttonDelete">
-                        <form action="{{route('posts.destroy',$postPending->id)}}" method="post">
+                        <form action="{{route('posts.destroy',$postPending->post_id)}}" method="post">
                             @csrf
                             @method('DELETE')
                             <button class="btn buttonCross btn-danger" type="submit"> X </button>
@@ -68,7 +68,7 @@
                             
                         </div>
                         <br/>
-                        <form action="{{route('posts.update',$postPending->id)}}" method="post">
+                        <form action="{{route('posts.update',$postPending->post_id)}}" method="post">
                             <!-- Add CSRF Token -->
                             @csrf
                             @method('PUT')
