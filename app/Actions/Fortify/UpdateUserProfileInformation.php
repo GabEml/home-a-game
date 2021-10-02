@@ -26,7 +26,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'date_of_birth'=>['required','date','before_or_equal:today'],
             'phone'=>['required', 'string','max:16'],
             'address'=>['required','string', 'max:255'],
-            'postal_code' => ['required', 'string', 'max:5'],
+            'postal_code' => ['required', 'string', 'min:3', 'max:8'],
             'city' => ['required', 'string', 'max:255'],
             'country' => ['required', 'string', 'max:255'],
         ])->validateWithBag('updateProfileInformation');

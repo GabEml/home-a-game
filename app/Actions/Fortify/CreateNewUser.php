@@ -25,9 +25,9 @@ class CreateNewUser implements CreatesNewUsers
             'date_of_birth'=>['required','date','before_or_equal:today'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
-            'phone'=>['required', 'string','max:10'],
+            'phone'=>['required', 'string','max:14'],
             'address'=>['required','string', 'max:255'],
-            'postal_code' => ['required', 'string', 'max:5'],
+            'postal_code' => ['required', 'string', 'min:3', 'max:8'],
             'city' => ['required', 'string', 'max:255'],
             'country' => ['required', 'string', 'max:255'],
 
