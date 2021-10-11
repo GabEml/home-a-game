@@ -69,7 +69,7 @@
       <h2 class="titleProfile title">Voir le classement des sessions précédentes</h2>
       <br/>
       <div class=" col-12 table-responsive">
-        @if($sessiongames->isEmpty())
+        @if(!count($sessiongames))
           <p class="text-center">Il n'y a pas encore d'anciens classements !</p>
         @else
           <table class="table-bordered table-hover align-middle table tableGoodie">
