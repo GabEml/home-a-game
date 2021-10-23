@@ -99,7 +99,7 @@ class SessiongameController extends Controller
                 'price' => 'required|numeric',
                 'name' => 'required|max:60|min:3',
                 'description' => 'required|min:5', 
-                'start_date' => 'required|date|after_or_equal:tomorrow', 
+                'start_date' => 'required|date|after_or_equal:today', 
                 'end_date'=>'required|date|after:start_date',
                 'goodie'=>'required|integer|exists:goodies,id',
                 'image_path'=>'required|image|max:100000',

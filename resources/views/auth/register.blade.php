@@ -61,7 +61,7 @@
 
                     <div class="mt-4">
                         <x-jet-label for="postal_code" value="{{ __('Code Postal') }}" />
-                        <x-jet-input pattern="[0-9]{5}" id="postal_code" class="block mt-1 w-full" :value="old('postal_code')" type="text" name="postal_code" required />
+                        <x-jet-input pattern="[0-9]{3,8}" id="postal_code" class="block mt-1 w-full" :value="old('postal_code')" type="text" name="postal_code" required />
                     </div>
 
                     <div class="mt-4">

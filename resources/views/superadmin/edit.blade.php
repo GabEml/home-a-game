@@ -63,7 +63,7 @@
                     
                     <div class="form-group">
                         <label for="postal_code"> Code postal </label>
-                        <input value="{{$user->postal_code }}" type="text" pattern="[0-9]{5}" required name="postal_code" id="postal_code" class="form-control"class=@error('postal_code') is-invalid @enderror >
+                        <input value="{{$user->postal_code }}" type="text" pattern="[0-9]{3,8}" required name="postal_code" id="postal_code" class="form-control"class=@error('postal_code') is-invalid @enderror >
                     </div>
                     
             
