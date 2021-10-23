@@ -51,7 +51,7 @@ class ChallengePolicy
     {
         return Auth::user()->role->role==="User"
         and SessiongameUser::where("user_id", Auth::user()->id)->where("sessiongame_id", $challenge->sessiongame->id)->get()->isNotEmpty()
-        and $challenge->sessiongame->start_date<date('Y-m-d') and $challenge->sessiongame->end_date>date('Y-m-d');
+        and $challenge->sessiongame->start_date<=date('Y-m-d') and $challenge->sessiongame->end_date>=date('Y-m-d');
     }
 
     /**
