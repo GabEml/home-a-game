@@ -75,6 +75,8 @@ Lancer les migrations :
 php artisan migrate
 ```
 
+Si problème de migration il y'a, passer la variable d'environnement "NEW_PROJECT_PROBLEM" à true : 
+
 Puis remplissez la base
 ```sh
 php artisan db:seed

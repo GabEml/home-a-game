@@ -17,7 +17,9 @@ class CreateGoodiesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('image_path');
-            $table->engine = 'InnoDB';
+            if(env('NEW_PROJECT_PROBLEM') == false) {
+                $table->engine = 'InnoDB';
+            }
         });
     }
 
