@@ -5,6 +5,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use DateTime;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -36,6 +37,7 @@ class DatabaseSeeder extends Seeder
         $date= new DateTime;
 
         $user = New User;
+        $user->email_verified_at = $date;
         $user->firstname="Toto";
         $user->lastname="Toto";
         $user->email="toto@toto.com";
@@ -50,6 +52,7 @@ class DatabaseSeeder extends Seeder
         $user->save();
 
         $userAdminDefis = New User;
+        $userAdminDefis->email_verified_at = $date;
         $userAdminDefis->firstname="Admin Defis";
         $userAdminDefis->lastname="Admin Defis";
         $userAdminDefis->email="admin@defis.com";
@@ -64,6 +67,7 @@ class DatabaseSeeder extends Seeder
         $userAdminDefis->save();
 
         $userSuperAdmin = New User;
+        $userSuperAdmin->email_verified_at = $date;
         $userSuperAdmin->firstname="Super Admin";
         $userSuperAdmin->lastname="Super Admin";
         $userSuperAdmin->email="super@admin.com";
