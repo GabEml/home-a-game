@@ -28,7 +28,7 @@ class SessiongameController extends Controller
         $sessiongames=$request->input('sessiongames');
 
         $sessiongamesAll= Sessiongame::orderBy('start_date')->get();
-        
+
         $user=User::where('id', Auth::user()->id)->first();
 
         $dateNow = date('Y-m-d');
@@ -39,7 +39,7 @@ class SessiongameController extends Controller
 
         $sessiongamesArray=explode(" ", $sessiongames);
 
-    
+
         if($success=="true"){
             for ($i = 0; $i < sizeof($sessiongamesArray); $i++) {
                 $sessiongame=new SessiongameUser();
@@ -49,7 +49,7 @@ class SessiongameController extends Controller
 
                 array_push($arrSessiongame, $sessiongame->sessiongame->name . " ", "et");
             }
-            
+
             array_pop($arrSessiongame);
             $user->notify(new NotificationsSessiongame($arrSessiongame, Auth::user()->email, $user->firstname . " " . $user->lastname ));
         }
@@ -91,15 +91,15 @@ class SessiongameController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', Sessiongame::class);
-        
+
 
         $sessiongame=new Sessiongame();
-        
+
             $validateData=$request->validate([
                 'price' => 'required|numeric',
                 'name' => 'required|max:60|min:3',
-                'description' => 'required|min:5', 
-                'start_date' => 'required|date|after_or_equal:today', 
+                'description' => 'required|min:5',
+                'start_date' => 'required|date|after_or_equal:today',
                 'end_date'=>'required|date|after:start_date',
                 'goodie'=>'required|integer|exists:goodies,id',
                 'image_path'=>'required|image|max:100000',
@@ -114,7 +114,7 @@ class SessiongameController extends Controller
         // Save the file locally in the storage/public/ folder under a new folder named /product
         $request->image_path->store('images', 'public');
         $path ="/".$request->file('image_path')->store('images');
-        
+
         $sessiongame->type = $validateData["type"];
         $sessiongame->name = $validateData["name"];
         $sessiongame->description = $validateData["description"];
@@ -124,7 +124,7 @@ class SessiongameController extends Controller
         $sessiongame->image_path=$path;
         $sessiongame->goodie_id = $validateData["goodie"];
         $sessiongame->save();
-    
+
 
     return redirect('/sessions');
     }
@@ -167,7 +167,9 @@ class SessiongameController extends Controller
             $ranking=NULL;
         }
         $position=0;
-    
+
+
+
         return view('sessiongame.show', ['users'=>$ranking, "position"=>$position, "sessiongame"=>$sessiongame]);
     }
 
@@ -194,13 +196,13 @@ class SessiongameController extends Controller
     public function update(Request $request, SessionGame $sessiongame)
     {
         $this->authorize('update', Sessiongame::class);
-      
-        
+
+
             $validateData=$request->validate([
                 'name' => 'required|max:60|min:3',
-                'description' => 'required|min:5', 
+                'description' => 'required|min:5',
                 'price' => 'required|numeric',
-                'start_date' => 'required|date|', 
+                'start_date' => 'required|date|',
                 'end_date'=>'required|date|after:start_date',
                 'goodie'=>'required|integer|exists:goodies,id',
                 'image_path'=>'image|max:100000',
@@ -214,19 +216,19 @@ class SessiongameController extends Controller
             else{
                 $sessiongame->see_ranking = 1;
             }
-        
+
 
         if ($request->hasFile('image_path')) {
             $path = $sessiongame->image_path;
 
             //Pour utiliser is_file, il faur enlever le "/" qui est au début du chemin de l'image dans la bdd
             $path = substr($path,1);
-            
+
             if(is_file($path))
             {
                 //Supprimer l'image du dossier
                 unlink(public_path($sessiongame->image_path));
-        
+
 
                 // Save the file locally in the storage/public/ folder under a new folder named /product
                 $request->image_path->store('images', 'public');
@@ -243,7 +245,7 @@ class SessiongameController extends Controller
         $sessiongame->type = $validateData["type"];
         $sessiongame->goodie_id = $validateData["goodie"];
         $sessiongame->update();
-    
+
 
     return redirect('/sessions');
     }
@@ -261,7 +263,7 @@ class SessiongameController extends Controller
 
         //Pour utiliser is_file, il faur enlever le "/" qui est au début du chemin de l'image dans la bdd
         $path = substr($path,1);
-            
+
         if(is_file($path))
         {
             //Supprimer l'image du dossier
