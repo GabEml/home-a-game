@@ -60,6 +60,23 @@ Copier le fichier `.env.example` en `.env` :
 Et remplissez les informations propres à la BDD. 
 
 
+Remplir le MAIL_MAILER : 
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=athomeagame@gmail.com
+MAIL_PASSWORD=OtraGame2021!
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=admin@laravel.com
+MAIL_FROM_NAME="${APP_NAME}"
+
+
+et les clés de tests Stripe : 
+STRIPE_KEY=pk_test_51IAZDfA9JqtKwsXJ1RGSwnWxD22KhmhRJcLOUFeGpuF6CN7SfgjeuISMCTZmpJ65XJBdlWKu5aNFdzEzIeCRRcig00VzHu0z8w
+STRIPE_SECRET=sk_test_51IAZDfA9JqtKwsXJZLOiChT92S1yCs9ypScMol2YDUIrLzmJLx9WREEqoR2sCqfcat81SPev6gVtpYPlenIKc2Yw00ZcItqF1R
+
+
 Installer le projet à l'aide de composer : 
 ```sh
 composer install
