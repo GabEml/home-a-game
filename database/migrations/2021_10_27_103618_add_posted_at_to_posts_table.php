@@ -14,7 +14,7 @@ class AddPostedAtToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dateTime('posted_at');
+            $table->dateTime('posted_at')->nullable();
         });
     }
 

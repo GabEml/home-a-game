@@ -50,7 +50,7 @@
                             @else
                                 <div> <p> Nombres de points : {{$postValidated->challenge->points}}</p></div>
                             @endif
-                            <div><p>Posté le : {{$postValidated->posted_at}}</p></div>
+                            <div><p>Posté le : <?php $postedAt = explode(' ', $postValidated->posted_at); ?><?=$postedAt[0];?> à <?=$postedAt[1]?></p></div>
                             </div>
                         <br/>
                         <form action="{{route('posts.update',$postValidated->id)}}" method="post">
