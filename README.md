@@ -60,6 +60,25 @@ Copier le fichier `.env.example` en `.env` :
 Et remplissez les informations propres à la BDD. 
 
 
+Remplir le MAIL_MAILER : 
+
+```txt
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=athomeagame@gmail.com
+MAIL_PASSWORD=OtraGame2021!
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=admin@laravel.com
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+et les clés de tests Stripe : 
+```txt
+STRIPE_KEY=pk_test_51IAZDfA9JqtKwsXJ1RGSwnWxD22KhmhRJcLOUFeGpuF6CN7SfgjeuISMCTZmpJ65XJBdlWKu5aNFdzEzIeCRRcig00VzHu0z8w
+STRIPE_SECRET=sk_test_51IAZDfA9JqtKwsXJZLOiChT92S1yCs9ypScMol2YDUIrLzmJLx9WREEqoR2sCqfcat81SPev6gVtpYPlenIKc2Yw00ZcItqF1R
+```
+
 Installer le projet à l'aide de composer : 
 ```sh
 composer install
@@ -75,19 +94,29 @@ Lancer les migrations :
 php artisan migrate
 ```
 
+Si problème de migration il y'a, passer la variable d'environnement "NEW_PROJECT_PROBLEM" à true : 
+
 Puis remplissez la base
 ```sh
 php artisan db:seed
 ```
 
 
+Pour lancer le projet, ouvrez votre fichier `hosts`, en tant qu'administrateur, situé ici `C:\\Windows\\System32\\drivers\\etc`
 
-Puis lancer le projet : 
-```sh
-php artisan serve
+Puis ajouter les lignes suivantes :
+
+```txt
+127.0.0.1 otr.ontheroadagame.fr
+127.0.0.1 at-home.ontheroadagame.fr
 ```
 
-Vous y accéderez sur : http://127.0.0.1:8000/
+Enfin, lancer le serveur : 
+```sh
+php artisan serve --host=otr.ontheroadagame.fr
+```
+
+Vous y accéderez sur : http://otr.ontheroadagame.fr:8000 ou http://at-home.ontheroadagame.fr:8000
 
 Vous pourrez ensuite créer un compte, vous serez un simple utilisateur, vous pourrez sous inscrire à une session, y participer.
 

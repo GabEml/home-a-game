@@ -21,7 +21,9 @@ class CreatePostsTable extends Migration
             $table->enum('state', ['pending','validated','partly_validated','not_validated'])->default('pending');
             $table-> foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('challenge_id')->constrained('challenges')->onDelete('cascade');
-
+            if(env('NEW_PROJECT_PROBLEM') == false) {
+                $table->engine = 'InnoDB';
+            }
         });
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGoodiesTable extends Migration
+class AddPostedAtToPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,8 @@ class CreateGoodiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('goodies', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('image_path');
-            if(env('NEW_PROJECT_PROBLEM') == false) {
-                $table->engine = 'InnoDB';
-            }
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dateTime('posted_at')->nullable();
         });
     }
 
@@ -30,6 +25,8 @@ class CreateGoodiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('goodies');
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropColumn('posted_at');
+        });
     }
 }
