@@ -83,13 +83,21 @@ php artisan db:seed
 ```
 
 
+Pour lancer le projet, ouvrez votre fichier `hosts`, en tant qu'administrateur, situé ici `C:\\Windows\\System32\\drivers\\etc`
 
-Puis lancer le projet : 
-```sh
-php artisan serve
+Puis ajouter les lignes suivantes :
+
+```txt
+127.0.0.1 otr.ontheroadagame.fr
+127.0.0.1 at-home.ontheroadagame.fr
 ```
 
-Vous y accéderez sur : http://127.0.0.1:8000/
+Enfin, lancer le serveur : 
+```sh
+php artisan serve --host=otr.ontheroadagame.fr
+```
+
+Vous y accéderez sur : http://otr.ontheroadagame.fr:8000 ou http://at-home.ontheroadagame.fr:8000
 
 Vous pourrez ensuite créer un compte, vous serez un simple utilisateur, vous pourrez sous inscrire à une session, y participer.
 
