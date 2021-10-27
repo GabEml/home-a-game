@@ -50,8 +50,10 @@
                             @else
                                 <div> <p> Nombres de points : {{$postValidated->challenge->points}}</p></div>
                             @endif
+                            @if ($postValidated->posted_at !== null)
                             <div><p>Posté le : <?php $postedAt = explode(' ', $postValidated->posted_at); ?><?=$postedAt[0];?> à <?=$postedAt[1]?></p></div>
-                            </div>
+                            @endif
+                        </div>
                         <br/>
                         <form action="{{route('posts.update',$postValidated->id)}}" method="post">
                             <!-- Add CSRF Token -->
