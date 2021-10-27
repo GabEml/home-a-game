@@ -17,7 +17,7 @@ class CreateSessiongameUserTable extends Migration
             $table->id();
             $table -> foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table -> foreignId('sessiongame_id')->nullable()->constrained('sessiongames')->onDelete('set null');
-            $table->engine = 'InnoDB';
+
             $table -> unique(['sessiongame_id','user_id']);
         });
     }

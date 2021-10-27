@@ -2,7 +2,7 @@
 
 @section('title', 'Liste de vos défis')
 
-@section('titlePage', 'Liste de vos défis') 
+@section('titlePage', 'Liste de vos défis')
 
 @section ('content')
 
@@ -13,7 +13,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('sessiongames.index') }}">Espace Jeu</a></li>
                 <li class="breadcrumb-item active">{{$sessiongame->name}}</li>
-                
+
             </ol>
        </nav>
     </div>
@@ -29,17 +29,17 @@
                 $position=$position+1
             @endphp
             @if($user->id == Auth::user()->id)
-                <p class="text-center resultRanking">Vous avez 
+                <p class="text-center resultRanking">Vous avez
                     @if($user->points==NULL)
                     0 point,
-                    @else 
-                    {{$user->points}} points, 
+                    @else
+                    {{$user->points}} points,
                     @endif
 
                     @if($sessiongame->see_ranking==1)
                         @if($position==1)
                         vous êtes {{$position}}<sup>er</sup> du classement !</p>
-                        @else 
+                        @else
                         <sup>ème</sup> du classement !</p>
                         @endif
                     @else
@@ -53,7 +53,28 @@
 
        <!--End Breadcrumb-->
        <div class="row containerArticles">
+        @php
+            $states = [
+                'pending' => 'En attente',
+                'not_validated' => 'Non validé',
+                'partly_validated' => 'Partiellement validé',
+                'validated' => 'Validé'
+            ];
+            $btn_label = [
+                'pending' => 'Modifier',
+                'not_validated' => 'Non validé',
+                'partly_validated' => 'Modifier',
+                'validated' => 'Voir',
+                'empty' => 'Soumettre une preuve'
+            ];
+        @endphp
           @foreach ($sessiongame->challenges as $challenge)
+              @php
+                  $post = $challenge->posts->filter(function($post) {
+                    return $post->id == Auth::user()->id;
+                  })->first();
+                  $state = $post ? $post->state : 'empty';
+              @endphp
               <div class="flex flex-col positionButton marginArticles col-lg-3 col-md-6 col-sm-12 containerChallenge containerPresentation justify-content-between">
                   <div class="flex flex-col">
                         <div class="containerTitleChallenge">
@@ -66,28 +87,17 @@
                         @else
                             <h2 class="align-self-center text-center titleArticleHome">{{$challenge->points}} points</h2>
                         @endif
-                        
+
                     </div>
                   <div>
-                    
                       <div class="result">
-                      @foreach ($challenge->posts as $post)
-                            @if($post->user->id == Auth::user()->id)
-                                @if($post->state =="pending")
-                                    <p class="status text-center"> Statut : En attente </p>
-                                @elseif($post->state =="not_validated")
-                                    <p class="status text-center"> Statut :Non validé </p>
-                                    <p class="status text-center"> Score obtenu : {{$post->user_point}} points </p>
-                                @elseif($post->state =="partly_validated")
-                                    <p class="status text-center">Statut : Partiellement validé </p>
-                                    <p class="status text-center"> Score obtenu : {{$post->user_point}} points</p>
-                                @else
-                                    <p class="status text-center">Statut : Validé </p>
-                                    <p class="status text-center"> Score obtenu : {{$post->user_point}} points</p>
-                                @endif
-                            @endif
-
-                        @endforeach
+                          @if($state == "empty")
+                          @elseif($state == "pending")
+                              <p class="status text-center"> Statut : {{$states[$state]}} </p>
+                          @else
+                              <p class="status text-center"> Statut : {{$states[$state]}} </p>
+                              <p class="status text-center"> Score obtenu : {{$post->user_point}} points </p>
+                          @endif
                     </div>
                 <br/>
                     <div>
@@ -103,7 +113,9 @@
                             </div>
                         @else
                         <div>
-                            <a class="btn seeMore seeMoreChallenge" href="{{route('challenges.show',$challenge->id)}}"> Voir</a>
+                            <a class="btn seeMore seeMoreChallenge state-{{$state}}" href="{{route('challenges.show',$challenge->id)}}">
+                                {{$btn_label[$state]}}
+                            </a>
                         </div>
                         @endif
                     </div>
@@ -114,7 +126,7 @@
 
 @auth
     @if (Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
-        
+
         <div class="flex col-12 justify-content-between  btnChallengeAdmin">
             <div class="flex ">
                 <a class="btn btn-primary" href="{{route('sessiongames.index')}}"> Retour</a>

@@ -22,7 +22,7 @@ class CreateSessiongamesTable extends Migration
             $table->date('end_date');
             $table->string('image_path');
             $table -> foreignId('goodie_id')->nullable()->constrained('goodies')->onDelete('set null');
-            $table->engine = 'InnoDB';
+
         });
     }
 

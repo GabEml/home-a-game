@@ -20,7 +20,7 @@ class CreateArticlesTable extends Migration
             $table->string('image_path');
             $table -> foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
-            $table->engine = 'InnoDB';
+
         });
     }
 
