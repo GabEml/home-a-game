@@ -65,6 +65,8 @@
                             @else
                                 <div> <p> Nombres de points : {{$postPending->challenge->points}}</p></div>
                             @endif
+                            <div><p>Posté le : <?php $postedAt = explode(' ', $postPending->posted_at); ?><?=$postedAt[0];?> à <?=$postedAt[1]?></p></div>
+
                             
                         </div>
                         <br/>
