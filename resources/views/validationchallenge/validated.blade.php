@@ -50,7 +50,8 @@
                             @else
                                 <div> <p> Nombres de points : {{$postValidated->challenge->points}}</p></div>
                             @endif
-                        </div>
+                            <div><p>Posté le : {{$postValidated->posted_at}}</p></div>
+                            </div>
                         <br/>
                         <form action="{{route('posts.update',$postValidated->id)}}" method="post">
                             <!-- Add CSRF Token -->

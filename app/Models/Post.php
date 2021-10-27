@@ -23,6 +23,7 @@ class Post extends Model
         'state',
         'user_id',
         'challenge_id',
+        'posted_at',
     ];
 
     /**
