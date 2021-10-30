@@ -160,15 +160,20 @@ class PostController extends Controller
             $test=32;
         }
 
+        $validateDataBonus=$request->validate([
+            'bonus' => 'integer|in:0,1', 
+        ]);
+
         $maxPointsPost = $post->challenge->points;
 
-        if($post->challenge->unlimited_points==1){
+        if($post->challenge->unlimited_points==1 || $request->filled('bonus')){
             $validateData=$request->validate([
             'state' => 'required|in:validated,partly_validated,not_validated', 
             'user_point'=>"required_if:state,partly_validated|numeric|nullable|min:0|max:2147483647",
-            'comment'=>'nullable|max:255|min:2'
+            'comment'=>'nullable|max:255|min:2',
+            'bonus' => 'integer|in:0,1', 
         ]);
-
+        $post->bonus = $validateData["bonus"];
         $post->state = $validateData["state"];
         $post->user_point = $validateData["user_point"];
         }
@@ -177,9 +182,11 @@ class PostController extends Controller
             $validateData=$request->validate([
             'state' => 'required|in:validated,partly_validated,not_validated', 
             'user_point'=>"required_if:state,partly_validated|numeric|nullable|min:0|max:$maxPointsPost",
-            'comment'=>'nullable|max:255|min:2'
+            'comment'=>'nullable|max:255|min:2',
             ]);
-        
+
+            $post->bonus = 0;
+
             $post->state = $validateData["state"];
             if($validateData["state"]==="validated"){
                 $post->user_point =$maxPointsPost;

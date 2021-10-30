@@ -46,7 +46,7 @@
             <img width="350px" height=auto class="align-self-center imagePresentation" src="/images/ontheroadagame.png" alt="On The Road a Game">
             <h2 class="align-self-center titlePresentation">Un voyage On The Road a Game à gagner chaque année*</h2>
             <br/>
-            <small class="italic">*Lot attribué par tirage au sort entre les vainqueurs de toutes les sessions</small>
+            <small class="italic">*Lot attribué au vainqueur de la session finale annuelle. Voir notre règlement pour plus de détails.</small>
         </div>
     </div>
 

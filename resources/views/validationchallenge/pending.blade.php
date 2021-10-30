@@ -88,7 +88,14 @@
                                 <label for="user_point">Nombres de points :</label>
                                 <input type="number" min=0  value="{{$postPending->user_point}}" name="user_point" id="user_point" class="form-control"class=@error('user_point') is-invalid @enderror >
                             </div>
-                            
+
+                            <div class="form-check form-check-inline flex justify-content-center ">
+                                <input class="form-check-input" type="checkbox" value="1" name="bonus" class=@error('bonus') is-invalid @enderror>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Bonus
+                                </label>
+                            </div>
+                            <br/>
                             <div class="form-group">
                                 <label for="comment">Commentaire :</label>
                                 <textarea name="comment" id="comment" class="form-control"class=@error('comment') is-invalid @enderror ></textarea>
@@ -103,6 +110,9 @@
                             <button type="submit" class="btn btn-info ">Valider</button>
                     </div>
                     @error('state')
+                    <div class="alert alert-danger"> {{$message}} </div>
+                    @enderror 
+                    @error('bonus')
                     <div class="alert alert-danger"> {{$message}} </div>
                     @enderror 
                     @error('user_point')
