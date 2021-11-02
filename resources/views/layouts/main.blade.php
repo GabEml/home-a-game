@@ -189,7 +189,16 @@
                      </div>
                  </div>
                      <div class="col-12 d-flex justify-content-center small">
-                         <p class="mb-0">&copy; Copyright 2021 © HAG | Tous droits réservés</p>
+                        <p class="textFooter mb-0 text-center">
+                            Copyright 2021 &copy; OTR | Tous droits réservés |
+                            <a class="linkFooter" href="https://www.ontheroadagame.fr/mentions-legales-et-politique-de-confidentialite/">
+                                Mentions légales & politique de confidentialité</a> |
+                            <a class="linkFooter" href="https://www.ontheroadagame.fr/conditions-generales-vente/">Conditions Générales et
+                                Particulières de Vente</a>
+                            <br />
+                            <a class="linkFooter" href="https://www.ontheroadagame.fr/wp-content/uploads/2021/11/2021-11-02-Reglement-On-The-Road-a-Game-At-Home-Edition.pdf"
+                                target=_blank>Règlement du jeu On The Road a Game @ Home Edition</a>
+                        </p>
                      </div>
              </div><!--End container-fluid in footer-->
         </footer><!--end of main Footer-->

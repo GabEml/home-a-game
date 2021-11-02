@@ -52,7 +52,6 @@
                 <tbody>
                     <tr>
                         <td>
-                            {{$userSearch}}
                             {{$userSearch->firstname}} {{$userSearch->lastname}}  ({{$userSearch->email}})
                         </td>
                         <td class="text-center"> 

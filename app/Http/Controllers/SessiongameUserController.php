@@ -123,6 +123,7 @@ class SessiongameUserController extends Controller
 
         $validateData = $request->validate([
             'sessiongames' => 'required|exists:sessiongames,id',
+            'conditions'=>'required'
         ]);
 
         $test = DB::table('sessiongame_user')
