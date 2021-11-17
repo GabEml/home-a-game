@@ -8,7 +8,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Api\BaseController;
 
@@ -20,6 +19,23 @@ class UserController extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function indexUsers()
+    {
+        $this->authorize('viewAny', User::class);
+        $users = DB::table('users')
+            ->select("users.id", "firstname", "lastname")
+            ->where('roles.role', "User")
+            ->join('roles', 'roles.id', '=', 'users.role_id')
+            ->get();
+
+        return $this->sendResponse($users, 'Users list');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function test()
     {
         $this->authorize('viewAny', User::class);
         $users = DB::table('users')
