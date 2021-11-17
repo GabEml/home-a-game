@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Role;
-
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -20,24 +18,7 @@ class UserController extends BaseController
      */
     public function indexUsers()
     {
-        $this->authorize('viewAny', User::class);
-        $users = DB::table('users')
-            ->select("users.id", "firstname", "lastname")
-            ->where('roles.role', "User")
-            ->join('roles', 'roles.id', '=', 'users.role_id')
-            ->get();
-
-        return $this->sendResponse($users, 'Users list');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function test()
-    {
-        $this->authorize('viewAny', User::class);
+        // $this->authorize('viewAny', User::class);
         $users = DB::table('users')
             ->select("users.id", "firstname", "lastname")
             ->where('roles.role', "User")

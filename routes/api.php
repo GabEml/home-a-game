@@ -82,11 +82,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('goodies/{goodie}', [GoodieController::class, 'update']);
     Route::delete('goodies/{goodie}', [GoodieController::class, 'destroy']);
 
-    // Route::middleware('cors')->prefix('api')->group(function () {
-    //     Route::get('/utilisateurs/utilisateurs', [UserController::class, 'indexUsers']);
-    // });
-});
-
-Route::prefix('api')->group(function () {
-    Route::get('/test', [UserController::class, 'test']);
+    Route::middleware('cors')->prefix('api')->group(function () {
+        Route::get('/utilisateurs/utilisateurs', [UserController::class, 'indexUsers']);
+    });
 });
