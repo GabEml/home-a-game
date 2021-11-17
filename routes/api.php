@@ -86,3 +86,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/utilisateurs/utilisateurs', [UserController::class, 'indexUsers']);
     });
 });
+
+Route::middleware('cors')->prefix('api')->group(function () {
+    Route::get('/test', [UserController::class, 'indexUsers']);
+});
