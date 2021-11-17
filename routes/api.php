@@ -85,6 +85,6 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::middleware('cors')->group(function () {
-    Route::get('allutilisateurs', [UserController::class, 'indexUsers'])->header('Access-Control-Allow-Origin: *');
-    Route::post('authenticate', [LoginController::class, 'authenticate'])->header('Access-Control-Allow-Origin: *');
+    Route::get('allutilisateurs', [UserController::class, 'indexUsers']);
+    Route::post('authenticate', [LoginController::class, 'authenticate']);
 });
