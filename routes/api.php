@@ -85,6 +85,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('cors')->group(function () {
         Route::get('/allutilisateurs', [UserController::class, 'indexUsers']);
-        Route::get('/authenticate', [LoginController::class, 'authenticate']);
+        Route::post('/authenticate', [LoginController::class, 'authenticate']);
     });
 });
