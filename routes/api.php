@@ -82,7 +82,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('goodies/{goodie}', [GoodieController::class, 'update']);
     Route::delete('goodies/{goodie}', [GoodieController::class, 'destroy']);
 
-    Route::prefix('api')->group(function () {
+    Route::middleware('CORS')->prefix('api')->group(function () {
         Route::get('/utilisateurs/utilisateurs', [UserController::class, 'indexUsers']);
     });
 });
