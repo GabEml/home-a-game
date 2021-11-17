@@ -66,7 +66,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('posts/{post}', [PostController::class, 'update']);
     //Route::get('posts/{post}',[PostdefiController::class, 'show']);
 
-    Route::get('utilisateurs/utilisateurs', [UserController::class, 'indexUsers']);
+    // Route::get('utilisateurs/utilisateurs', [UserController::class, 'indexUsers']);
     Route::get('utilisateurs/admin-defis', [UserController::class, 'indexAdminChallenge']);
     Route::get('utilisateurs/super-admin', [UserController::class, 'indexSuperAdmin']);
     Route::get('utilisateurs/{user}', [UserController::class, 'show']);
@@ -82,11 +82,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('goodies/{goodie}', [GoodieController::class, 'update']);
     Route::delete('goodies/{goodie}', [GoodieController::class, 'destroy']);
 
-    // Route::middleware('cors')->prefix('api')->group(function () {
-    //     Route::get('/utilisateurs/utilisateurs', [UserController::class, 'indexUsers']);
+    // Route::middleware('cors')->group(function () {
+    // Route::get('/allutilisateurs', [UserController::class, 'indexUsers']);
     // });
 });
 
-Route::middleware('cors')->prefix('api')->group(function () {
-    Route::get('/utilisateurs/utilisateurs', [UserController::class, 'indexUsersTest']);
+Route::middleware('cors')->group(function () {
+    Route::get('/allutilisateurs', [UserController::class, 'indexUsers']);
 });
