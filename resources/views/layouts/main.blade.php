@@ -14,27 +14,27 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Acme&family=Poppins:wght@100&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-        
+
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
         <link rel="icon" href="/images/logo.svg" />
-        
+
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
-        
+
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         {{-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> --}}
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        
+
         @livewireStyles
-        
+
         <!-- Styles -->
         <style>
            .is-invalid {border:1px solid red}
-        
+
         </style>
 
         <script src="{{ mix('js/app.js') }}" defer></script>
@@ -59,7 +59,7 @@
                     <li class="nav-item">
                         <x-jet-nav-link href="{{ route('articles.index') }}" :active="request()->routeIs('articles.index')">
                             <h2 class="linkMenu">{{ __('Articles') }}</h2>
-                        </x-jet-nav-link> 
+                        </x-jet-nav-link>
                     </li>
                     <li class="nav-item">
                         <x-jet-nav-link href="{{ route('ranking') }}" :active="request()->routeIs('ranking')">
@@ -104,7 +104,7 @@
                     @endif
                     @endif
                 </ul>
-            
+
             <div class="nav navbar-nav hiddenNavComputer">
                 @auth
                 <li class="nav-item dropdown">
@@ -115,8 +115,8 @@
                       <a class="dropdown-item" href="{{ route('profile') }}">Mon Profil</a>
                       {{-- <a class="dropdown-item" href="{{ route('api-tokens.index')}}">API Token</a> --}}
                       <a class="dropdown-item" href="/deconnexion">Se déconnecter</a>
-                      
-                      
+
+
                     </div>
                   </li>
                 @else
@@ -131,7 +131,7 @@
                         </x-jet-nav-link>
                     </div>
                 @endif
-                        
+
             </div>
         </div>
         <div class="hiddenNavPhone">
@@ -140,11 +140,11 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="linkMenu">{{ Auth::user()->firstname }}</span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item" href="{{ route('profile') }}">Mon Profil</a>
                       {{-- <a class="dropdown-item" href="{{ route('api-tokens.index')}}">API Token</a> --}}
                       <a class="dropdown-item" href="/deconnexion">Se déconnecter</a>
-                      
+
                     </div>
                   </li>
                 @else
@@ -160,7 +160,7 @@
                     </div>
                 @endif
         </div>
-        
+
       </nav>
         <div class="logoImage flex flex-col">
             <a  href="{{ route('home') }}"><img class="backgroundLogo" src="/images/fond.png"  alt="fond logo"></a>
@@ -170,7 +170,7 @@
         </div>
         <br/>
         <div class="container">
-             
+
             @yield('content')
         </div>
 
