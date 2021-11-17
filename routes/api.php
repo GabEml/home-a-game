@@ -82,9 +82,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('goodies/', [GoodieController::class, 'store']);
     Route::put('goodies/{goodie}', [GoodieController::class, 'update']);
     Route::delete('goodies/{goodie}', [GoodieController::class, 'destroy']);
+});
 
-    Route::middleware('cors')->group(function () {
-        Route::get('allutilisateurs', [UserController::class, 'indexUsers']);
-        Route::post('authenticate', [LoginController::class, 'authenticate']);
-    });
+Route::middleware('cors')->group(function () {
+    Route::get('allutilisateurs', [UserController::class, 'indexUsers']);
+    Route::post('authenticate', [LoginController::class, 'authenticate']);
 });
