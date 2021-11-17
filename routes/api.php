@@ -2,14 +2,15 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ArticleController;
-use App\Http\Controllers\Api\RankingController;
-use App\Http\Controllers\Api\SessiongameController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\GoodieController;
-use App\Http\Controllers\Api\SessiongameUserController;
+use App\Http\Controllers\Api\ArticleController;
+use App\Http\Controllers\Api\RankingController;
 use App\Http\Controllers\Api\ChallengeController;
+use App\Http\Controllers\Api\SessiongameController;
+use App\Http\Controllers\Api\SessiongameUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,5 +85,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('cors')->group(function () {
         Route::get('/allutilisateurs', [UserController::class, 'indexUsers']);
+        Route::get('/authenticate', [LoginController::class, 'authenticate']);
     });
 });
