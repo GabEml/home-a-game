@@ -16,7 +16,7 @@ class UserController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexUsers()
+    public function indexUsersTest()
     {
         // $this->authorize('viewAny', User::class);
         $users = DB::table('users')
