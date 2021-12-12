@@ -65,6 +65,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Sessions Path
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure the path where users will get redirected during
+    | authentication or password reset when the operations are successful
+    | and the user is authenticated. You are free to change this value.
+    |
+    */
+
+    'sessions' => RouteServiceProvider::SESSIONS,
+
+    /*
+    |--------------------------------------------------------------------------
     | Fortify Routes Prefix / Subdomain
     |--------------------------------------------------------------------------
     |

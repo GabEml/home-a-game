@@ -16,7 +16,7 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
-            <div class="flex registrationForm">
+            <div class="flex registrationForm gap-5">
                 <div class="col-12 col-md-6">
                     <div>
                         <x-jet-label for="firstname" value="{{ __('Prénom') }}" />

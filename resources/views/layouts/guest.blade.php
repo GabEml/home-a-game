@@ -191,6 +191,7 @@
 
                     <br />
 
+                    <div class="spacer"></div>
                     <footer class="bg-dark text-light footer">
                         <div class="container-fluid">
                             <div class="flex justify-content-center">
