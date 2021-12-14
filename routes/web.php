@@ -1,21 +1,22 @@
 <?php
 
-use App\Http\Controllers\ConnexionController;
-use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\SessiongameController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\SessiongameUserController;
-use App\Http\Controllers\ChallengeController;
-use App\Http\Controllers\RankingController;
 use App\Http\Controllers\GoodieController;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\RankingController;
 use App\Http\Controllers\WebhookController;
+use App\Http\Controllers\ChallengeController;
+use App\Http\Controllers\ConnexionController;
+use App\Http\Controllers\SessiongameController;
+use App\Http\Controllers\UserProfileController;
 
 
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\SessiongameUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/',[ArticleController::class, 'home'])->name('home');
+
+Route::get('/inscription',[RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/inscription',[RegisterController::class, 'register']);
 
 Route::get('/deconnexion',[ConnexionController::class, 'logout'])->middleware('auth')->name('disconnection');
 

@@ -20,15 +20,6 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/';
 
     /**
-     * The path to the "sessionsgames" route for your application.
-     *
-     * This is used by Laravel authentication to redirect users after register.
-     *
-     * @var string
-     */
-    public const SESSIONS = '/inscription_sessions';
-
-    /**
      * The controller namespace for the application.
      *
      * When present, controller route declarations will automatically be prefixed with this namespace.
