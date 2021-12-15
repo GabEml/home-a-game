@@ -54,7 +54,7 @@
                 <ul class=" menu navbar-nav mx-auto text-md-center text-left">
                     <li class="nav-item">
                         <x-jet-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
-                            <h2 class="linkMenu">{{ __('Accueil') }}</h2>
+                            <h2 class="linkMenu">{{ __('Accueil @HOME') }}</h2>
                         </x-jet-nav-link>
                     </li>
                     <li class="nav-item">
@@ -64,14 +64,13 @@
                         </x-jet-nav-link>
                     </li>
                     <li class="nav-item">
-                        <x-jet-nav-link href="{{ route('articles.index') }}"
-                            :active="request()->routeIs('articles.index')">
-                            <h2 class="linkMenu">{{ __('Articles') }}</h2>
+                        <x-jet-nav-link href="{{ route('ranking') }}" :active="request()->routeIs('ranking')">
+                            <h2 class="linkMenu">{{ __('Classement') }}</h2>
                         </x-jet-nav-link>
                     </li>
                     <li class="nav-item">
-                        <x-jet-nav-link href="{{ route('ranking') }}" :active="request()->routeIs('ranking')">
-                            <h2 class="linkMenu">{{ __('Classement') }}</h2>
+                        <x-jet-nav-link href="https://www.ontheroadagame.fr/">
+                            <h2 class="linkMenu">{{ __('OTRAG') }}</h2>
                         </x-jet-nav-link>
                     </li>
                     @auth
@@ -135,17 +134,15 @@
                         @else
                             <div>
                                 <x-jet-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
-                                    <h2 class="linkMenu">{{ __('Se connecter') }}</h2>
+                                    <h2 class="link-auth">{{ __('Se connecter') }}</h2>
                                 </x-jet-nav-link>
                             </div>
                             <div>
                                 <x-jet-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
-                                    <h2 class="linkMenu"> {{ __("S'inscrire") }}</h2>
+                                    <h2 class="link-auth"> {{ __("S'inscrire") }}</h2>
                                 </x-jet-nav-link>
                             </div>
-                            @endif
-
-                        </div>
+                        @endif
                     </div>
                     <div class="hiddenNavPhone">
                         @auth
