@@ -173,7 +173,7 @@
             <div class="banner-text-box">
                 {{-- <div class="banner-text-box-background"></div> --}}
                 <div class="container">
-                    <h1 class="h1 title">Découvrez At Home a Game</h1>
+                    <h1 class="h1 title">Découvrez @ Home a Game</h1>
                     <div class="discover">
                         @if(Auth::user())
                             <a href="{{ route('sessiongames.index') }}" target="_self" class="link-discover" style="border-radius:5px;">
