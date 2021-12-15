@@ -138,7 +138,7 @@
                                 </x-jet-nav-link>
                             </div>
                             <div>
-                                <x-jet-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
+                                <x-jet-nav-link href="{{ route('registered') }}" :active="request()->routeIs('registered')">
                                     <h2 class="link-auth"> {{ __("S'inscrire") }}</h2>
                                 </x-jet-nav-link>
                             </div>
@@ -165,7 +165,7 @@
                                 </x-jet-nav-link>
                             </div>
                             <div>
-                                <x-jet-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
+                                <x-jet-nav-link href="{{ route('registered') }}" :active="request()->routeIs('registered')">
                                     <h2 class="linkMenu linkMenuNotConnected linkRegister"> {{ __("S'inscrire") }}</h2>
                                 </x-jet-nav-link>
                             </div>

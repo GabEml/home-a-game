@@ -32,8 +32,8 @@ use App\Http\Controllers\SessiongameUserController;
 
 Route::get('/',[ArticleController::class, 'home'])->name('home');
 
-Route::get('/inscription',[RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/inscription',[RegisterController::class, 'register']);
+Route::get('/inscription',[RegisterController::class, 'showRegistrationForm'])->name('registered');
+Route::post('/inscription',[RegisterController::class, 'registered']);
 
 Route::get('/deconnexion',[ConnexionController::class, 'logout'])->middleware('auth')->name('disconnection');
 

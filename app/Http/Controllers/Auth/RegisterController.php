@@ -37,8 +37,7 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        // $sessions = $sgur->getAllUnstartedSession();
-        // dd($sessions);
+
         return view('auth.register'); //, (['sessions' => $sessions])
     }
 
@@ -48,7 +47,7 @@ class RegisterController extends Controller
      * @param  array  $input
      * @return \App\Models\User
      */
-    public function register(Request $request)
+    public function registered(Request $request)
     {
         $validate = $this->validator($request->all());
         $user = $this->create($validate);
