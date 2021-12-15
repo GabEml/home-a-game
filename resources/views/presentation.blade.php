@@ -16,7 +16,7 @@
             <h2 class="align-self-center titlePresentation">Plusieurs sessions par an, limitées dans le temps</h2>
         </div>
         <br/>
-            <p>Comme les voyages On The Road a Game, une session @ Home dure 5 jours. </p>
+            <p>Comme les voyages On The Road a Game, une session @ Home dure 10 jours. </p>
             <p>5 jours de challenges et de défis délirants, imaginés autour d'une thématique culturelle, sportive, d'actualité...</p>
             <br/>
             <p class="underline">Le coût de participation à une session s'élève à 10€.</p>
