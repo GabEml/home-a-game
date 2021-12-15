@@ -65,7 +65,7 @@
                     @if (Auth::user()->role->role==="User" or Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
                     <li class="nav-item">
                         <x-jet-nav-link href="{{ route('sessiongames.index') }}" :active="request()->routeIs('sessiongames.index')">
-                            <h2 class="linkMenu">{{ __('Sousmettre un défi') }}</h2>
+                            <h2 class="linkMenu">{{ __('Soumettre un défi') }}</h2>
                         </x-jet-nav-link>
                     </li>
                     @endif
