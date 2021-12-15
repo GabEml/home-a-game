@@ -62,7 +62,7 @@ class PostController extends Controller
     public function indexValidated()
     {
         $this->authorize('viewAny', Post::class);
-        $postsValidated = Post::where('state', '!=', 'pending')->orderByDesc("id")->get();
+        $postsValidated = Post::where('state', '!=', 'pending')->orderByDesc("id")->paginate(9);
         $postsPending = Post::where('state', '=', 'pending')->orderByDesc("id")->get();
         return view('validationchallenge.validated', ['postsValidated'=>$postsValidated ], ['postsPending'=>$postsPending]);
     }

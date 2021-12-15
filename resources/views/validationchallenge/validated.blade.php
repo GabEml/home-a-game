@@ -146,6 +146,22 @@
         @endif
     </div>
 
+    @if ($postsValidated->lastPage() > 1)
+            <ul class="pagination">
+                <li class="{{ ($postsValidated->currentPage() == 1) ? ' isDisabled' : '' }}">
+                    <a href="{{ $postsValidated->url($postsValidated->currentPage()-1) }}">Précédent</a>
+                </li>
+                @for ($i = 1; $i <= $postsValidated->lastPage(); $i++)
+                    <li class="{{ ($postsValidated->currentPage() == $i) ? ' active' : '' }}">
+                        <a href="{{ $postsValidated->url($i) }}">{{ $i }}</a>
+                    </li>
+                @endfor
+                <li class="{{ ($postsValidated->currentPage() == $postsValidated->lastPage()) ? ' isDisabled' : '' }}">
+                    <a href="{{ $postsValidated->url($postsValidated->currentPage()+1) }}" >Suivant</a>
+                </li>
+            </ul>
+        @endif
+
     <br /><br />
 
 @endsection
