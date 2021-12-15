@@ -79,7 +79,8 @@ Route::delete('posts/{post}',[PostController::class, 'destroy'])->middleware('au
 Route::get('posts/valides',[PostController::class, 'indexValidated'])->middleware('auth','verified')->name('posts.indexValidated');
 Route::get('posts/en-attente',[PostController::class, 'indexPending'])->middleware('auth','verified')->name('posts.indexPending');
 Route::put('posts/{post}',[PostController::class, 'update'])->middleware('auth','verified')->name('posts.update');
-Route::get('posts/en-attente/search',[PostController::class, 'search'])->middleware('auth','verified')->name('posts.search');
+Route::get('posts/en-attente/searchPending',[PostController::class, 'searchPending'])->middleware('auth','verified')->name('posts.searchPending');
+Route::get('posts/en-attente/searchValidated',[PostController::class, 'searchValidated'])->middleware('auth','verified')->name('posts.searchValidated');
 
 
 Route::get('utilisateurs/utilisateurs',[UserController::class, 'indexUsers'])->middleware('auth','verified')->name('users.indexUsers');

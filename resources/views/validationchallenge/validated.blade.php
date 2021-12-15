@@ -13,7 +13,22 @@
         </div>
     </div>
 
-    <br /><br />
+    <br/>
+
+    <div class=" col-12 col-md-6 offset-md-3">
+        <form action="{{ route('posts.searchValidated') }}" method="get" role="search">
+            <!-- Add CSRF Token -->
+            @csrf
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Rechercher..." name="searchPost">
+                <span class="input-group-btn">
+        <button class="btn btn-info" type="submit">Rechercher</button>
+      </span>
+            </div>
+        </form>
+    </div>
+
+    <br/>
 
     <div class="row containerArticles">
         @if ($postsValidated->isEmpty())
