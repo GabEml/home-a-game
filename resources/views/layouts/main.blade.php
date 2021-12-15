@@ -179,6 +179,9 @@
                             <a href="{{ route('sessiongames.index') }}" target="_self" class="link-discover" style="border-radius:5px;">
                             <span>Jouer</span>
                             <i class="icon-angle-right"></i></a>
+                            <a href="{{ route('sessiongameusers.create') }}" target="_self" class="link-discover" style="border-radius:5px;">
+                            <span>Rejoindre une session</span>
+                            <i class="icon-angle-right"></i></a>
                         @else
                             <a href="{{ route('register') }}" target="_self" class="link-discover" style="border-radius:5px;">
                             <span>Participer</span>
