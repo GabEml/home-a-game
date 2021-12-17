@@ -85,7 +85,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'email_verified_at' => null,
         ])->save();
 
-        $user->sendEmailVerificationNotification();
+        //$user->sendEmailVerificationNotification();
         if($user->stripe_id!=null){
         $user->updateStripeCustomer(
             ['address'=>
