@@ -7,7 +7,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\ResetPasswordAdmin as ResetPasswordAdminNotification;
@@ -143,7 +143,7 @@ class User extends Authenticatable  // implements MustVerifyEmail
         $this->notify(new ResetPasswordNotification($token));
     }
 
-    // public function sendEmailVerificationNotification(){
-    //     $this->notify(new VerifyEmailNotification());
-    // }
+    public function sendEmailVerificationNotification(){
+        $this->notify(new VerifyEmailNotification());
+    }
 }
