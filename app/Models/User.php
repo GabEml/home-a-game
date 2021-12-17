@@ -26,7 +26,7 @@ use App\Notifications\VerifyEmail as VerifyEmailNotification;
 // class User extends Authenticatable implements MustVerifyEmail
 
 
-class User extends Authenticatable  // implements MustVerifyEmail
+class User extends Authenticatable  implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
