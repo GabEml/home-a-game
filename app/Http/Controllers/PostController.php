@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
+use DateTimeZone;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Challenge;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -60,8 +62,9 @@ class PostController extends Controller
     public function indexValidated()
     {
         $this->authorize('viewAny', Post::class);
-        $postsValidated = Post::where('state', '!=', 'pending')->orderByDesc("id")->get();
-        return view('validationchallenge.validated', ['postsValidated'=>$postsValidated ]);
+        $postsValidated = Post::where('state', '!=', 'pending')->orderByDesc("id")->paginate(9);
+        $postsPending = Post::where('state', '=', 'pending')->orderByDesc("id")->get();
+        return view('validationchallenge.validated', ['postsValidated'=>$postsValidated ], ['postsPending'=>$postsPending]);
     }
 
 
@@ -122,14 +125,19 @@ class PostController extends Controller
             }
         }
 
-            $post=new Post();
-            $post->file_path=$path;
-            $post->user_id=Auth::user()->id;
-            $post->challenge_id=$challenge->id;
-            $post->state="pending";
-            $post->save();  
+        $date = new DateTime();
+        $date->format('Y-m-d H:i:s');
 
-            return redirect()->route('challenges.show', ['challenge'=>$challenge]);
+        $post=new Post();
+        $post->file_path=$path;
+        $post->user_id=Auth::user()->id;
+        $post->challenge_id=$challenge->id;
+        $post->state="pending";
+        $post->posted_at = $date;
+  
+        $post->save();  
+
+        return redirect()->route('challenges.show', ['challenge'=>$challenge]);
             
     }
 
@@ -152,15 +160,20 @@ class PostController extends Controller
             $test=32;
         }
 
+        $validateDataBonus=$request->validate([
+            'bonus' => 'integer|in:0,1', 
+        ]);
+
         $maxPointsPost = $post->challenge->points;
 
-        if($post->challenge->unlimited_points==1){
+        if($post->challenge->unlimited_points==1 || $request->filled('bonus')){
             $validateData=$request->validate([
             'state' => 'required|in:validated,partly_validated,not_validated', 
             'user_point'=>"required_if:state,partly_validated|numeric|nullable|min:0|max:2147483647",
-            'comment'=>'nullable|max:255|min:2'
+            'comment'=>'nullable|max:255|min:2',
+            'bonus' => 'integer|in:0,1', 
         ]);
-
+        $post->bonus = $validateData["bonus"];
         $post->state = $validateData["state"];
         $post->user_point = $validateData["user_point"];
         }
@@ -169,9 +182,11 @@ class PostController extends Controller
             $validateData=$request->validate([
             'state' => 'required|in:validated,partly_validated,not_validated', 
             'user_point'=>"required_if:state,partly_validated|numeric|nullable|min:0|max:$maxPointsPost",
-            'comment'=>'nullable|max:255|min:2'
+            'comment'=>'nullable|max:255|min:2',
             ]);
-        
+
+            $post->bonus = 0;
+
             $post->state = $validateData["state"];
             if($validateData["state"]==="validated"){
                 $post->user_point =$maxPointsPost;
@@ -185,6 +200,8 @@ class PostController extends Controller
         }
 
         $post->comment = $validateData["comment"];
+        // $date = Post::select('posted_at')->where('id', $post->id)->get();
+        // $post->posted_at = $date;
         $post->update();
 
         $postsPending = Post::where('state', 'pending')->get();

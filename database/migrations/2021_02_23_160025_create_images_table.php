@@ -17,7 +17,9 @@ class CreateImagesTable extends Migration
             $table->id();
             $table->string('image_path');
             $table -> foreignId('challenge_id')->constrained('challenges')->onDelete('cascade');
-            $table->engine = 'InnoDB';
+            if(env('NEW_PROJECT_PROBLEM') == false) {
+                $table->engine = 'InnoDB';
+            }
         });
     }
 

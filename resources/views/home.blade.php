@@ -4,7 +4,7 @@
 
 @section('description',"Découvrez @ Home a Game un jeu d'aventure hors du commun pour vivre l'expérience On The Road a Game près de chez soi ! Votre mission: relever un max de défis. Votre objectif: battre les autres et tenter de gagner un voyage.")
 
-@section('titlePage'," @ Home a Game : un jeu d'aventure hors du commun pour vivre l'expérience OTR près de chez soi")
+@section('titlePage'," Un jeu d'échanges et de découverte, pour vivre l'expérience On The Road a Game près de chez soi")
 
 @section ('content')
 
@@ -46,7 +46,7 @@
             <img width="350px" height=auto class="align-self-center imagePresentation" src="/images/ontheroadagame.png" alt="On The Road a Game">
             <h2 class="align-self-center titlePresentation">Un voyage On The Road a Game à gagner chaque année*</h2>
             <br/>
-            <small class="italic">*Lot attribué par tirage au sort entre les vainqueurs de toutes les sessions</small>
+            <small class="italic">*Lot attribué au vainqueur de la session finale annuelle. Voir notre règlement pour plus de détails.</small>
         </div>
     </div>
 

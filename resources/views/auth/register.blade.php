@@ -13,10 +13,10 @@
 
         <x-jet-validation-errors class="mb-4" />
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('registered') }}">
             @csrf
 
-            <div class="flex registrationForm">
+            <div class="flex registrationForm gap-5">
                 <div class="col-12 col-md-6">
                     <div>
                         <x-jet-label for="firstname" value="{{ __('Prénom') }}" />

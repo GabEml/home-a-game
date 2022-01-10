@@ -20,7 +20,7 @@ class RankingController extends Controller
     public function ranking()
     {
         $session = DB::table('sessiongames')
-            ->where('start_date', '<', date('Y-m-d'))
+            ->where('start_date', '<=', date('Y-m-d'))
             ->where('type', 'Home a Game')
             ->orderByDesc('start_date')
             ->first();
@@ -73,7 +73,7 @@ class RankingController extends Controller
 
 
         $sessionCurrent = DB::table('sessiongames')
-            ->where('start_date', '<', date('Y-m-d'))
+            ->where('start_date', '<=', date('Y-m-d'))
             ->where('type', 'Home a Game')
             ->orderByDesc('start_date')
             ->first();
@@ -124,7 +124,7 @@ class RankingController extends Controller
     public function rankingOTR()
     {
         $session = DB::table('sessiongames')
-            ->where('start_date', '<', date('Y-m-d'))
+            ->where('start_date', '<=', date('Y-m-d'))
             ->where('type', 'On The Road a Game')
             ->orderByDesc('start_date')
             ->first();
@@ -175,7 +175,7 @@ class RankingController extends Controller
         $this->authorize('viewRankingOTR', $sessiongame);
 
         $sessionCurrent = DB::table('sessiongames')
-            ->where('start_date', '<', date('Y-m-d'))
+            ->where('start_date', '<=', date('Y-m-d'))
             ->where('type', 'On The Road a Game')
             ->orderByDesc('start_date')
             ->first();
