@@ -17,7 +17,6 @@ class Post extends Model
      * @var array
      */
     protected $fillable = [
-        'comment',
         'file_path',
         'user_point',
         'state',
@@ -34,7 +33,7 @@ class Post extends Model
     public function challenge()
     {
         return $this->belongsTo('App\Models\Challenge');
-    } 
+    }
 
     /**
      * Renvoie l'utilisateur qui a posté
@@ -44,5 +43,5 @@ class Post extends Model
     public function user()
     {
         return $this->belongsTo('App\Models\User');
-    } 
+    }
 }

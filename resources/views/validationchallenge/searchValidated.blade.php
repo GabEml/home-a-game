@@ -65,6 +65,11 @@
                             @else
                                 <div> <p> Nombres de points : {{$postValidated->points}}</p></div>
                             @endif
+                            @if ($postValidated->posted_at !== null)
+                                <div>
+                                    <p>Posté le : <?php $postedAt = explode(' ', $postValidated->posted_at); ?><?= $postedAt[0] ?> à <?= $postedAt[1] ?></p>
+                                </div>
+                            @endif
 
                         </div>
                         <br/>
@@ -75,9 +80,19 @@
                             <div class="form-group">
                                 <label for="state" >Statut :</label>
                                 <select class="form-control" name='state' class=@error('state') is-invalid @enderror>
-                                    <option value="validated" selected> Validé </option>
-                                    <option value="partly_validated"> Partiellement validé </option>
-                                    <option value="not_validated"> Non validé </option>
+                                    @if ($postValidated->state == 'validated')
+                                        <option value="validated" selected> Validé </option>
+                                        <option value="partly_validated"> Partiellement validé </option>
+                                        <option value="not_validated"> Non validé </option>
+                                    @elseif($postValidated->state =="partly_validated")
+                                        <option value="validated"> Validé </option>
+                                        <option value="partly_validated" selected> Partiellement validé </option>
+                                        <option value="not_validated"> Non validé </option>
+                                    @else
+                                        <option value="validated"> Validé </option>
+                                        <option value="partly_validated"> Partiellement validé </option>
+                                        <option value="not_validated" selected> Non validé </option>
+                                    @endif
                                 </select>
                             </div>
 
@@ -96,7 +111,7 @@
 
                             <div class="form-group">
                                 <label for="comment">Commentaire :</label>
-                                <textarea name="comment" id="comment" class="form-control"class=@error('comment') is-invalid @enderror ></textarea>
+                                <textarea name="comment" id="comment" class="form-control"class=@error('comment') is-invalid @enderror >{{$postValidated->comment}}</textarea>
                             </div>
                             <div class="flex justify-content-center">
                                 <small><a href="{{$postValidated->file_path}}" download>(Télécharger)</a></small>

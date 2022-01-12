@@ -84,13 +84,13 @@ Route::get('posts/valides',[PostController::class, 'indexValidated'])->middlewar
 Route::get('posts/en-attente',[PostController::class, 'indexPending'])->middleware('auth')->name('posts.indexPending');
 Route::put('posts/{post}',[PostController::class, 'update'])->middleware('auth')->name('posts.update');
 Route::get('posts/en-attente/searchPending',[PostController::class, 'searchPending'])->middleware('auth')->name('posts.searchPending');
-Route::get('posts/en-attente/searchValidated',[PostController::class, 'searchValidated'])->middleware('auth')->name('posts.searchValidated');
+Route::get('posts/valides/searchValidated',[PostController::class, 'searchValidated'])->middleware('auth')->name('posts.searchValidated');
 
 Route::get('utilisateurs/utilisateurs',[UserController::class, 'indexUsers'])->middleware('auth')->name('users.indexUsers');
 Route::get('utilisateurs/admin-defis',[UserController::class, 'indexAdminChallenge'])->middleware('auth')->name('users.indexAdminChallenge');
 Route::get('utilisateurs/super-admin',[UserController::class, 'indexSuperAdmin'])->middleware('auth')->name('users.indexSuperAdmin');
-Route::get('utilisateurs/liste-utilisateurs',[UserController::class, 'indexListUsers'])->middleware('auth')->name('users.indexListUsers'); 
-Route::get('utilisateurs/liste-utilisateurs/users-csv',[UserController::class, 'usersCsv'])->middleware('auth')->name('users.usersCsv'); 
+Route::get('utilisateurs/liste-utilisateurs',[UserController::class, 'indexListUsers'])->middleware('auth')->name('users.indexListUsers');
+Route::get('utilisateurs/liste-utilisateurs/users-csv',[UserController::class, 'usersCsv'])->middleware('auth')->name('users.usersCsv');
 Route::get('utilisateurs/creer',[UserController::class, 'create'])->middleware('auth')->name('users.create');
 Route::post('utilisateurs/nouveau',[UserController::class, 'storeNewUser'])->middleware('auth')->name('users.storeNewUser');
 Route::post('utilisateurs',[UserController::class, 'store'])->middleware('auth')->name('users.store');
