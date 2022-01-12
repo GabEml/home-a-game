@@ -17,6 +17,7 @@ class Post extends Model
      * @var array
      */
     protected $fillable = [
+        'comment',
         'file_path',
         'user_point',
         'state',
