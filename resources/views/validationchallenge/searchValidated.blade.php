@@ -102,7 +102,13 @@
                             </div>
 
                             <div class="form-check form-check-inline flex justify-content-center ">
-                                <input class="form-check-input" type="checkbox" value="1" name="bonus" class=@error('bonus') is-invalid @enderror>
+                                @if ($postValidated->bonus == 0)
+                                    <input class="form-check-input" type="checkbox" value="1" name="bonus"
+                                        class=@error('bonus') is-invalid @enderror>
+                                @else
+                                    <input class="form-check-input" type="checkbox" checked value="1" name="bonus"
+                                        class=@error('bonus') is-invalid @enderror>
+                                @endif
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Bonus
                                 </label>
