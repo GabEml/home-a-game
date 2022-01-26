@@ -154,8 +154,48 @@ class UserController extends Controller
 
         $user->save();
         
-        return [$user, response()->json([
-            "message" => "Utilisateur créé"])];
+        
+        $token = $user->createToken("token");
+
+        return ['token' => $token->plainTextToken];
+
+        // return [$user, response()->json([
+        //     "message" => "Utilisateur créé"])];
+    }
+
+    /**
+     * storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function connexion(Request $request)
+    {
+
+        // $validateData=$request->validate([
+        //     'email' => 'required| string| email| max:255| unique:users',
+        //     'password'=> 'required',
+        // ]);
+
+        // $user->save();
+        // $user = User::where([["email",$request->input('email')],["password",Hash::make($request->input('password'))]])->first();
+
+        $user = User::where("email",$request->input('email'))->first();
+
+        $password = Hash::make($request->input('password'));
+        $test = "non";
+
+        if(password_verify($request->input('password'), $user->password)) {
+            $test = "ok";
+        }
+
+        $token = $user->createToken("token");
+
+        return [$test, 'token' => $token->plainTextToken];
+
+
+        // return [$test, response()->json([
+        //     "message" => "OK"])];
     }
 
     /**
