@@ -99,7 +99,6 @@ class User extends Authenticatable  implements MustVerifyEmail
         'role_id',
         'city',
         'country',
-        'api_token',
     ];
 
     /**
