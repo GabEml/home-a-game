@@ -57,7 +57,7 @@ class ArticleController extends Controller
         $this->authorize('create', Article::class);
             $validateData=$request->validate([
                 'title' => 'required|max:60|min:5|unique:articles',
-                'description' => 'required|min:10', 
+                'description' => 'required|min:10',
                 'image_path'=>'required|image|max:100000',// Only allow .jpg, .bmp and .png file types.
             ]);
 
@@ -65,15 +65,15 @@ class ArticleController extends Controller
             $request->image_path->store('images', 'public');
             $path ="/".$request->file('image_path')->store('images');
 
-    
-    
+
+
             $article=new Article();
             $article->title = $validateData["title"];
             $article->description = $validateData["description"];
             $article->image_path=$path;
             $article->user_id=Auth::user()->id;
             $article->save();
-        
+
 
         return redirect('/articles');
     }
@@ -113,7 +113,7 @@ class ArticleController extends Controller
         $this->authorize('update', Article::class);
         $validateData=$request->validate([
             'title' => 'required|max:60|min:5',Rule::unique('users')->ignore($article->id),
-            'description' => 'required|min:10', 
+            'description' => 'required|min:10',
             'image_path'=>'image|max:100000',// Only allow .jpg, .bmp and .png file types.
         ]);
 
@@ -122,12 +122,12 @@ class ArticleController extends Controller
 
             //Pour utiliser is_file, il faur enlever le "/" qui est au début du chemin de l'image dans la bdd
             $path = substr($path,1);
-            
+
             if(is_file($path))
             {
                 //Supprimer l'image du dossier
                 unlink(public_path($article->image_path));
-        
+
 
                 // Save the file locally in the storage/public/ folder under a new folder named /product
                 $request->image_path->store('images', 'public');
@@ -140,7 +140,7 @@ class ArticleController extends Controller
         $article->title = $validateData["title"];
         $article->description = $validateData["description"];
         $article->update();
-        
+
         return redirect('/articles');
     }
 
