@@ -35,7 +35,7 @@ Route::get('classement', [RankingController::class, 'ranking']);
 
 Route::post('inscription',[UserController::class, 'store']);
 
-Route::post('connexion',[UserController::class, 'createJean']);
+Route::post('connexion',[UserController::class, 'connexion']);
 
 Route::middleware('auth:sanctum')->group(function(){
     

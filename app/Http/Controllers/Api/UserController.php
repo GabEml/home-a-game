@@ -169,7 +169,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function createJean(Request $request)
+    public function connexion(Request $request)
     {
 
         // $validateData=$request->validate([
