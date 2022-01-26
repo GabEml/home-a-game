@@ -34,18 +34,18 @@
         <tbody>
           @if ($users==null)
           @else
-            @if($session->see_ranking==1)
-              @foreach ($users as $user)
-                  <tr>
-                      <th scope="row">{{$position=$position+1}}</th>
-                      <td>{{$user->firstname}} {{$user->lastname}}</td>
-                      @if ($user->points == NULL)
-                      <td>0</td>
-                      @else
-                        <td>{{$user->points}}</td>
-                      @endif
-                  </tr>
-              @endforeach
+              @if($session->see_ranking==1 || Auth::user() != null && Auth::user()->role->role != "User")
+                @foreach ($users as $user)
+                    <tr>
+                        <th scope="row">{{$position=$position+1}}</th>
+                        <td>{{$user->firstname}} {{$user->lastname}}</td>
+                        @if ($user->points == NULL)
+                        <td>0</td>
+                        @else
+                          <td>{{$user->points}}</td>
+                        @endif
+                    </tr>
+                @endforeach
               @else 
                   <td colspan="3" class="text-center"> Le classement n'est pas encore dévoilé !</td>
               @endif
