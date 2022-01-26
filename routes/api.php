@@ -33,7 +33,7 @@ Route::get('articles/{article}',[ArticleController::class, 'show']);
 
 Route::get('classement', [RankingController::class, 'ranking']);
 
-Route::post('inscription',[RegisterController::class, 'create']);
+Route::post('inscription',[UserController::class, 'store']);
 
 Route::post('connexion',[UserController::class, 'createJean']);
 
