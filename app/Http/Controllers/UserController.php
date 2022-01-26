@@ -141,6 +141,39 @@ class UserController extends Controller
         return redirect()->route('users.edit', ['user'=>$user]);
     }
 
+        /**
+     * storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function createJean(Request $request)
+    {
+
+        // $validateData=$request->validate([
+        //     'email' => 'required| string| email| max:255| unique:users',
+        //     'password'=> 'required',
+        // ]);
+
+        // $user->save();
+        // $user = User::where([["email",$request->input('email')],["password",Hash::make($request->input('password'))]])->first();
+
+        $user = User::where("email",$request->input('email'))->first();
+
+        $password = Hash::make($request->input('password'));
+        $test = "non";
+
+        if(password_verify($request->input('password'), $user->password)) {
+            $test = "ok";
+        }
+
+        // $token = $request->email()->createToken($request->token_name);
+
+
+        return [$test, response()->json([
+            "message" => "OK"])];
+    }
+
     /**
      * Store a newly created resource in storage.
      *
