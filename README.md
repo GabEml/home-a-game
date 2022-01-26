@@ -133,6 +133,6 @@ Si vous voulez tester en tant que super Administrateur :
 - Mail : super@admin.com 
 - Mot de passe : superadmin
 
-test
+test2
 
 
