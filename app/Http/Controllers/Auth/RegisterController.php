@@ -101,6 +101,7 @@ class RegisterController extends Controller
             'role_id'=> 1,
             'city' => $input['city'],
             'country' => $input['country'],
+            'api_token' => Str::random(60),
         ]);
     }
 
