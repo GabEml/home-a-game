@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use App\Models\Sessiongame;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -87,9 +88,9 @@ class RegisterController extends Controller
      * @param array $input
      * @return void
      */
-    public function create(array $input)
+    public function create(Request $input)
     {
-        return User::create([
+        $user = User::create([
             'firstname' => $input['firstname'],
             'lastname' => $input['lastname'],
             'date_of_birth' => $input['date_of_birth'],
@@ -101,8 +102,10 @@ class RegisterController extends Controller
             'role_id'=> 1,
             'city' => $input['city'],
             'country' => $input['country'],
-            'api_token' => Str::random(60),
         ]);
-    }
 
+        $token = $user->createToken($request->token_name);
+
+        return ['token' => $token->plainTextToken];
+    }
 }
