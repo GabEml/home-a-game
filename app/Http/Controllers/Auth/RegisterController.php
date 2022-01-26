@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\Console\Input\Input;
 use App\Actions\Fortify\PasswordValidationRules;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -87,7 +88,7 @@ class RegisterController extends Controller
      * @param array $input
      * @return void
      */
-    public function create(array $input)
+    public function create(Request $input)
     {
         return User::create([
             'firstname' => $input['firstname'],

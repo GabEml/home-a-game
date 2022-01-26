@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\GoodieController;
 use App\Http\Controllers\Api\SessiongameUserController;
 use App\Http\Controllers\Api\ChallengeController;
+use App\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,7 @@ Route::get('articles/{article}',[ArticleController::class, 'show']);
 
 Route::get('classement', [RankingController::class, 'ranking']);
 
-Route::post('inscription',[UserController::class, 'store']);
+Route::post('inscription',[RegisterController::class, 'create']);
 
 Route::post('connexion',[UserController::class, 'createJean']);
 
