@@ -69,7 +69,7 @@
                         </x-jet-nav-link>
                     </li>
                     @endif
-                    @if (Auth::user()->role->role==="User")
+                    @if (Auth::user()->role->role==="User" && config('app.app_domain') != 'otr')
                     <li class="nav-item">
                         <x-jet-nav-link href="{{ route('sessiongameusers.create') }}" :active="request()->routeIs('sessiongameusers.create')">
                             <h2 class="linkMenu">{{ __("S'inscrire à une session") }}</h2>
@@ -115,8 +115,6 @@
                       <a class="dropdown-item" href="{{ route('profile') }}">Mon Profil</a>
                       {{-- <a class="dropdown-item" href="{{ route('api-tokens.index')}}">API Token</a> --}}
                       <a class="dropdown-item" href="/deconnexion">Se déconnecter</a>
-
-
                     </div>
                   </li>
                 @else
@@ -179,9 +177,13 @@
                             <a href="{{ route('sessiongames.index') }}" target="_self" class="link-discover btn-play" style="border-radius:5px;">
                             <span>Jouer</span>
                             <i class="icon-angle-right"></i></a>
-                            <a href="{{ route('sessiongameusers.create') }}" target="_self" class="link-discover btn-join" style="border-radius:5px;">
-                            <span>Rejoindre une session</span>
-                            <i class="icon-angle-right"></i></a>
+
+                            @if(config('app.app_domain') != 'otr')
+                                <a href="{{ route('sessiongameusers.create') }}" target="_self" class="link-discover btn-join" style="border-radius:5px;">
+                                    <span>Rejoindre une session</span>
+                                    <i class="icon-angle-right"></i>
+                                </a>
+                            @endif
                         @else
                             <a href="{{ route('register') }}" target="_self" class="link-discover" style="border-radius:5px;">
                             <span>Participer</span>
