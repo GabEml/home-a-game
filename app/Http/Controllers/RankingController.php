@@ -27,6 +27,8 @@ class RankingController extends Controller
 
         $dateNow = new DateTime;
 
+        // dd($session);
+
         if ($session != NULL) {
             $ranking = DB::table('sessiongame_user')
                 ->select('users.id', 'users.firstname', 'users.lastname', DB::raw('SUM(user_point) as points'))
@@ -50,8 +52,11 @@ class RankingController extends Controller
                 ->groupBy('sessiongames.id', 'sessiongame_user.user_id')
                 ->orderByDesc('points')
                 ->get();
+            $ranking = null;
 
             $sessiongames = Sessiongame::where('type', 'Home a Game')->where("end_date", '<', $dateNow)->where('id', '!=', $session->id)->get();
+
+            // dd($sessiongames);
         } else {
             $ranking = NULL;
             $sessiongames = [];
@@ -70,7 +75,6 @@ class RankingController extends Controller
     public function rankingPrevious(Sessiongame $sessiongame)
     {
         $this->authorize('viewRanking', $sessiongame);
-
 
         $sessionCurrent = DB::table('sessiongames')
             ->where('start_date', '<=', date('Y-m-d'))
@@ -101,6 +105,8 @@ class RankingController extends Controller
                 ->groupBy('sessiongames.id', 'sessiongame_user.user_id')
                 ->orderByDesc('points')
                 ->get();
+
+                // dd($ranking);
         } else {
             $ranking = NULL;
         }
@@ -111,7 +117,6 @@ class RankingController extends Controller
 
 
         $sessiongames = Sessiongame::where('type', 'Home a Game')->where("end_date", '<', $dateNow)->where('id', '!=', $sessionCurrent->id)->get();
-
 
         return view('ranking', ['users' => $ranking, "position" => $position, "session" => $sessiongame, "sessiongames" => $sessiongames, "sessionCurrent" => $sessionCurrent]);
     }
