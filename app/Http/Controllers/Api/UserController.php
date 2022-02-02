@@ -192,7 +192,7 @@ class UserController extends BaseController
             $tokenresult = $token->plainTextToken;
         }
 
-        return  $this->sendResponse(['token' => $tokenresult], 'Token');
+        return  $this->sendResponse(['email' => $user->email,'token' => $tokenresult], 'Token');
 
 
         // return [$test, response()->json([
