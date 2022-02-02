@@ -21,7 +21,7 @@
     <br />
 
     <div class='col-12'>
-        <p class="text-center">{{ $sessiongame->description }}</p>
+        <div class="text-center">{!! $sessiongame->description !!}</div>
         <p class="text-center">Pour cette session, vous pouvez avoir la chance de gagner :
             {{ $sessiongame->goodie->name }} !</p>
         <br />
@@ -69,7 +69,7 @@
                 'validated' => 'Voir',
                 'empty' => 'Soumettre une preuve',
             ];
-            
+
             $btn_class = [
                 'not_validated' => 'NotValidated',
                 'partly_validated' => 'PartlyValidated',
