@@ -21,7 +21,7 @@
     <br />
 
     <div class='col-12'>
-        <div class="text-center">{!! $sessiongame->description !!}</div>
+        <div class="text-center session-game-description">{!! $sessiongame->description !!}</div>
         <p class="text-center">Pour cette session, vous pouvez avoir la chance de gagner :
             {{ $sessiongame->goodie->name }} !</p>
         <br />
