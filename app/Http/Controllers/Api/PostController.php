@@ -23,8 +23,7 @@ class PostController extends Controller
         $this->authorize('viewAny', Post::class);
         $postsPending = Post::where('state', 'pending')->get();
         
-        return $postsPending;
-
+        return $this->sendResponse($postsPending, 'Posts validated');
     }
 
     /**
@@ -36,7 +35,8 @@ class PostController extends Controller
     {
         $this->authorize('viewAny', Post::class);
         $postsValidated = Post::where('state', '!=', 'pending')->get();
-        return $postsValidated;
+
+        return $this->sendResponse($postsValidated, 'Posts validated');
     }
 
 
@@ -48,7 +48,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return $post;
+        return $this->sendResponse($post, 'Post selected');
     }
 
 
@@ -93,8 +93,7 @@ class PostController extends Controller
             $post->save();
         
 
-            return [$post, response()->json([
-                "message" => "Post créé"])];
+            return $this->sendResponse($post, 'Post created successfully');
     }
 
 
@@ -122,10 +121,7 @@ class PostController extends Controller
         $post->comment = $validateData["comment"];
         $post->update();
 
-        return [$post, response()->json([
-            "message" => "Post modifié"])];
-
- 
+        return $this->sendResponse($post, 'Post updated successfully'); 
     }
 
     /**
@@ -138,7 +134,7 @@ class PostController extends Controller
     {
         $this->authorize('delete', $post);
         $post->delete();
-        return [$post, response()->json([
-            "message" => "Post supprimé"])];
+
+        return $this->sendResponse($post, 'Post deleted successfully');
     }
 }

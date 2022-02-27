@@ -18,7 +18,8 @@ class ArticleController extends Controller
     public function home()
     {
         $articles = Article::orderBy('created_at', 'desc')->take(3)->get();
-        return $articles;
+        
+        return $this->sendResponse($articles, 'Articles list');
     }
 
     /**
@@ -29,7 +30,8 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::orderBy('created_at', 'desc')->get();
-        return $articles;
+        
+        return $this->sendResponse($articles, 'Articles list');
     }
 
 
@@ -61,10 +63,7 @@ class ArticleController extends Controller
         $article->user_id = Auth::user()->id;
         $article->save();
 
-
-        return [$article, response()->json([
-            "message" => "Article créé"
-        ])];
+        return $this->sendResponse($article, 'Article created successfully');
     }
 
     /**
@@ -75,7 +74,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        return $article;
+        return $this->sendResponse($article, 'Article selected');
     }
 
 
@@ -107,9 +106,7 @@ class ArticleController extends Controller
         $article->description = $validateData["description"];
         $article->update();
 
-        return [$article, response()->json([
-            "message" => "Article modifié"
-        ])];
+        return $this->sendResponse($article, 'Article updated successfully');
     }
 
     /**
@@ -122,8 +119,7 @@ class ArticleController extends Controller
     {
         $this->authorize('delete', Article::class);
         $article->delete();
-        return [$article, response()->json([
-            "message" => "Article supprimé"
-        ])];
+
+        return $this->sendResponse($article, 'Article deleted successfully');
     }
 }

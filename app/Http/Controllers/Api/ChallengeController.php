@@ -52,8 +52,7 @@ class ChallengeController extends Controller
             $image->save();  
          }
     
-         return [$challenge, response()->json([
-            "message" => "Défis créé"])];
+         return $this->sendResponse($challenge, 'Challenge created successfully');
     }
 
     /**
@@ -67,7 +66,7 @@ class ChallengeController extends Controller
         $this->authorize('view', $challenge->sessiongame);
         $sessiongame=$challenge->sessiongame;
     
-        return $challenge;
+        return $this->sendResponse($challenge, 'Challenge selected');
     }
 
 
@@ -111,9 +110,7 @@ class ChallengeController extends Controller
 
          $sessiongame = $challenge->sessiongame;
     
-         return [$challenge, response()->json([
-            "message" => "Défis modifié"])];
-        
+         return $this->sendResponse($challenge, 'Challenge updated successfully');
     }
 
     /**
@@ -127,8 +124,8 @@ class ChallengeController extends Controller
         $this->authorize('delete', Challenge::class);
         $session = $challenge->sessiongame;
         $challenge->delete();
-        return [$challenge, response()->json([
-            "message" => "Défis supprimé"])];
+
+        return $this->sendResponse($challenge, 'Challenge deleted successfully');
     }
 
     /**
@@ -142,8 +139,7 @@ class ChallengeController extends Controller
         $this->authorize('delete', Challenge::class);
         $challenge = $image->challenge;
         $image->delete();
-        return [$image, response()->json([
-            "message" => "Image supprimée"])];
-        
+
+        return $this->sendResponse($image, 'Image Challenge deleted successfully');
     }
 }

@@ -26,7 +26,7 @@ class SessiongameController extends Controller
         $user=User::where('id', Auth::user()->id)->first();
         $sessiongamesUser = $user->sessiongames;
 
-        return $sessiongamesUser;
+        return $this->sendResponse($sessiongamesUser, 'User Sessions List');
     }
 
     /**
@@ -38,7 +38,7 @@ class SessiongameController extends Controller
     {
         $sessiongamesAll= Sessiongame::orderBy('start_date')->get();
 
-        return $sessiongamesAll;
+        return $this->sendResponse($sessiongamesAll, 'Sessions List');
     }
 
 
@@ -78,8 +78,7 @@ class SessiongameController extends Controller
         $sessiongame->save();
     
 
-        return [$sessiongame, response()->json([
-            "message" => "Session de jeu créée"])];
+        return $this->sendResponse($sessiongame, 'Session created successfully');
     }
 
     /**
@@ -91,7 +90,8 @@ class SessiongameController extends Controller
     public function show(SessionGame $sessiongame)
     {
         $this->authorize('view', $sessiongame);
-        return [$sessiongame, $sessiongame->challenges];
+
+        return $this->sendResponse([$sessiongame, $sessiongame->challenges], 'Session selected');
     }
 
 
@@ -129,8 +129,7 @@ class SessiongameController extends Controller
         $sessiongame->update();
     
 
-        return [$sessiongame, response()->json([
-            "message" => "Session de jeu modifiée"])];
+        return $this->sendResponse($sessiongame, 'Session updated successfully');
     }
 
     /**
@@ -143,7 +142,7 @@ class SessiongameController extends Controller
     {
         $this->authorize('delete', Sessiongame::class);
         $sessiongame->delete();
-        return [$sessiongame, response()->json([
-            "message" => "Session de jeu suprimée"])];
+
+        return $this->sendResponse($sessiongame, 'Session deleted successfully');
     }
 }

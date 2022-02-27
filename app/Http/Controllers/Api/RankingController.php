@@ -35,8 +35,8 @@ class RankingController extends Controller
 
         $position=0;
         $winner="";
-        return $ranking;
-      
+        
+        return $this->sendResponse($ranking, 'Session Rank selected');
     }
 
     /**
@@ -98,6 +98,7 @@ class RankingController extends Controller
         ->get();
 
         $position=0;
-        return $winner;
+
+        return $this->sendResponse($winner, 'Winner selected');
     }
 }
