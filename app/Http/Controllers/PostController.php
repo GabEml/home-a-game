@@ -24,11 +24,8 @@ class PostController extends Controller
     {
         $this->authorize('viewAny', Post::class);
         $postsPending = Post::where('state', 'pending')->get();
-<<<<<<< HEAD
         
         // dump($postsPending);
-=======
->>>>>>> fd0cefc320bcd344a1ec7b47da43f2767ea78ab9
 
         return view('validationchallenge.pending', ['postsPending'=>$postsPending]);
 
