@@ -9,7 +9,6 @@ use App\Models\User;
 use App\Models\Challenge;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -24,11 +23,8 @@ class PostController extends Controller
     {
         $this->authorize('viewAny', Post::class);
         $postsPending = Post::where('state', 'pending')->get();
-<<<<<<< HEAD
         
         // dump($postsPending);
-=======
->>>>>>> fd0cefc320bcd344a1ec7b47da43f2767ea78ab9
 
         return view('validationchallenge.pending', ['postsPending'=>$postsPending]);
 
@@ -39,7 +35,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function searchPending(Request $request)
+    public function search(Request $request)
     {
         $this->authorize('viewAny', Post::class);
 
@@ -56,34 +52,8 @@ class PostController extends Controller
             ->join('posts','users.id', '=', 'posts.user_id')
             ->join('challenges','challenges.id', '=', 'posts.challenge_id')
             ->get();
-
-        return view('validationchallenge.searchPending', ['postsPending'=>$postsSearch]);
-    }
-
-    /**
-     * Search users posts
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function searchValidated(Request $request)
-    {
-        $this->authorize('viewAny', Post::class);
-
-        $key = $request->searchPost;
-
-        $postsSearch = User::select("*",'posts.id as post_id')
-            ->whereIn('posts.state', ['validated','partly_validated','not_validated'])
-            ->where(function($query) use($key){
-                $query->orWhere('lastname', 'like', "%{$key}%")
-                    ->orWhere('firstname', 'like', "%{$key}%")
-                    ->orWhere('email', 'like', "%{$key}%")
-                    ->orWhere('challenges.title', 'like', "%{$key}%");
-            })
-            ->join('posts','users.id', '=', 'posts.user_id')
-            ->join('challenges','challenges.id', '=', 'posts.challenge_id')
-            ->get();
-
-        return view('validationchallenge.searchValidated', ['postsValidated'=>$postsSearch]);
+        
+        return view('validationchallenge.search', ['postsPending'=>$postsSearch]);
     }
 
     /**
@@ -132,7 +102,7 @@ class PostController extends Controller
                 'file_path.mimes'=>'Le fichier de preuve doit être une vidéo mp4',
                 'file_path.max'=>'Vous dépassez la taille maximale (100Mo).'
             ]);
-
+    
             // Save the file locally in the storage/public/ folder under a new folder named /product
             $request->file_path->store('videos', 'public');
             $path ="/".$request->file('file_path')->store('videos');
@@ -145,7 +115,7 @@ class PostController extends Controller
                 'file_path.mimes'=>"Le fichier de preuve n'a pas le bon format",
                 'file_path.max'=>'Vous dépassez la taille maximale (100Mo).'
             ]);
-
+ 
             //On vérifie si c'est une image
             if (false !== mb_strpos($validateData["file_path"]->getMimeType(), "image")) {
                 $request->file_path->store('images', 'public');
@@ -166,11 +136,11 @@ class PostController extends Controller
         $post->challenge_id=$challenge->id;
         $post->state="pending";
         $post->posted_at = $date;
-
-        $post->save();
+  
+        $post->save();  
 
         return redirect()->route('challenges.show', ['challenge'=>$challenge]);
-
+            
     }
 
 
@@ -193,17 +163,17 @@ class PostController extends Controller
         }
 
         $validateDataBonus=$request->validate([
-            'bonus' => 'integer|in:0,1',
+            'bonus' => 'integer|in:0,1', 
         ]);
 
         $maxPointsPost = $post->challenge->points;
 
         if($post->challenge->unlimited_points==1 || $request->filled('bonus')){
             $validateData=$request->validate([
-            'state' => 'required|in:validated,partly_validated,not_validated',
+            'state' => 'required|in:validated,partly_validated,not_validated', 
             'user_point'=>"required_if:state,partly_validated|numeric|nullable|min:0|max:2147483647",
             'comment'=>'nullable|max:255|min:2',
-            'bonus' => 'integer|in:0,1',
+            'bonus' => 'integer|in:0,1', 
         ]);
         $post->bonus = $validateData["bonus"];
         $post->state = $validateData["state"];
@@ -212,7 +182,7 @@ class PostController extends Controller
 
         else {
             $validateData=$request->validate([
-            'state' => 'required|in:validated,partly_validated,not_validated',
+            'state' => 'required|in:validated,partly_validated,not_validated', 
             'user_point'=>"required_if:state,partly_validated|numeric|nullable|min:0|max:$maxPointsPost",
             'comment'=>'nullable|max:255|min:2',
             ]);
@@ -246,7 +216,7 @@ class PostController extends Controller
             return redirect()->route('posts.indexValidated', ['posts'=>$postsValidated]);
         }
 
-
+ 
     }
 
     /**
@@ -262,7 +232,7 @@ class PostController extends Controller
 
             //Pour utiliser is_file, il faur enlever le "/" qui est au début du chemin de l'image dans la bdd
             $path = substr($path,1);
-
+            
             if(is_file($path))
             {
             //Supprimer l'image du dossier

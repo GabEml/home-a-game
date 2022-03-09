@@ -13,22 +13,7 @@
         </div>
     </div>
 
-    <br/>
-
-    <div class=" col-12 col-md-6 offset-md-3">
-        <form action="{{ route('posts.searchValidated') }}" method="get" role="search">
-            <!-- Add CSRF Token -->
-            @csrf
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Rechercher..." name="searchPost">
-                <span class="input-group-btn">
-        <button class="btn btn-info" type="submit">Rechercher</button>
-      </span>
-            </div>
-        </form>
-    </div>
-
-    <br/>
+    <br /><br />
 
     <div class="row containerArticles">
         @if ($postsValidated->isEmpty())
@@ -161,7 +146,21 @@
         @endif
     </div>
 
-                {{$postsValidated->onEachSide(1)->links()}}
+    @if ($postsValidated->lastPage() > 1)
+            <ul class="pagination">
+                <li class="{{ ($postsValidated->currentPage() == 1) ? ' isDisabled' : '' }}">
+                    <a href="{{ $postsValidated->url($postsValidated->currentPage()-1) }}">Précédent</a>
+                </li>
+                @for ($i = 1; $i <= $postsValidated->lastPage(); $i++)
+                    <li class="{{ ($postsValidated->currentPage() == $i) ? ' active' : '' }}">
+                        <a href="{{ $postsValidated->url($i) }}">{{ $i }}</a>
+                    </li>
+                @endfor
+                <li class="{{ ($postsValidated->currentPage() == $postsValidated->lastPage()) ? ' isDisabled' : '' }}">
+                    <a href="{{ $postsValidated->url($postsValidated->currentPage()+1) }}" >Suivant</a>
+                </li>
+            </ul>
+        @endif
 
     <br /><br />
 

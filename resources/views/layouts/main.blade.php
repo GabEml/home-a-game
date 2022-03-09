@@ -176,10 +176,10 @@
                     <h1 class="h1 title">Découvrez @ Home a Game</h1>
                     <div class="discover">
                         @if(Auth::user())
-                            <a href="{{ route('sessiongames.index') }}" target="_self" class="link-discover btn-play" style="border-radius:5px;">
+                            <a href="{{ route('sessiongames.index') }}" target="_self" class="link-discover" style="border-radius:5px;">
                             <span>Jouer</span>
                             <i class="icon-angle-right"></i></a>
-                            <a href="{{ route('sessiongameusers.create') }}" target="_self" class="link-discover btn-join" style="border-radius:5px;">
+                            <a href="{{ route('sessiongameusers.create') }}" target="_self" class="link-discover" style="border-radius:5px;">
                             <span>Rejoindre une session</span>
                             <i class="icon-angle-right"></i></a>
                         @else

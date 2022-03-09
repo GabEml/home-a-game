@@ -74,17 +74,13 @@ class RankingController extends Controller
      */
     public function rankingPrevious(Sessiongame $sessiongame)
     {
-        //$this->authorize('viewRanking', $sessiongame);
+        $this->authorize('viewRanking', $sessiongame);
 
         $sessionCurrent = DB::table('sessiongames')
             ->where('start_date', '<=', date('Y-m-d'))
             ->where('type', 'Home a Game')
             ->orderByDesc('start_date')
             ->first();
-
-        if ($sessiongame->type != "Home a Game") {
-            abort(404);
-        }
 
         if ($sessiongame != NULL) {
             $ranking = DB::table('sessiongame_user')
@@ -162,12 +158,12 @@ class RankingController extends Controller
                 })
                 ->groupBy('sessiongames.id', 'sessiongame_user.user_id')
                 ->orderByDesc('points')
-                ->get();
-
+                ->get(); 
+            
             $sessiongames = Sessiongame::where('type', 'On The Road a Game')->where("end_date", '<', $dateNow)->where('id', '!=', $session->id)->get();
         } else {
             $ranking = NULL;
-            $sessiongames = [];
+            $sessiongames=[];
         }
 
         $position = 0;
@@ -181,17 +177,13 @@ class RankingController extends Controller
      */
     public function rankingOTRPrevious(Sessiongame $sessiongame)
     {
-        //$this->authorize('viewRankingOTR', $sessiongame);
+        $this->authorize('viewRankingOTR', $sessiongame);
 
         $sessionCurrent = DB::table('sessiongames')
             ->where('start_date', '<=', date('Y-m-d'))
             ->where('type', 'On The Road a Game')
             ->orderByDesc('start_date')
             ->first();
-
-        if ($sessiongame->type != "On The Road a Game") {
-            abort(404);
-        }
 
         if ($sessiongame != NULL) {
             $ranking = DB::table('sessiongame_user')

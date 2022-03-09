@@ -11,7 +11,6 @@
         <a href ="{{ route('users.indexUsers') }}" class=" menuValidation buttonPending "> Utilisateurs </a>
         <a href ="{{ route('users.indexAdminChallenge') }}" class=" menuValidation buttonValidated" > Admins défis</a>
         <a href ="{{ route('users.indexSuperAdmin') }}" class=" menuValidation buttonValidated buttonActive" > Super admins</a>
-        <a href ="{{ route('users.indexListUsers') }}" class=" menuValidation buttonValidated" > Liste</a>
     </div>
 </div>
 

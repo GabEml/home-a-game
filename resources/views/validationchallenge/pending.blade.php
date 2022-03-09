@@ -16,7 +16,7 @@
 <br/>
 
 <div class=" col-12 col-md-6 offset-md-3">
-    <form action="{{ route('posts.searchPending') }}" method="get" role="search">
+    <form action="{{ route('posts.search') }}" method="get" role="search">
         <!-- Add CSRF Token -->
         @csrf
         <div class="input-group">
@@ -68,7 +68,7 @@
                             @if ($postPending->posted_at !== null)
                             <div><p>Posté le : <?php $postedAt = explode(' ', $postPending->posted_at); ?><?=$postedAt[0];?> à <?=$postedAt[1]?></p></div>
                             @endif
-
+                            
                         </div>
                         <br/>
                         <form action="{{route('posts.update',$postPending->id)}}" method="post">
@@ -83,7 +83,7 @@
                                     <option value="not_validated"> Non validé </option>
                                 </select>
                             </div>
-
+                            
                             <div class="form-group">
                                 <label for="user_point">Nombres de points :</label>
                                 <input type="number" min=0  value="{{$postPending->user_point}}" name="user_point" id="user_point" class="form-control"class=@error('user_point') is-invalid @enderror >
@@ -105,22 +105,22 @@
                             </div>
                             <br/>
                     </fieldset>
-
+                    
                     <div class="flex justify-content-center">
                             <button type="submit" class="btn btn-info ">Valider</button>
                     </div>
                     @error('state')
                     <div class="alert alert-danger"> {{$message}} </div>
-                    @enderror
+                    @enderror 
                     @error('bonus')
                     <div class="alert alert-danger"> {{$message}} </div>
-                    @enderror
+                    @enderror 
                     @error('user_point')
                     <div class="alert alert-danger"> {{$message}} </div>
-                    @enderror
+                    @enderror 
                     @error('comment')
                     <div class="alert alert-danger"> {{$message}} </div>
-                    @enderror
+                    @enderror 
                     </form>
                     </div>
                 </div>

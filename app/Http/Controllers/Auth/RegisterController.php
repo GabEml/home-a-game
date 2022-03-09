@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use App\Models\Sessiongame;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -14,7 +13,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\Console\Input\Input;
 use App\Actions\Fortify\PasswordValidationRules;
-// use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -105,4 +103,5 @@ class RegisterController extends Controller
             'country' => $input['country'],
         ]);
     }
+
 }

@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
         $roleSuperAdmin->role = "Super Admin";
         $roleSuperAdmin->save();
 
+
         $date= new DateTime;
 
         $user = New User;

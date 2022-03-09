@@ -34,7 +34,7 @@
         <tbody>
           @if ($users==null)
           @else
-            @if($session->see_ranking==1 || Auth::user() != null && Auth::user()->role->role != "User")
+            @if($session->see_ranking==1)
               @foreach ($users as $user)
                   <tr>
                       <th scope="row">{{$position=$position+1}}</th>
