@@ -52,7 +52,6 @@ class RankingController extends Controller
                 ->groupBy('sessiongames.id', 'sessiongame_user.user_id')
                 ->orderByDesc('points')
                 ->get();
-            $ranking = null;
 
             $sessiongames = Sessiongame::where('type', 'Home a Game')->where("end_date", '<', $dateNow)->where('id', '!=', $session->id)->get();
 
