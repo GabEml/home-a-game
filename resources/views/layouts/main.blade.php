@@ -46,23 +46,25 @@
             </button>
             <div class="navbar-collapse collapse align-items-center " id="navbarTogglerDemo03">
                 <ul class=" menu navbar-nav mx-auto text-md-center text-left">
-                    <li class="nav-item">
-                        <x-jet-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
-                            <h2 class="linkMenu">{{ __('Accueil @HOME') }}</h2>
-                        </x-jet-nav-link>
-                    </li>
-                    <li class="nav-item">
-                        <x-jet-nav-link href="{{ route('presentation') }}" :active="request()->routeIs('presentation')">
-                            <h2 class="linkMenu">{{ __('Présentation du jeu') }}</h2>
-                        </x-jet-nav-link>
-                    </li>
+                    @if(config('app.app_domain') != 'otr')
+                        <li class="nav-item">
+                            <x-jet-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
+                                <h2 class="linkMenu">{{ __('Accueil @HOME') }}</h2>
+                            </x-jet-nav-link>
+                        </li>
+                        <li class="nav-item">
+                            <x-jet-nav-link href="{{ route('presentation') }}" :active="request()->routeIs('presentation')">
+                                <h2 class="linkMenu">{{ __('Présentation du jeu') }}</h2>
+                            </x-jet-nav-link>
+                        </li>
+                    @endif
                     <li class="nav-item">
                         <x-jet-nav-link href="{{ route('ranking') }}" :active="request()->routeIs('ranking')">
                             <h2 class="linkMenu">{{ __('Classement') }}</h2>
                         </x-jet-nav-link>
                     </li>
                     @auth
-                    @if (Auth::user()->role->role==="User" or Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
+                    @if (Auth::check())
                     <li class="nav-item">
                         <x-jet-nav-link href="{{ route('sessiongames.index') }}" :active="request()->routeIs('sessiongames.index')">
                             <h2 class="linkMenu">{{ __('Soumettre un défi') }}</h2>
@@ -83,13 +85,6 @@
                         </x-jet-nav-link>
                     </li>
                     @endif
-                    @if (Auth::user()->role->role==="User" or Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
-                    <li class="nav-item">
-                        <x-jet-nav-link href="{{ route('goodies.index') }}" :active="request()->routeIs('goodies.index')">
-                            <h2 class="linkMenu">{{ __('Goodies') }}</h2>
-                        </x-jet-nav-link>
-                    </li>
-                    @endif
                     @if (Auth::user()->role->role==="Super Admin")
                     <li class="nav-item">
                         <x-jet-nav-link href="{{ route('users.indexUsers') }}" :active="request()->routeIs('users.indexUsers')">
@@ -98,11 +93,20 @@
                     </li>
                     @endif
                     @endif
-                    <li class="nav-item">
-                        <x-jet-nav-link href="https://www.ontheroadagame.fr/">
-                            <h2 class="linkMenu">{{ __('On The Road') }}</h2>
-                        </x-jet-nav-link>
-                    </li>
+                    @if (config('app.app_domain') != 'otr')
+                        <li class="nav-item">
+                            <x-jet-nav-link href="{{ route('goodies.index') }}" :active="request()->routeIs('goodies.index')">
+                                <h2 class="linkMenu">{{ __('Goodies') }}</h2>
+                            </x-jet-nav-link>
+                        </li>
+                    @endif
+                    @if(config('app.app_domain') != 'otr')
+                        <li class="nav-item">
+                            <x-jet-nav-link href="https://www.ontheroadagame.fr/">
+                                <h2 class="linkMenu">{{ __('On The Road') }}</h2>
+                            </x-jet-nav-link>
+                        </li>
+                    @endif
                 </ul>
 
             <div class="nav navbar-nav hiddenNavComputer">
@@ -164,7 +168,7 @@
         <div class="logoImage flex flex-col">
             <div class="logo-image-banner">
                 <div class="relative">
-                    <a class="background"><img class="backgroundLogo" src="/images/otr-header.jpg"  alt="fond logo"></a>  
+                    <a class="background"><img class="backgroundLogo" src="/images/otr-header.jpg"  alt="fond logo"></a>
                     <a class="logo" href="{{ route('home') }}"><img class="logo" src="/images/logo.svg"  alt="logo"></a>
                 </div>
             </div>
@@ -194,7 +198,7 @@
                 </div>
             </div>
         </div>
-        @else 
+        @else
         <div class="little-banner flex flex-col">
                 <a href="https://at-home.ontheroadagame.fr"><img class="backgroundLogo" src="/images/fond.png" alt="fond logo"></a>
                 <a class="logo" href="https://at-home.ontheroadagame.fr"><img class="logo" src="/images/logo.svg" alt="logo"></a>
@@ -202,7 +206,7 @@
         @endif
         <div class="homepage-title">
             <h1 class="h1 title"> @yield('titlePage') </h1>
-        </div> 
+        </div>
         <div class="container">
 
             @yield('content')
