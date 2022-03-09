@@ -2,9 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\GoodieController;
 use App\Http\Controllers\Api\ArticleController;
 use App\Http\Controllers\Api\RankingController;
@@ -23,8 +23,6 @@ use App\Http\Controllers\Api\SessiongameUserController;
 |
 */
 
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Headers: Authorization, Content-Type');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -37,6 +35,10 @@ Route::get('articles/{article}', [ArticleController::class, 'show']);
 Route::get('classement', [RankingController::class, 'ranking']);
 
 Route::post('inscription', [UserController::class, 'store']);
+
+Route::post('connexion',[UserController::class, 'connexion']);
+
+Route::post('deconnexion',[UserController::class, 'deconnexion']);
 
 
 Route::middleware('auth:sanctum')->group(function () {

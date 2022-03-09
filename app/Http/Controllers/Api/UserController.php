@@ -158,6 +158,58 @@ class UserController extends BaseController
         ])];
     }
 
+
+    /**
+     * storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function connexion(Request $request)
+    {
+
+        // $validateData=$request->validate([
+        //     'email' => 'required| string| email| max:255| unique:users',
+        //     'password'=> 'required',
+        // ]);
+
+        // $user->save();
+        // $user = User::where([["email",$request->input('email')],["password",Hash::make($request->input('password'))]])->first();
+
+        $user = User::where("email",$request->input('email'))->first();
+
+        $password = Hash::make($request->input('password'));
+        $tokenresult = null;
+
+        if(password_verify($request->input('password'), $user->password)) {
+            $token = $user->createToken("token");
+            $tokenresult = $token->plainTextToken;
+        }
+
+        return  $this->sendResponse(['email' => $user->email,'token' => $tokenresult], 'Token');
+
+
+        // return [$request, response()->json([
+        //     "message" => $request
+        //     ])
+        // ];
+    }
+
+    /**
+     * storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function deconnexion(Request $request)
+    {
+        $user = User::where("email", $request->input('email'))->first();
+
+        $user->tokens()->delete();
+
+        $this->sendResponse('Deco', 'Déconnexion réussie');
+    }
+
     /**
      * Update the specified resource in storage.
      *
