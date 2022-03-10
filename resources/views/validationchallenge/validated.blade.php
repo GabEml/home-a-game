@@ -39,7 +39,7 @@
             @foreach ($postsValidated as $postValidated)
                 <div class=" positionButton marginArticles col-lg-3 col-md-6 col-sm-12 containerPresentation">
                     <div class="flex justify-content-end buttonDelete">
-                        <form action="{{ route('posts.destroy', $postValidated->id) }}" method="post">
+                        <form action="{{ route('posts.destroy', $postValidated->post_id) }}" method="post">
                             @csrf
                             @method('DELETE')
                             <button class="btn buttonCross btn-danger" type="submit"> X </button>
@@ -82,7 +82,7 @@
                             @endif
                         </div>
                         <br />
-                        <form action="{{ route('posts.update', $postValidated->id) }}" method="post">
+                        <form action="{{ route('posts.update', $postValidated->post_id) }}" method="post">
                             <!-- Add CSRF Token -->
                             @csrf
                             @method('PUT')
