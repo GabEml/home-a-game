@@ -176,7 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
-
+        App\Providers\DomainDetectionProvider::class,
     ],
 
     /*
@@ -232,9 +232,24 @@ return [
 
     ],
 
-    //STRIPE 
+    /*
+    |--------------------------------------------------------------------------
+    | Stripe
+    |--------------------------------------------------------------------------
+    */
 
     'stripe_key' => env('STRIPE_KEY'),
     'stripe_secret' => env('STRIPE_SECRET'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | App domain detection
+    |--------------------------------------------------------------------------
+    |
+    | Switch app_domain value with subdomain url.
+    |
+    */
+
+    'app_domain' => env('OTR', 'OTR'),
 
 ];

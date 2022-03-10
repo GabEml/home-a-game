@@ -41,14 +41,14 @@
                         @if ($position == 1)
                             vous êtes {{ $position }}<sup>er</sup> du classement !
                 </p>
-            @else
-                <sup>ème</sup> du classement !</p>
+                        @else
+                            vous êtes {{ $position }}<sup>ème</sup> du classement !
+                        @endif
+                     @else
+                        le classement n'est pas encore dévoilé ! </p>
+                    @endif
+                @break
             @endif
-        @else
-            le classement n'est pas encore dévoilé ! </p>
-        @endif
-        @break
-        @endif
         @endforeach
     </div>
     <br />

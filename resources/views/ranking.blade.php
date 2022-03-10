@@ -8,12 +8,6 @@
 
 @section ('content')
 
-<div class="row">
-  <div class=" menuValidation col-12 justify-content-center flex">
-      <a href ="{{ route('ranking') }}" class=" menuValidation buttonPending buttonActive"> @Home a Game </a>
-      <a href ="{{ route('rankingOTR') }}" class=" menuValidation buttonValidated" >On The Road a Game</a>
-  </div>
-</div>
 @if ($session==null)
 @else
     <h2 class="titleProfile title">{{$session->name}} du {{$session->start_date}} au {{$session->end_date}}</h2>
@@ -68,32 +62,32 @@
     <div>
       <h2 class="titleProfile title">Voir le classement des sessions précédentes</h2>
       <br/>
-      <div class=" col-12 table-responsive">
+      <div class="col-12 table-responsive">
         @if(!count($sessiongames))
           <p class="text-center">Il n'y a pas encore d'anciens classements !</p>
         @else
           <table class="table-bordered table-hover align-middle table tableGoodie">
             <tbody>
+            @if($sessionCurrent->id != $session->id)
+                <td>
+                    <strong>Session actuelle :</strong> {{$sessionCurrent->name}} du {{$sessionCurrent->start_date}} au {{$sessionCurrent->end_date}}
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-info" href="{{route('ranking')}}"> Voir </a>
+                </td>
+            @endif
               @foreach ($sessiongames as $sessiongame)
                 @if($sessiongame->id != $session->id and $sessiongame->id !=$sessionCurrent->id)
                   <tr>
                     <td>
                       {{$sessiongame->name}} du {{$sessiongame->start_date}} au {{$sessiongame->end_date}}
                     </td>
-                    <td class="text-center"> 
+                    <td class="text-center">
                       <a class="btn btn-info" href="{{route('ranking.previous',$sessiongame->id)}}"> Voir </a>
                     </td>
                   </tr>
                 @endif
               @endforeach
-              @if($sessionCurrent->id != $session->id)
-                <td>
-                  <strong>Session actuelle :</strong> {{$sessionCurrent->name}} du {{$sessionCurrent->start_date}} au {{$sessionCurrent->end_date}}
-                </td>
-                <td class="text-center"> 
-                  <a class="btn btn-info" href="{{route('ranking')}}"> Voir </a>
-                </td>
-              @endif
             </tbody>
           </table>
         @endif

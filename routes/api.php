@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\GoodieController;
 use App\Http\Controllers\Api\SessiongameUserController;
 use App\Http\Controllers\Api\ChallengeController;
+use App\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,9 @@ Route::get('classement', [RankingController::class, 'ranking']);
 
 Route::post('inscription',[UserController::class, 'store']);
 
+Route::post('connexion',[UserController::class, 'connexion']);
+
+Route::post('deconnexion',[UserController::class, 'deconnexion']);
 
 Route::middleware('auth:sanctum')->group(function(){
     
