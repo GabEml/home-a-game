@@ -61,6 +61,7 @@ class SessiongameController extends Controller
         //On récupère les sessions de l'utilisateur qui sont en cours
         $sessiongamesUserNow = $user->sessiongames()->where('start_date','<',date('Y-m-d'))
         ->where('end_date','>',date('Y-m-d'))
+        ->where('type', $type)
         ->orderBy('end_date')
         ->get();
 
