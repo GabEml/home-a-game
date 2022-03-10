@@ -27,6 +27,8 @@ class RankingController extends Controller
 
         $dateNow = new DateTime;
 
+        // dd($session);
+
         if ($session != NULL) {
             $ranking = DB::table('sessiongame_user')
                 ->select('users.id', 'users.firstname', 'users.lastname', DB::raw('SUM(user_point) as points'))
@@ -108,6 +110,8 @@ class RankingController extends Controller
                 ->groupBy('sessiongames.id', 'sessiongame_user.user_id')
                 ->orderByDesc('points')
                 ->get();
+
+                // dd($ranking);
         } else {
             $ranking = NULL;
         }

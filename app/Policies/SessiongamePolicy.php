@@ -23,7 +23,6 @@ class SessiongamePolicy
      */
     public function viewRanking(User $user, Sessiongame $sessiongame)
     {
-    
         $sessiongameCurrent=Sessiongame::where('start_date','<',date('Y-m-d'))
         ->where('type','Home a Game')
         ->orderByDesc('start_date')
