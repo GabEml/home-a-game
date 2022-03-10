@@ -28,7 +28,7 @@ class PostController extends Controller
         $postsPending = Post::select('*')
         ->join('challenges','challenges.id', '=', 'posts.challenge_id')
         ->join('sessiongames','challenges.sessiongame_id', '=', 'sessiongames.id')    
-        ->where('sessiongames.type', $type)   
+        //->where('sessiongames.type', $type)   
         ->where('posts.state', 'pending')
         ->orderByDesc("posts.id")->get();
 
@@ -100,7 +100,7 @@ class PostController extends Controller
         $postsValidated = Post::select('*')
         ->join('challenges','challenges.id', '=', 'posts.challenge_id')
         ->join('sessiongames','challenges.sessiongame_id', '=', 'sessiongames.id')    
-        ->where('sessiongames.type', $type)   
+        //->where('sessiongames.type', $type)   
         ->where('posts.state', '!=', 'pending')
         ->orderByDesc("posts.id")->paginate(9);
     
