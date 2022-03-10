@@ -27,7 +27,11 @@ class SessiongameController extends Controller
         $success = $request->input('success');
         $sessiongames=$request->input('sessiongames');
 
-        $sessiongamesAll= Sessiongame::orderBy('start_date')->get();
+        $type = config('app.app_domain') == 'otr' ? 'On The Road a Game' : 'Home a Game';
+
+        $sessiongamesType= Sessiongame::orderBy('start_date')
+            ->where('type', $type)
+            ->get();
 
         $user=User::where('id', Auth::user()->id)->first();
 
@@ -64,10 +68,15 @@ class SessiongameController extends Controller
         $idSessiongamesNow = $sessiongamesUserNow->pluck('id');
 
         //On récupère toutes les autres sessions auquelles il est inscrit, qu'elles soient futur ou passés
-        $sessiongamesUser = $user->sessiongames()->whereNotIn('sessiongames.id', $idSessiongamesNow)->orderByDesc('end_date')->get();
+        $sessiongamesUser = $user->sessiongames()->where('type', $type)->whereNotIn('sessiongames.id', $idSessiongamesNow)->orderByDesc('end_date')->get();
 
 
-        return view('sessiongame.index',['challengeCompleted'=>$challengeCompleted,'sessiongames'=>$sessiongamesAll, 'sessiongamesUser'=>$sessiongamesUser,'sessiongamesUserNow'=>$sessiongamesUserNow, 'dateNow'=>$dateNow]);
+        return view('sessiongame.index',[
+            'challengeCompleted'=>$challengeCompleted,
+            'sessiongames'=>$sessiongamesType,
+            'sessiongamesUser'=>$sessiongamesUser,
+            'sessiongamesUserNow'=>$sessiongamesUserNow,
+            'dateNow'=>$dateNow]);
     }
 
     /**
@@ -167,7 +176,7 @@ class SessiongameController extends Controller
             $ranking=NULL;
         }
         $position=0;
-    
+
         return view('sessiongame.show', ['users'=>$ranking, "position"=>$position, "sessiongame"=>$sessiongame]);
     }
 

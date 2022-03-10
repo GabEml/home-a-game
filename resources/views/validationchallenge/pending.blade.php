@@ -98,7 +98,7 @@
                             <br/>
                             <div class="form-group">
                                 <label for="comment">Commentaire :</label>
-                                <textarea name="comment" id="comment" class="form-control"class=@error('comment') is-invalid @enderror ></textarea>
+                                <textarea name="comment" id="comment" class="form-control" class=@error('comment') is-invalid @enderror >{{ $postPending->comment }}</textarea>
                             </div>
                             <div class="flex justify-content-center">
                                 <small><a href="{{$postPending->file_path}}" download>(Télécharger)</a></small>

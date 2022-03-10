@@ -13,15 +13,15 @@ use function PHPUnit\Framework\isEmpty;
 class RankingController extends Controller
 {
     /**
-     * ranking
-     *
-     * @return \Illuminate\Http\Response
+     * Dynamic ranking
      */
     public function ranking()
     {
+        $type = config('app.app_domain') == 'otr' ? 'On The Road a Game' : 'Home a Game';
+
         $session = DB::table('sessiongames')
             ->where('start_date', '<=', date('Y-m-d'))
-            ->where('type', 'Home a Game')
+            ->where('type', $type)
             ->orderByDesc('start_date')
             ->first();
 
@@ -53,9 +53,7 @@ class RankingController extends Controller
                 ->orderByDesc('points')
                 ->get();
 
-            $sessiongames = Sessiongame::where('type', 'Home a Game')->where("end_date", '<', $dateNow)->where('id', '!=', $session->id)->get();
-
-            // dd($sessiongames);
+            $sessiongames = Sessiongame::where('type', $type)->where("end_date", '<', $dateNow->format('Y-m-d'))->where('id', '!=', $session->id)->orderBy('end_date', 'desc')->get();
         } else {
             $ranking = NULL;
             $sessiongames = [];
@@ -63,7 +61,13 @@ class RankingController extends Controller
 
         $position = 0;
 
-        return view('ranking', ['users' => $ranking, "position" => $position, "session" => $session, "sessionCurrent" => $session, "sessiongames" => $sessiongames]);
+        return view('ranking', [
+            'users' => $ranking,
+            "position" => $position,
+            "session" => $session,
+            "sessionCurrent" => $session,
+            "sessiongames" => $sessiongames
+        ]);
     }
 
     /**
@@ -75,15 +79,13 @@ class RankingController extends Controller
     {
         //$this->authorize('viewRanking', $sessiongame);
 
+        $type = config('app.app_domain') == 'otr' ? 'On The Road a Game' : 'Home a Game';
+
         $sessionCurrent = DB::table('sessiongames')
             ->where('start_date', '<=', date('Y-m-d'))
-            ->where('type', 'Home a Game')
+            ->where('type', $type)
             ->orderByDesc('start_date')
             ->first();
-
-        if ($sessiongame->type != "Home a Game") {
-            abort(404);
-        }
 
         if ($sessiongame != NULL) {
             $ranking = DB::table('sessiongame_user')
@@ -119,7 +121,7 @@ class RankingController extends Controller
         $dateNow = new DateTime;
 
 
-        $sessiongames = Sessiongame::where('type', 'Home a Game')->where("end_date", '<', $dateNow)->where('id', '!=', $sessionCurrent->id)->get();
+        $sessiongames = Sessiongame::where('type', $type)->where("end_date", '<', $dateNow)->where('id', '!=', $sessionCurrent->id)->orderBy('end_date', 'desc')->get();
 
         return view('ranking', ['users' => $ranking, "position" => $position, "session" => $sessiongame, "sessiongames" => $sessiongames, "sessionCurrent" => $sessionCurrent]);
     }

@@ -52,70 +52,68 @@
             </button>
             <div class="navbar-collapse collapse align-items-center " id="navbarTogglerDemo03">
                 <ul class=" menu navbar-nav mx-auto text-md-center text-left">
-                    <li class="nav-item">
-                        <x-jet-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
-                            <h2 class="linkMenu">{{ __('Accueil @HOME') }}</h2>
-                        </x-jet-nav-link>
-                    </li>
-                    <li class="nav-item">
-                        <x-jet-nav-link href="{{ route('presentation') }}"
-                            :active="request()->routeIs('presentation')">
-                            <h2 class="linkMenu">{{ __('Présentation') }}</h2>
-                        </x-jet-nav-link>
-                    </li>
+                    @if(config('app.app_domain') != 'otr')
+                        <li class="nav-item">
+                            <x-jet-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
+                                <h2 class="linkMenu">{{ __('Accueil @HOME') }}</h2>
+                            </x-jet-nav-link>
+                        </li>
+                        <li class="nav-item">
+                            <x-jet-nav-link href="{{ route('presentation') }}" :active="request()->routeIs('presentation')">
+                                <h2 class="linkMenu">{{ __('Présentation du jeu') }}</h2>
+                            </x-jet-nav-link>
+                        </li>
+                    @endif
                     <li class="nav-item">
                         <x-jet-nav-link href="{{ route('ranking') }}" :active="request()->routeIs('ranking')">
                             <h2 class="linkMenu">{{ __('Classement') }}</h2>
                         </x-jet-nav-link>
                     </li>
-                    <li class="nav-item">
-                        <x-jet-nav-link href="https://www.ontheroadagame.fr/">
-                            <h2 class="linkMenu">{{ __('OTRAG') }}</h2>
-                        </x-jet-nav-link>
-                    </li>
+                    @if (config('app.app_domain') != 'otr')
+                        <li class="nav-item">
+                            <x-jet-nav-link href="{{ route('goodies.index') }}" :active="request()->routeIs('goodies.index')">
+                                <h2 class="linkMenu">{{ __('Goodies') }}</h2>
+                            </x-jet-nav-link>
+                        </li>
+                    @endif
                     @auth
-                        @if (Auth::user()->role->role === 'User' or Auth::user()->role->role === 'Admin Défis' or Auth::user()->role->role === 'Super Admin')
+                        @if (Auth::check())
                             <li class="nav-item">
-                                <x-jet-nav-link href="{{ route('sessiongames.index') }}"
-                                    :active="request()->routeIs('sessiongames.index')">
-                                    <h2 class="linkMenu">{{ __('Espace de jeu') }}</h2>
+                                <x-jet-nav-link href="{{ route('sessiongames.index') }}" :active="request()->routeIs('sessiongames.index')">
+                                    <h2 class="linkMenu">{{ __('Soumettre un défi') }}</h2>
                                 </x-jet-nav-link>
                             </li>
                         @endif
-                        @if (Auth::user()->role->role === 'User')
+                        @if (Auth::user()->role->role==="User" && config('app.app_domain') != 'otr')
                             <li class="nav-item">
-                                <x-jet-nav-link href="{{ route('sessiongameusers.create') }}"
-                                    :active="request()->routeIs('sessiongameusers.create')">
+                                <x-jet-nav-link href="{{ route('sessiongameusers.create') }}" :active="request()->routeIs('sessiongameusers.create')">
                                     <h2 class="linkMenu">{{ __("S'inscrire à une session") }}</h2>
                                 </x-jet-nav-link>
                             </li>
                         @endif
-                        @if (Auth::user()->role->role === 'Admin Défis' or Auth::user()->role->role === 'Super Admin')
+                        @if (Auth::user()->role->role==="Admin Défis" or Auth::user()->role->role==="Super Admin")
                             <li class="nav-item">
-                                <x-jet-nav-link href="{{ route('posts.indexPending') }}"
-                                    :active="request()->routeIs('posts.indexPending')">
+                                <x-jet-nav-link href="{{ route('posts.indexPending') }}" :active="request()->routeIs('posts.indexPending')">
                                     <h2 class="linkMenu">{{ __('Validation défis') }}</h2>
                                 </x-jet-nav-link>
                             </li>
                         @endif
-                        @if (Auth::user()->role->role === 'User' or Auth::user()->role->role === 'Admin Défis' or Auth::user()->role->role === 'Super Admin')
+                        @if (Auth::user()->role->role==="Super Admin")
                             <li class="nav-item">
-                                <x-jet-nav-link href="{{ route('goodies.index') }}"
-                                    :active="request()->routeIs('goodies.index')">
-                                    <h2 class="linkMenu">{{ __('Goodies') }}</h2>
-                                </x-jet-nav-link>
-                            </li>
-                        @endif
-                        @if (Auth::user()->role->role === 'Super Admin')
-                            <li class="nav-item">
-                                <x-jet-nav-link href="{{ route('users.indexUsers') }}"
-                                    :active="request()->routeIs('users.indexUsers')">
+                                <x-jet-nav-link href="{{ route('users.indexUsers') }}" :active="request()->routeIs('users.indexUsers')">
                                     <h2 class="linkMenu">{{ __('Utilisateurs') }}</h2>
                                 </x-jet-nav-link>
                             </li>
                         @endif
-                        @endif
-                    </ul>
+                    @endif
+                    @if(config('app.app_domain') != 'otr')
+                        <li class="nav-item">
+                            <x-jet-nav-link href="https://www.ontheroadagame.fr/">
+                                <h2 class="linkMenu">{{ __('On The Road') }}</h2>
+                            </x-jet-nav-link>
+                        </li>
+                    @endif
+                </ul>
 
                     <div class="nav navbar-nav hiddenNavComputer">
                         @auth
