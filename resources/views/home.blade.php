@@ -4,10 +4,9 @@
 
 @section('description',"Découvrez @ Home a Game un jeu d'aventure hors du commun pour vivre l'expérience On The Road a Game près de chez soi ! Votre mission: relever un max de défis. Votre objectif: battre les autres et tenter de gagner un voyage.")
 
-@section('titlePage'," @ Home a Game : un jeu d'aventure hors du commun pour vivre l'expérience OTR près de chez soi")
+@section('titlePage'," Un jeu d'échanges et de découverte, pour vivre l'expérience On The Road a Game près de chez soi")
 
 @section ('content')
-
 
 <div class="row containerHome">
     <div class=" col-12 col-md-6 col-lg-3 d-flex containerPresentation">
@@ -40,7 +39,7 @@
 
 </div>
 <div class="row containerHome">
-    
+
     <div class=" col-12 col-md-6 col-lg-4 d-flex containerPresentation">
         <div class="centerImageHome flex flex-col justify-content-center">
             <img width="350px" height=auto class="align-self-center imagePresentation" src="/images/ontheroadagame.png" alt="On The Road a Game">
@@ -72,6 +71,6 @@
 </div> --}}
 <br/>
 
-<?php echo realpath('chemin.php'); ?> 
+<?php echo realpath('chemin.php'); ?>
 
 @endsection

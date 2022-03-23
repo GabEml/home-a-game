@@ -4,7 +4,7 @@
 
 @section('description', "Présentation du nouveau concept @ Home a Game un jeu d'aventure hors du commun pour vivre l'expérience On The Road a Game près de chez soi ! Votre mission: relever un max de défis. Votre objectif: battre les autres et tenter de gagner un voyage.")
 
-@section('titlePage'," @ Home a Game : un jeu d'aventure hors du commun pour vivre l'expérience OTR près de chez soi")
+@section('titlePage'," Un jeu d'échanges et de découverte, pour vivre l'expérience On The Road a Game près de chez soi")
 
 @section ('content')
 
@@ -16,8 +16,8 @@
             <h2 class="align-self-center titlePresentation">Plusieurs sessions par an, limitées dans le temps</h2>
         </div>
         <br/>
-            <p>Comme les voyages On The Road a Game, une session @ Home dure 5 jours. </p>
-            <p>5 jours de challenges et de défis délirants, imaginés autour d'une thématique culturelle, sportive, d'actualité...</p>
+            <p>Comme les voyages On The Road a Game, une session @ Home dure 10 jours. </p>
+            <p>10 jours de challenges et de défis délirants, imaginés autour d'une thématique culturelle, sportive, d'actualité...</p>
             <br/>
             <p class="underline">Le coût de participation à une session s'élève à 10€.</p>
             <br/>

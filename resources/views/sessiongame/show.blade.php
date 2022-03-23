@@ -21,7 +21,7 @@
     <br />
 
     <div class='col-12'>
-        <p class="text-center">{{ $sessiongame->description }}</p>
+        <div class="text-center session-game-description">{!! $sessiongame->description !!}</div>
         <p class="text-center">Pour cette session, vous pouvez avoir la chance de gagner :
             {{ $sessiongame->goodie->name }} !</p>
         <br />
@@ -41,14 +41,14 @@
                         @if ($position == 1)
                             vous êtes {{ $position }}<sup>er</sup> du classement !
                 </p>
-            @else
-                <sup>ème</sup> du classement !</p>
+                        @else
+                            vous êtes {{ $position }}<sup>ème</sup> du classement !
+                        @endif
+                     @else
+                        le classement n'est pas encore dévoilé ! </p>
+                    @endif
+                @break
             @endif
-        @else
-            le classement n'est pas encore dévoilé ! </p>
-        @endif
-        @break
-        @endif
         @endforeach
     </div>
     <br />
@@ -69,7 +69,7 @@
                 'validated' => 'Voir',
                 'empty' => 'Soumettre une preuve',
             ];
-            
+
             $btn_class = [
                 'not_validated' => 'NotValidated',
                 'partly_validated' => 'PartlyValidated',

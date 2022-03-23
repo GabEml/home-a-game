@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Role;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Api\BaseController;
 
@@ -125,8 +129,7 @@ class UserController extends BaseController
      */
     public function store(Request $request)
     {
-
-        $validateData = $request->validate([
+        $validateData=$request->validate([
             'firstname' => 'required| string| max:255',
             'lastname' => 'required| string| max:255',
             'date_of_birth' => 'required|date|before_or_equal:today',
@@ -138,6 +141,7 @@ class UserController extends BaseController
             'country' => 'required| string| max:255',
             'password' => 'required',
         ]);
+
         $user = new User();
         $user->firstname = $validateData['firstname'];
         $user->lastname = $validateData['lastname'];
@@ -152,10 +156,62 @@ class UserController extends BaseController
         $user->role_id = 1;
 
         $user->save();
+        
+        $token = $user->createToken("token");
 
-        return [$user, response()->json([
-            "message" => "Utilisateur créé"
-        ])];
+        return ['token' => $token->plainTextToken];
+
+        // return [$user, response()->json([
+        //     "message" => "Utilisateur créé"])];
+    }
+
+    /**
+     * storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function connexion(Request $request)
+    {
+
+        // $validateData=$request->validate([
+        //     'email' => 'required| string| email| max:255| unique:users',
+        //     'password'=> 'required',
+        // ]);
+
+        // $user->save();
+        // $user = User::where([["email",$request->input('email')],["password",Hash::make($request->input('password'))]])->first();
+
+        $user = User::where("email",$request->input('email'))->first();
+
+        $password = Hash::make($request->input('password'));
+        $tokenresult = null;
+
+        if(password_verify($request->input('password'), $user->password)) {
+            $token = $user->createToken("token");
+            $tokenresult = $token->plainTextToken;
+        }
+
+        return  $this->sendResponse(['email' => $user->email,'token' => $tokenresult], 'Token');
+
+
+        // return [$test, response()->json([
+        //     "message" => "OK"])];
+    }
+
+    /**
+     * storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function deconnexion(Request $request)
+    {
+        $user = User::where("email", $request->input('email'))->first();
+
+        $user->tokens()->delete();
+
+        $this->sendResponse('Deco', 'Déconnexion réussie');
     }
 
 
