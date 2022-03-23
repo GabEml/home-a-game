@@ -18,7 +18,8 @@ class GoodieController extends Controller
     {
         $this->authorize('viewAny', Goodie::class);
         $goodies= Goodie::all();
-        return $goodies;
+        
+        return $this->sendResponse($goodies, 'Goodies list');
     }
 
     /**
@@ -29,7 +30,7 @@ class GoodieController extends Controller
      */
     public function show(Goodie $goodie)
     {
-        return $goodie;
+        return $this->sendResponse($goodie, 'Goodie selected');
     }
 
 
@@ -51,8 +52,7 @@ class GoodieController extends Controller
             $goodie->save();
         
 
-            return [$goodie, response()->json([
-                "message" => "Goodie créé"])];
+            return $this->sendResponse($goodie, 'Goodie created successfully');
     }
 
 
@@ -74,8 +74,7 @@ class GoodieController extends Controller
             $goodie->update();
         
 
-            return [$goodie, response()->json([
-                "message" => "Goodie modifié"])];
+            return $this->sendResponse($goodie, 'Goodie updated successfully');
     }
 
     /**
@@ -88,7 +87,7 @@ class GoodieController extends Controller
     {
         $this->authorize('delete', Goodie::class);
         $goodie->delete();
-        return [$goodie, response()->json([
-            "message" => "Goodie supprimé"])];
+
+        return $this->sendResponse($goodie, 'Goodie deleted successfully');
     }
 }

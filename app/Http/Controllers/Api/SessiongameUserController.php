@@ -40,12 +40,14 @@ class SessiongameUserController extends Controller
             $sessiongame->user_id = Auth::user()->id;
             $sessiongame->save();
 
-            return response()->json([
-                "message" => "Vous vous êtes bien inscrit à la session"]);
+            return $this->sendResponse($sessiongame, 'Vous vous êtes bien inscrit à la session');
+            // return response()->json([
+            //     "message" => "Vous vous êtes bien inscrit à la session"]);
         }
         else {
-            return response()->json([
-                "message" => "Vous êtes déjà inscrit à cette session"]);
+            return $this->sendError($sessiongame, 'Vous êtes déjà inscrit à cette session');
+            // return response()->json([
+            //     "message" => "Vous êtes déjà inscrit à cette session"]);
         }
     }
 

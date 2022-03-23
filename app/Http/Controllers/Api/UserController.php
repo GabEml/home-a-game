@@ -22,14 +22,14 @@ class UserController extends BaseController
      */
     public function indexUsers()
     {
-        $this->authorize('viewAny', User::class);
-        $users= DB::table('users')
-        ->select("users.id", "firstname", "lastname")
-        ->where('roles.role',"User")
-        ->join('roles','roles.id', '=', 'users.role_id')
-        ->get();
-        
-        return $users;
+        // $this->authorize('viewAny', User::class);
+        $users = DB::table('users')
+            ->select("users.id", "firstname", "lastname")
+            ->where('roles.role', "User")
+            ->join('roles', 'roles.id', '=', 'users.role_id')
+            ->get();
+
+        return $this->sendResponse($users, 'Users list');
     }
 
     /**
@@ -39,14 +39,14 @@ class UserController extends BaseController
      */
     public function indexAdminChallenge()
     {
-        
+
         $this->authorize('viewAny', User::class);
-        $users= DB::table('users')
-        ->select("users.id", "firstname", "lastname")
-        ->where('roles.role',"Admin Défis")
-        ->join('roles','roles.id', '=', 'users.role_id')
-        ->get();
-        
+        $users = DB::table('users')
+            ->select("users.id", "firstname", "lastname")
+            ->where('roles.role', "Admin Défis")
+            ->join('roles', 'roles.id', '=', 'users.role_id')
+            ->get();
+
         return $users;
     }
 
@@ -58,12 +58,12 @@ class UserController extends BaseController
     public function indexSuperAdmin()
     {
         $this->authorize('viewAny', User::class);
-        $users= DB::table('users')
-        ->select("users.id", "firstname", "lastname")
-        ->where('roles.role',"Super Admin")
-        ->join('roles','roles.id', '=', 'users.role_id')
-        ->get();
-        
+        $users = DB::table('users')
+            ->select("users.id", "firstname", "lastname")
+            ->where('roles.role', "Super Admin")
+            ->join('roles', 'roles.id', '=', 'users.role_id')
+            ->get();
+
         return $users;
     }
 
@@ -89,35 +89,36 @@ class UserController extends BaseController
     {
         $this->authorize('create', User::class);
 
-        $validateData=$request->validate([
+        $validateData = $request->validate([
             'firstname' => 'required| string| max:255',
             'lastname' => 'required| string| max:255',
-            'date_of_birth'=>'required|date|before_or_equal:today',
+            'date_of_birth' => 'required|date|before_or_equal:today',
             'email' => 'required| string| email| max:255| unique:users',
-            'phone'=>'required| string|max:10',
-            'address'=>'required|string| max:255',
+            'phone' => 'required| string|max:10',
+            'address' => 'required|string| max:255',
             'postal_code' => 'required| string| max:5',
             'city' => 'required| string| max:255',
             'country' => 'required| string| max:255',
-            'role_id'=> 'required|integer|exists:roles,id',
+            'role_id' => 'required|integer|exists:roles,id',
         ]);
         $user = new User();
-        $user ->firstname = $validateData['firstname'];
-        $user ->lastname = $validateData['lastname'];
-        $user ->date_of_birth = $validateData['date_of_birth'];
-        $user ->email = $validateData['email'];
-        $user ->password = Hash::make($validateData['firstname'].$validateData['lastname']);
-        $user ->phone = $validateData['phone'];
-        $user ->address = $validateData['address'];
-        $user ->postal_code = $validateData['postal_code'];
-        $user ->role_id= $validateData['role_id'];
-        $user ->city = $validateData['city'];
-        $user ->country = $validateData['country'];
+        $user->firstname = $validateData['firstname'];
+        $user->lastname = $validateData['lastname'];
+        $user->date_of_birth = $validateData['date_of_birth'];
+        $user->email = $validateData['email'];
+        $user->password = Hash::make($validateData['firstname'] . $validateData['lastname']);
+        $user->phone = $validateData['phone'];
+        $user->address = $validateData['address'];
+        $user->postal_code = $validateData['postal_code'];
+        $user->role_id = $validateData['role_id'];
+        $user->city = $validateData['city'];
+        $user->country = $validateData['country'];
 
         $user->save();
-        
+
         return [$user, response()->json([
-            "message" => "Utilisateur créé"])];
+            "message" => "Utilisateur créé"
+        ])];
     }
 
     /**
@@ -131,31 +132,30 @@ class UserController extends BaseController
         $validateData=$request->validate([
             'firstname' => 'required| string| max:255',
             'lastname' => 'required| string| max:255',
-            'date_of_birth'=>'required|date|before_or_equal:today',
+            'date_of_birth' => 'required|date|before_or_equal:today',
             'email' => 'required| string| email| max:255| unique:users',
-            'phone'=>'required| string|max:10',
-            'address'=>'required|string| max:255',
+            'phone' => 'required| string|max:10',
+            'address' => 'required|string| max:255',
             'postal_code' => 'required| string| max:5',
             'city' => 'required| string| max:255',
             'country' => 'required| string| max:255',
-            'password'=> 'required',
+            'password' => 'required',
         ]);
 
         $user = new User();
-        $user ->firstname = $validateData['firstname'];
-        $user ->lastname = $validateData['lastname'];
-        $user ->date_of_birth = $validateData['date_of_birth'];
-        $user ->email = $validateData['email'];
-        $user ->phone = $validateData['phone'];
-        $user ->address = $validateData['address'];
-        $user ->postal_code = $validateData['postal_code'];
-        $user ->password=  Hash::make($validateData['password']);
-        $user ->city = $validateData['city'];
-        $user ->country = $validateData['country'];
-        $user ->role_id= 1;
+        $user->firstname = $validateData['firstname'];
+        $user->lastname = $validateData['lastname'];
+        $user->date_of_birth = $validateData['date_of_birth'];
+        $user->email = $validateData['email'];
+        $user->phone = $validateData['phone'];
+        $user->address = $validateData['address'];
+        $user->postal_code = $validateData['postal_code'];
+        $user->password =  Hash::make($validateData['password']);
+        $user->city = $validateData['city'];
+        $user->country = $validateData['country'];
+        $user->role_id = 1;
 
         $user->save();
-        
         
         $token = $user->createToken("token");
 
@@ -225,35 +225,36 @@ class UserController extends BaseController
     {
         $this->authorize('updateSuperAdmin', User::class);
 
-        $validateData=$request->validate([
+        $validateData = $request->validate([
             'firstname' => 'required| string| max:255',
             'lastname' => 'required| string| max:255',
-            'date_of_birth'=>'required|date|before_or_equal:today',
+            'date_of_birth' => 'required|date|before_or_equal:today',
             'email' => 'required| string| email| max:255', Rule::unique('users')->ignore($user->id),
-            'phone'=>'required| string|max:10',
-            'address'=>'required|string| max:255',
+            'phone' => 'required| string|max:10',
+            'address' => 'required|string| max:255',
             'postal_code' => 'required| string| max:5',
             'city' => 'required| string| max:255',
             'country' => 'required| string| max:255',
             'role_id' => 'required|integer|exists:roles,id',
-           
+
         ]);
 
-        $user ->firstname = $validateData['firstname'];
-        $user ->lastname = $validateData['lastname'];
-        $user ->date_of_birth = $validateData['date_of_birth'];
-        $user ->email = $validateData['email'];
-        $user ->phone = $validateData['phone'];
-        $user ->address = $validateData['address'];
-        $user ->postal_code = $validateData['postal_code'];
-        $user ->city = $validateData['city'];
-        $user ->country = $validateData['country'];
+        $user->firstname = $validateData['firstname'];
+        $user->lastname = $validateData['lastname'];
+        $user->date_of_birth = $validateData['date_of_birth'];
+        $user->email = $validateData['email'];
+        $user->phone = $validateData['phone'];
+        $user->address = $validateData['address'];
+        $user->postal_code = $validateData['postal_code'];
+        $user->city = $validateData['city'];
+        $user->country = $validateData['country'];
         $user->role_id = $validateData["role_id"];
 
         $user->update();
 
         return [$user, response()->json([
-            "message" => "Utilisateur modifié"])];
+            "message" => "Utilisateur modifié"
+        ])];
     }
 
     /**
@@ -267,35 +268,36 @@ class UserController extends BaseController
     {
         $this->authorize('update', User::class);
 
-        $validateData=$request->validate([
+        $validateData = $request->validate([
             'firstname' => 'required| string| max:255',
             'lastname' => 'required| string| max:255',
-            'date_of_birth'=>'required|date|before_or_equal:today',
+            'date_of_birth' => 'required|date|before_or_equal:today',
             'email' => 'required| string| email| max:255', Rule::unique('users')->ignore($user->id),
-            'phone'=>'required| string|max:10',
-            'address'=>'required|string| max:255',
+            'phone' => 'required| string|max:10',
+            'address' => 'required|string| max:255',
             'postal_code' => 'required| string| max:5',
             'city' => 'required| string| max:255',
             'country' => 'required| string| max:255',
             'password' => 'required',
-           
+
         ]);
 
-        $user ->firstname = $validateData['firstname'];
-        $user ->lastname = $validateData['lastname'];
-        $user ->date_of_birth = $validateData['date_of_birth'];
-        $user ->email = $validateData['email'];
-        $user ->phone = $validateData['phone'];
-        $user ->address = $validateData['address'];
-        $user ->postal_code = $validateData['postal_code'];
-        $user ->city = $validateData['city'];
-        $user ->country = $validateData['country'];
-        $user ->password=  Hash::make($validateData['password']);
+        $user->firstname = $validateData['firstname'];
+        $user->lastname = $validateData['lastname'];
+        $user->date_of_birth = $validateData['date_of_birth'];
+        $user->email = $validateData['email'];
+        $user->phone = $validateData['phone'];
+        $user->address = $validateData['address'];
+        $user->postal_code = $validateData['postal_code'];
+        $user->city = $validateData['city'];
+        $user->country = $validateData['country'];
+        $user->password =  Hash::make($validateData['password']);
 
         $user->update();
 
         return [$user, response()->json([
-            "message" => "Utilisateur modifié"])];
+            "message" => "Utilisateur modifié"
+        ])];
     }
 
     /**
@@ -310,9 +312,10 @@ class UserController extends BaseController
 
         $user->tokens->each->delete();
         $user->delete();
-        
+
         return [$user, response()->json([
-            "message" => "Utilisateur supprimé"])];
+            "message" => "Utilisateur supprimé"
+        ])];
     }
 
     /**
@@ -327,8 +330,9 @@ class UserController extends BaseController
 
         $user->tokens->each->delete();
         $user->delete();
-        
+
         return [$user, response()->json([
-            "message" => "Utilisateur supprimé"])];
+            "message" => "Utilisateur supprimé"
+        ])];
     }
 }
