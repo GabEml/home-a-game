@@ -199,8 +199,7 @@ class UserController extends BaseController
             return $this->sendError('Password is not matching', 'Password is not matching');
         }
 
-        return  $this->sendResponse(['email' => $user->email,'token' => $tokenresult], 'Token');
-
+        return  $this->sendResponse(['id' => $user->id,'token' => $tokenresult], 'Token');
 
         // return [$test, response()->json([
         //     "message" => "OK"])];
