@@ -19,6 +19,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
+use App\Http\Controllers\Api\UserCsv;
+
 class UserController extends Controller
 {
     /**
@@ -369,5 +371,105 @@ class UserController extends Controller
         return redirect()->route('users.indexUsers', ['users'=>$users]);
 
         //print_r($user);
+    }
+
+
+    /**
+     * get all users and render
+     * @param Request $request
+     */
+    public function indexListUsers(Request $request) {
+
+        $currentValues = $request->all();
+        $userRoles = $this->getAllRoles();
+        $filteredUsers = $this->filteredUsers($currentValues);
+        $allUsers = $this->filteredUsers($currentValues, false, true);
+
+        // dd($userRoles);
+
+        return view('superadmin.list-users', compact('currentValues', 'filteredUsers', 'userRoles', 'allUsers'));
+    }
+
+    /**
+     *  Get users by filter
+     * @param Request $currentValues
+     * @param Boolean $paginate
+     */
+    public function filteredUsers($currentValues, $paginate = true, $allUsers = false) {
+
+        if($allUsers == true) {
+            $filteredUsers = DB::table('users')
+            ->join('roles','roles.id', '=', 'users.role_id')
+            ->select('*')
+            ->get();
+        } else {
+            if(count($currentValues) > 0 && !isset($currentValues['page'])) {
+                $query = DB::table('users')
+                ->join('roles','roles.id', '=', 'users.role_id')
+                ->select('*');
+
+                if($currentValues['role'] != "Any Role") {
+                    $query->where("role", "=", $currentValues['role']);
+                }
+            } else {
+                $query = DB::table('users')
+                ->select('*');
+            } 
+
+            if($paginate === true) {
+                if(isset($currentValues['paginate']) == null) {
+                    $filteredUsers = $query->paginate(100);
+                } else {
+                    $filteredUsers = $query->paginate($currentValues['paginate']);
+                }
+            } else {
+                $filteredUsers = $query->get();
+            }
+        }
+
+        return $filteredUsers;
+    }
+
+     /**
+     *  Get all users role
+     */
+    public function getAllRoles() {
+        $userRoles = [];
+
+        $query = DB::table('roles')
+        ->select('*');
+       
+        $roles = $query->get();
+
+        if(count($roles) > 1 && $roles) {
+            foreach($roles as $role) {
+                if(!in_array($role->role, $userRoles)) {
+                    array_push($userRoles, $role->role);
+                }  
+            }
+        }
+
+        return $userRoles;
+    }
+
+    /**
+     * Generate csv file for users
+     * @param Request $request
+     */
+    public function usersCsv(Request $request) {
+        // dd($request);
+        $currentValues = $request->all();
+        $users = $this->filteredUsers($currentValues, false);
+        $userApi = new UserCsv();
+
+        // dd($userApi);
+        $file = $userApi->generateCsv($users);
+        if (is_array($file) && $file['error']) {
+            return redirect()->back()->with([
+                'message'   => $file['message']
+            ]);
+        } else {
+            return $file;
+        }
     }
 }

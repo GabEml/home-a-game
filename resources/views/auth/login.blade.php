@@ -1,4 +1,5 @@
-   <meta name="description" content="Connectez-vous à @ Home a Game un jeu d'aventure hors du commun pour vivre l'expérience On The Road a Game près de chez soi ! Votre mission: relever un max de défis. Votre objectif: battre les autres et tenter de gagner un voyage.">
+
+<meta name="description" content="Connectez-vous à @ Home a Game un jeu d'aventure hors du commun pour vivre l'expérience On The Road a Game près de chez soi ! Votre mission: relever un max de défis. Votre objectif: battre les autres et tenter de gagner un voyage.">
 
 <x-guest-layout>
     <x-jet-authentication-card>
@@ -7,8 +8,6 @@
             <x-jet-authentication-card-logo />
             <h1 class="h1 title"> Se connecter </h1>
         </x-slot>
-
-        
 
         <x-jet-validation-errors class="mb-4" />
 
@@ -51,6 +50,6 @@
             </div>
         </form>
     </x-jet-authentication-card>
-    
+
 </x-guest-layout>
 <br/><br/>

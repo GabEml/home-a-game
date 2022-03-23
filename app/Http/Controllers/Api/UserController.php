@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Role;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Api\BaseController;
 
@@ -69,11 +73,12 @@ class UserController extends BaseController
      * @param  \App\Models\user  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        return $user;
-    }
+        $user = User::find($id);
 
+        return $this->sendResponse($user, 'User find successfully');
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -125,8 +130,7 @@ class UserController extends BaseController
      */
     public function store(Request $request)
     {
-
-        $validateData = $request->validate([
+        $validateData=$request->validate([
             'firstname' => 'required| string| max:255',
             'lastname' => 'required| string| max:255',
             'date_of_birth' => 'required|date|before_or_equal:today',
@@ -138,6 +142,7 @@ class UserController extends BaseController
             'country' => 'required| string| max:255',
             'password' => 'required',
         ]);
+
         $user = new User();
         $user->firstname = $validateData['firstname'];
         $user->lastname = $validateData['lastname'];
@@ -152,12 +157,14 @@ class UserController extends BaseController
         $user->role_id = 1;
 
         $user->save();
+        
+        $token = $user->createToken("token");
 
-        return [$user, response()->json([
-            "message" => "Utilisateur créé"
-        ])];
+        return ['token' => $token->plainTextToken];
+
+        // return [$user, response()->json([
+        //     "message" => "Utilisateur créé"])];
     }
-
 
     /**
      * storage.
@@ -178,21 +185,24 @@ class UserController extends BaseController
 
         $user = User::where("email",$request->input('email'))->first();
 
+        if($user == null) {
+            return $this->sendError('User not found', 'User not found');
+        }
+
         $password = Hash::make($request->input('password'));
         $tokenresult = null;
 
         if(password_verify($request->input('password'), $user->password)) {
             $token = $user->createToken("token");
             $tokenresult = $token->plainTextToken;
+        }        else {
+            return $this->sendError('Password is not matching', 'Password is not matching');
         }
 
-        return  $this->sendResponse(['email' => $user->email,'token' => $tokenresult], 'Token');
+        return  $this->sendResponse(['id' => $user->id,'token' => $tokenresult], 'Token');
 
-
-        // return [$request, response()->json([
-        //     "message" => $request
-        //     ])
-        // ];
+        // return [$test, response()->json([
+        //     "message" => "OK"])];
     }
 
     /**

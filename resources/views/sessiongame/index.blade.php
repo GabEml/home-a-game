@@ -64,7 +64,7 @@
             @endforeach
             <p class="align-self-center" >Défis réalisés : {{$challengeCompleted}} sur {{$sessiongame->challenges->count()}}</p>
             <br/>
-            @if($sessiongame->end_date<=$dateNow)
+            @if($sessiongame->end_date<$dateNow)
                 <p class="statusSessiongame align-self-center text-danger "> Terminée</p>
             @elseif($sessiongame->start_date<=$dateNow and $sessiongame->end_date>=$dateNow)
                 <p class="statusSessiongame align-self-center text-success"> En cours</p>
@@ -111,7 +111,7 @@
                 @endforeach
                 <p class="align-self-center" >Défis réalisés : {{$challengeCompleted}} sur {{$sessiongame->challenges->count()}}</p>
                 <br/>
-                @if($sessiongame->end_date<=$dateNow)
+                @if($sessiongame->end_date<$dateNow)
                     <p class="statusSessiongame align-self-center text-danger "> Terminée</p>
                 @elseif($sessiongame->start_date<=$dateNow and $sessiongame->end_date>=$dateNow)
                     <p class="statusSessiongame align-self-center text-success"> En cours</p>
