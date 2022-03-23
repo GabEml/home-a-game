@@ -167,9 +167,7 @@ class SessiongameController extends Controller
             $ranking=NULL;
         }
         $position=0;
-
-
-
+    
         return view('sessiongame.show', ['users'=>$ranking, "position"=>$position, "sessiongame"=>$sessiongame]);
     }
 

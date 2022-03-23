@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\RankingController;
 use App\Http\Controllers\Api\ChallengeController;
 use App\Http\Controllers\Api\SessiongameController;
 use App\Http\Controllers\Api\SessiongameUserController;
+use App\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,8 +40,9 @@ Route::get('classement', [RankingController::class, 'ranking']);
 Route::post('inscription', [UserController::class, 'store']);
 
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::post('connexion',[UserController::class, 'connexion']);
 
+Route::middleware('auth:sanctum')->group(function () {
     Route::post('articles/', [ArticleController::class, 'store']);
     Route::put('articles/{article}', [ArticleController::class, 'update']);
     Route::delete('articles/{article}', [ArticleController::class, 'destroy']);
