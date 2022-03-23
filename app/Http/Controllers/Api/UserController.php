@@ -184,12 +184,18 @@ class UserController extends BaseController
 
         $user = User::where("email",$request->input('email'))->first();
 
+        if($user == null) {
+            return $this->sendError('User not found', 'User not found');
+        }
+
         $password = Hash::make($request->input('password'));
         $tokenresult = null;
 
         if(password_verify($request->input('password'), $user->password)) {
             $token = $user->createToken("token");
             $tokenresult = $token->plainTextToken;
+        }        else {
+            return $this->sendError('Password is not matching', 'Password is not matching');
         }
 
         return  $this->sendResponse(['email' => $user->email,'token' => $tokenresult], 'Token');
@@ -197,58 +203,6 @@ class UserController extends BaseController
 
         // return [$test, response()->json([
         //     "message" => "OK"])];
-    }
-
-    /**
-     * storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function deconnexion(Request $request)
-    {
-        $user = User::where("email", $request->input('email'))->first();
-
-        $user->tokens()->delete();
-
-        $this->sendResponse('Deco', 'Déconnexion réussie');
-    }
-
-
-    /**
-     * storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function connexion(Request $request)
-    {
-
-        // $validateData=$request->validate([
-        //     'email' => 'required| string| email| max:255| unique:users',
-        //     'password'=> 'required',
-        // ]);
-
-        // $user->save();
-        // $user = User::where([["email",$request->input('email')],["password",Hash::make($request->input('password'))]])->first();
-
-        $user = User::where("email",$request->input('email'))->first();
-
-        $password = Hash::make($request->input('password'));
-        $tokenresult = null;
-
-        if(password_verify($request->input('password'), $user->password)) {
-            $token = $user->createToken("token");
-            $tokenresult = $token->plainTextToken;
-        }
-
-        return  $this->sendResponse(['email' => $user->email,'token' => $tokenresult], 'Token');
-
-
-        // return [$request, response()->json([
-        //     "message" => $request
-        //     ])
-        // ];
     }
 
     /**
