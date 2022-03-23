@@ -17,7 +17,7 @@
 
 <br/><br/>
 
-<div class="contourForm col-12 col-md-6 offset-md-3 form_container_filered_users">
+<div class="contourForm col-12 col-md-8 offset-md-2 form_container_filered_users">
     <div>
         <div class="flex justify-content-center flex-column">
             <p class="sessions text-center">Liste des utilisateurs</p>
@@ -62,34 +62,36 @@
             <button class="btn btn-info ">
                 Rechercher
             </button>
-            <table class="mt-5 w-100 table">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($filteredUsers as $user)
-                            <tr>
-                                <td>
-                                    {{ $user->id }}
-                                </td>
-                                <td>
-                                    {{ $user->lastname }}
-                                </td>
-                                <td>
-                                    {{ $user->firstname }}
-                                </td>
-                                <td>
-                                    {{ $user->email}}
-                                </td>
-                            </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <div class="table-scroll">
+                <table class="mt-5 w-100 table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($filteredUsers as $user)
+                                <tr>
+                                    <td>
+                                        {{ $user->id }}
+                                    </td>
+                                    <td>
+                                        {{ $user->lastname }}
+                                    </td>
+                                    <td>
+                                        {{ $user->firstname }}
+                                    </td>
+                                    <td>
+                                        {{ $user->email}}
+                                    </td>
+                                </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
             @if(count($filteredUsers) == 0)
                 {{ 'Aucun résultat' }}
             @endif 

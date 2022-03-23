@@ -116,12 +116,13 @@ Enfin, lancer le serveur :
 php artisan serve --host=otr.ontheroadagame.fr
 ```
 
+Vous y accéderez sur : http://otr.ontheroadagame.fr:8000 ou http://at-home.ontheroadagame.fr:8000
+
+
 Ajouter le fichier 'UserCsv.csv' dans le storage 'private': 
 ```sh
     touch storage/app/private/UserCsv.csv
 ```
-
-Vous y accéderez sur : http://otr.ontheroadagame.fr:8000 ou http://at-home.ontheroadagame.fr:8000
 
 Vous pourrez ensuite créer un compte, vous serez un simple utilisateur, vous pourrez sous inscrire à une session, y participer.
 
@@ -132,7 +133,4 @@ Si vous voulez tester en tant qu'administrateur des défis :
 Si vous voulez tester en tant que super Administrateur : 
 - Mail : super@admin.com 
 - Mot de passe : superadmin
-
-test2
-
 

@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Challenge;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -21,11 +22,19 @@ class PostController extends Controller
      */
     public function indexPending()
     {
+        $type = config('app.app_domain') == 'otr' ? 'On The Road a Game' : 'Home a Game';
+
         $this->authorize('viewAny', Post::class);
-        $postsPending = Post::where('state', 'pending')->get();
+        $postsPending = Post::select('*',"posts.id as post_id")
+        ->join('challenges','challenges.id', '=', 'posts.challenge_id')
+        ->join('sessiongames','challenges.sessiongame_id', '=', 'sessiongames.id')    
+        //->where('sessiongames.type', $type)   
+        ->where('posts.state', 'pending')
+        ->orderByDesc("posts.id")->get();
+
+        //$postsPending = Post::where('state', 'pending')->get();
 
         return view('validationchallenge.pending', ['postsPending'=>$postsPending]);
-
     }
 
     /**
@@ -87,10 +96,19 @@ class PostController extends Controller
      */
     public function indexValidated()
     {
+        $type = config('app.app_domain') == 'otr' ? 'On The Road a Game' : 'Home a Game';
+
         $this->authorize('viewAny', Post::class);
-        $postsValidated = Post::where('state', '!=', 'pending')->orderByDesc("id")->paginate(9);
-        $postsPending = Post::where('state', '=', 'pending')->orderByDesc("id")->get();
-        return view('validationchallenge.validated', ['postsValidated'=>$postsValidated ], ['postsPending'=>$postsPending]);
+        $postsValidated = Post::select('*', "posts.id as post_id")
+        ->join('challenges','challenges.id', '=', 'posts.challenge_id')
+        ->join('sessiongames','challenges.sessiongame_id', '=', 'sessiongames.id')    
+        //->where('sessiongames.type', $type)   
+        ->where('posts.state', '!=', 'pending')
+        ->orderByDesc("posts.id")->paginate(9);
+    
+        // dd($postsValidated);
+
+        return view('validationchallenge.validated', ['postsValidated'=>$postsValidated]);
     }
 
 

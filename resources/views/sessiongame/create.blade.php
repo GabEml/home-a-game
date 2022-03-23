@@ -11,28 +11,32 @@
         <!-- Add CSRF Token -->
         @csrf
        <fieldset>
-           
+
             <div class="form-group">
                 <label for="price" >Prix (€)</label>
                 <input value="{{ old('price') }}" required type="number" step="any" class="form-control" name="price" class=@error('price') is-invalid @enderror />
             {{-- <small>Si vous ne mettez pas de prix, il est fixé à 40€ par défault</small> --}}
             </div>
-            
+
             <div class="form-group">
                 <label for="name">Nom </label>
                 <input value="{{ old('name') }}" type="text" required name="name" id="name" class="form-control"class=@error('name') is-invalid @enderror >
             </div>
 
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea value="{{ old('description') }}" required name="description" id="description" rows="2" class="form-control" class=@error('description') is-invalid @enderror >{{ old('description') }}</textarea>
-            </div>
+           <script src="https://cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
+           <div class="form-group">
+               <label for="description">Description</label>
+               <textarea required name="description" id="description" rows="8" class="form-control"class=@error('description') is-invalid @enderror ></textarea>
+           </div>
+           <script>
+               CKEDITOR.replace( 'description' );
+           </script>
 
             <div class="form-group">
                 <label for="start_date">Date de début</label>
                 <input value="{{ old('start_date') }}" type="date" required name="start_date" id="start_date" class="form-control"class=@error('start_date') is-invalid @enderror >
             </div>
-            
+
             <div class="form-group">
                 <label for="end_date">Date de fin</label>
                 <input value="{{ old('end_date') }}" type="date" required name="end_date" id="end_date" class="form-control"class=@error('end_date') is-invalid @enderror >
@@ -48,7 +52,7 @@
                 <label for="goodie"> Goodie</label>
                 <br/>
                 <select value="{{ old('goodie') }}" class="form-control" name='goodie' id='goodie' class="form-control"class=@error('goodie') is-invalid @enderror>
-                    @foreach ($goodies as $goodie) 
+                    @foreach ($goodies as $goodie)
                         <option value={{$goodie->id}}> {{$goodie->name}}</option>
                     @endforeach
                 </select>
@@ -61,7 +65,7 @@
                     <option value="On The Road a Game">On The Road a Game</option>
                 </select>
             </div>
-            
+
 <br/>
 
             <div class="form-check form-check-inline flex justify-content-center ">
@@ -85,7 +89,7 @@
        <div class="flex justify-content-between">
         <a class="btn btn-primary" href="{{route('sessiongames.index')}}"> Retour </a>
         <button type="submit" class="btn btn-info ">Ajouter</button>
-        
+
 
        </div>
     </form>

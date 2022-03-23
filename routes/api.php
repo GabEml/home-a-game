@@ -42,10 +42,13 @@ Route::post('inscription', [UserController::class, 'store']);
 
 Route::post('connexion',[UserController::class, 'connexion']);
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('articles/', [ArticleController::class, 'store']);
-    Route::put('articles/{article}', [ArticleController::class, 'update']);
-    Route::delete('articles/{article}', [ArticleController::class, 'destroy']);
+Route::post('deconnexion',[UserController::class, 'deconnexion']);
+
+Route::middleware('auth:sanctum')->group(function(){
+    
+    Route::post('articles/',[ArticleController::class, 'store']);
+    Route::put('articles/{article}',[ArticleController::class, 'update']);
+    Route::delete('articles/{article}',[ArticleController::class, 'destroy']);
 
     Route::get('tirage_gagnant', [RankingController::class, 'winnerDraw']);
 

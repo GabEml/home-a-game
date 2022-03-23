@@ -37,7 +37,7 @@
         @foreach ($postsPending as $postPending)
                 <div class=" positionButton marginArticles col-lg-3 col-md-6 col-sm-12 containerPresentation">
                     <div class="flex justify-content-end buttonDelete">
-                        <form action="{{route('posts.destroy',$postPending->id)}}" method="post">
+                        <form action="{{route('posts.destroy',$postPending->post_id)}}" method="post">
                             @csrf
                             @method('DELETE')
                             <button class="btn buttonCross btn-danger" type="submit"> X </button>
@@ -71,7 +71,7 @@
 
                         </div>
                         <br/>
-                        <form action="{{route('posts.update',$postPending->id)}}" method="post">
+                        <form action="{{route('posts.update',$postPending->post_id)}}" method="post">
                             <!-- Add CSRF Token -->
                             @csrf
                             @method('PUT')
@@ -98,7 +98,7 @@
                             <br/>
                             <div class="form-group">
                                 <label for="comment">Commentaire :</label>
-                                <textarea name="comment" id="comment" class="form-control"class=@error('comment') is-invalid @enderror ></textarea>
+                                <textarea name="comment" id="comment" class="form-control" class=@error('comment') is-invalid @enderror >{{ $postPending->comment }}</textarea>
                             </div>
                             <div class="flex justify-content-center">
                                 <small><a href="{{$postPending->file_path}}" download>(Télécharger)</a></small>

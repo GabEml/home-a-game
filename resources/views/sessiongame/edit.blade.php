@@ -21,16 +21,20 @@
             <input value="{{$sessiongame->name}}" type="text" required name="name" id="name" class="form-control"class=@error('name') is-invalid @enderror >
         </div>
 
+        <script src="https://cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
         <div class="form-group">
             <label for="description">Description</label>
             <textarea required name="description" id="description" rows="8" class="form-control"class=@error('description') is-invalid @enderror > {{$sessiongame->description}} </textarea>
         </div>
+        <script>
+            CKEDITOR.replace( 'description' );
+        </script>
 
         <div class="form-group">
             <label for="start_date">Date de début</label>
             <input type="date" value="{{$sessiongame->start_date}}" required name="start_date" id="start_date" class="form-control"class=@error('start_date') is-invalid @enderror ></input>
         </div>
-        
+
         <div class="form-group">
             <label for="end_date">Date de fin</label>
             <input type="date" value="{{$sessiongame->end_date}}" required name="end_date" id="end_date" class="form-control"class=@error('end_date') is-invalid @enderror ></input>
@@ -72,37 +76,37 @@
                 <input class="form-check-input" type="checkbox" value="0" name="see_ranking" class=@error('see_ranking') is-invalid @enderror>
             @else
                 <input class="form-check-input" type="checkbox" value="0" name="see_ranking" checked class=@error('see_ranking')  is-invalid @enderror>
-            @endif  
-            
+            @endif
+
             <label class="form-check-label" for="flexCheckDefault">
                 Cacher le classement
             </label>
         </div>
-        
+
    </fieldset>
    {{-- @error('price')
     <div class="alert alert-danger"> {{$message}} </div>
     @enderror  --}}
     @error('name')
     <div class="alert alert-danger"> {{$message}} </div>
-    @enderror 
+    @enderror
     @error('description')
     <div class="alert alert-danger"> {{$message}} </div>
-    @enderror 
+    @enderror
     @error('start_date')
     <div class="alert alert-danger"> {{$message}} </div>
-    @enderror 
+    @enderror
    @error('end_date')
     <div class="alert alert-danger"> {{$message}} </div>
-    @enderror 
+    @enderror
     @error('image_path')
     <div class="alert alert-danger"> {{$message}} </div>
-    @enderror 
+    @enderror
    <br/>
    <div class="flex justify-content-between">
     <a class="btn btn-primary" href="{{route('sessiongames.index')}}"> Retour </a>
     <button type="submit" class="btn btn-info ">Modifier</button>
-    
+
 
    </div>
 </form>

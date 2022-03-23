@@ -39,7 +39,7 @@
             @foreach ($postsValidated as $postValidated)
                 <div class=" positionButton marginArticles col-lg-3 col-md-6 col-sm-12 containerPresentation">
                     <div class="flex justify-content-end buttonDelete">
-                        <form action="{{ route('posts.destroy', $postValidated->id) }}" method="post">
+                        <form action="{{ route('posts.destroy', $postValidated->post_id) }}" method="post">
                             @csrf
                             @method('DELETE')
                             <button class="btn buttonCross btn-danger" type="submit"> X </button>
@@ -82,7 +82,7 @@
                             @endif
                         </div>
                         <br />
-                        <form action="{{ route('posts.update', $postValidated->id) }}" method="post">
+                        <form action="{{ route('posts.update', $postValidated->post_id) }}" method="post">
                             <!-- Add CSRF Token -->
                             @csrf
                             @method('PUT')
@@ -161,22 +161,9 @@
         @endif
     </div>
 
-    @if ($postsValidated->lastPage() > 1)
-            <ul class="pagination">
-                <li class="{{ ($postsValidated->currentPage() == 1) ? ' isDisabled' : '' }}">
-                    <a href="{{ $postsValidated->url($postsValidated->currentPage()-1) }}">Précédent</a>
-                </li>
-                @for ($i = 1; $i <= $postsValidated->lastPage(); $i++)
-                    <li class="{{ ($postsValidated->currentPage() == $i) ? ' active' : '' }}">
-                        <a href="{{ $postsValidated->url($i) }}">{{ $i }}</a>
-                    </li>
-                @endfor
-                <li class="{{ ($postsValidated->currentPage() == $postsValidated->lastPage()) ? ' isDisabled' : '' }}">
-                    <a href="{{ $postsValidated->url($postsValidated->currentPage()+1) }}" >Suivant</a>
-                </li>
-            </ul>
-        @endif
+                {{$postsValidated->onEachSide(1)->links()}}
 
     <br /><br />
+
 
 @endsection
