@@ -73,11 +73,12 @@ class UserController extends BaseController
      * @param  \App\Models\user  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        return $user;
-    }
+        $user = User::find($id);
 
+        return $this->sendResponse($user, 'User find successfully');
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -171,7 +172,7 @@ class UserController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function connexion(Request $request)
+    public function login(Request $request)
     {
 
         // $validateData=$request->validate([
@@ -184,16 +185,21 @@ class UserController extends BaseController
 
         $user = User::where("email",$request->input('email'))->first();
 
+        if($user == null) {
+            return $this->sendError('User not found', 'User not found');
+        }
+
         $password = Hash::make($request->input('password'));
         $tokenresult = null;
 
         if(password_verify($request->input('password'), $user->password)) {
             $token = $user->createToken("token");
             $tokenresult = $token->plainTextToken;
+        }        else {
+            return $this->sendError('Password is not matching', 'Password is not matching');
         }
 
-        return  $this->sendResponse(['email' => $user->email,'token' => $tokenresult], 'Token');
-
+        return  $this->sendResponse(['id' => $user->id,'token' => $tokenresult], 'Token');
 
         // return [$test, response()->json([
         //     "message" => "OK"])];
@@ -205,7 +211,7 @@ class UserController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function deconnexion(Request $request)
+    public function logout(Request $request)
     {
         $user = User::where("email", $request->input('email'))->first();
 
