@@ -41,11 +41,6 @@ Route::post('connexion',[UserController::class, 'connexion']);
 
 Route::post('deconnexion',[UserController::class, 'deconnexion']);
 
-
-Route::post('connexion',[UserController::class, 'connexion']);
-
-Route::post('deconnexion',[UserController::class, 'deconnexion']);
-
 Route::middleware('auth:sanctum')->group(function(){
     
     Route::post('articles/',[ArticleController::class, 'store']);

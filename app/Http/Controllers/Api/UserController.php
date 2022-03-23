@@ -73,11 +73,12 @@ class UserController extends BaseController
      * @param  \App\Models\user  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        return $user;
-    }
+        $user = User::find($id);
 
+        return $this->sendResponse($user, 'User find successfully');
+    }
 
     /**
      * Store a newly created resource in storage.
