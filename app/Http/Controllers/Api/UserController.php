@@ -172,7 +172,7 @@ class UserController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function connexion(Request $request)
+    public function login(Request $request)
     {
 
         // $validateData=$request->validate([
@@ -211,7 +211,7 @@ class UserController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function deconnexion(Request $request)
+    public function logout(Request $request)
     {
         $user = User::where("email", $request->input('email'))->first();
 
