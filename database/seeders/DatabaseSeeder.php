@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Influenceur;
 use Illuminate\Database\Seeder;
 use DateTime;
 use Illuminate\Support\Facades\DB;
@@ -25,11 +26,16 @@ class DatabaseSeeder extends Seeder
 
         $roleAdminDefis = New Role;
         $roleAdminDefis->id = 2;
+        $roleAdminDefis->role = "Influenceur";
+        $roleAdminDefis->save();
+
+        $roleAdminDefis = New Role;
+        $roleAdminDefis->id = 3;
         $roleAdminDefis->role = "Admin Défis";
         $roleAdminDefis->save();
 
         $roleSuperAdmin = New Role;
-        $roleSuperAdmin->id = 3;
+        $roleSuperAdmin->id = 4;
         $roleSuperAdmin->role = "Super Admin";
         $roleSuperAdmin->save();
 
@@ -50,6 +56,21 @@ class DatabaseSeeder extends Seeder
         $user->role_id=1;
         $user->save();
 
+        $user = New User;
+        $user->email_verified_at = $date;
+        $user->firstname="Clara";
+        $user->lastname="Vesval";
+        $user->email="clara.pro@gmail.com";
+        $user->password=Hash::make("root");
+        $user->date_of_birth=$date->format("Y-m-d");
+        $user->phone="0678254697";
+        $user->address="45 rue Paradis";
+        $user->city="Paris";
+        $user->country="France";
+        $user->postal_code="79000";
+        $user->role_id=2;
+        $user->save();
+
         $userAdminDefis = New User;
         $userAdminDefis->email_verified_at = $date;
         $userAdminDefis->firstname="Admin Defis";
@@ -62,7 +83,7 @@ class DatabaseSeeder extends Seeder
         $userAdminDefis->city="Paris";
         $userAdminDefis->country="France";
         $userAdminDefis->postal_code="79000";
-        $userAdminDefis->role_id=2;
+        $userAdminDefis->role_id=3;
         $userAdminDefis->save();
 
         $userSuperAdmin = New User;
@@ -77,7 +98,13 @@ class DatabaseSeeder extends Seeder
         $userSuperAdmin->city="Paris";
         $userSuperAdmin->country="France";
         $userSuperAdmin->postal_code="79000";
-        $userSuperAdmin->role_id=3;
+        $userSuperAdmin->role_id=4;
         $userSuperAdmin->save();
+        
+        $influenceur = New Influenceur;
+        $influenceur->people=4;
+        $influenceur->code="INF1234CODE";
+        $influenceur->user_id=2;
+        $influenceur->save();
     }
 }

@@ -70,6 +70,16 @@ class User extends Authenticatable  implements MustVerifyEmail
     }
 
     /**
+     * Renvoie la fiche influenceur d'un utilisateur
+     *
+     * @return  \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function influenceur()
+    {
+        return $this->hasOne('App\Models\Influenceur');
+    }
+
+    /**
      * Renvoie tous les sessions qui sont asssociés à 'l'utilisateur
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
